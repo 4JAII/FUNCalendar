@@ -1,6 +1,5 @@
 ﻿using Xamarin.Forms;
 using FUNCalendar.ViewModels;
-using System;
 
 namespace FUNCalendar.Views
 {

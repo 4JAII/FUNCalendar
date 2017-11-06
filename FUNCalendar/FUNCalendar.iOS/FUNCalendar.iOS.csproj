@@ -8,9 +8,9 @@
     <ProjectGuid>{9073F835-1150-434A-A1AC-8464C9287011}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>FunCalendar.iOS</RootNamespace>
+    <RootNamespace>FUNCalendar.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>FunCalendar.iOS</AssemblyName>
+    <AssemblyName>FUNCalendar.iOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

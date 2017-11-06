@@ -1,11 +1,7 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FUNCalendar.ViewModels
 {

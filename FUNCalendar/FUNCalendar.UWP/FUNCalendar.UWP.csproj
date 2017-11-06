@@ -7,8 +7,8 @@
     <ProjectGuid>{3B7E05EE-335A-412E-83AD-0E5503647EE3}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FunCalendar.UWP</RootNamespace>
-    <AssemblyName>FunCalendar.UWP</AssemblyName>
+    <RootNamespace>FUNCalendar.UWP</RootNamespace>
+    <AssemblyName>FUNCalendar.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
