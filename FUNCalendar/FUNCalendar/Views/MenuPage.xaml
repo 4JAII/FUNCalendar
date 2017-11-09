@@ -14,6 +14,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
+                            <Image Source="{Binding Image}"/>
                             <Label Text="{Binding Title}"
                                    HorizontalOptions="FillAndExpand"/>
                         </StackLayout>
