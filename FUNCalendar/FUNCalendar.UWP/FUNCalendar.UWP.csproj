@@ -105,7 +105,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="FUNCalendar.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -116,6 +115,13 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Resources\AddIcon.png" />
+    <Content Include="Resources\CalendarIcon.png" />
+    <Content Include="Resources\ConfigIcon.png" />
+    <Content Include="Resources\HouseHoldAccountsIcon.png" />
+    <Content Include="Resources\SyncIcon.png" />
+    <Content Include="Resources\ToDoIcon.png" />
+    <Content Include="Resources\WishListIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -133,6 +139,7 @@
       <Project>{71A1EA7A-3FC5-47E0-A9EE-C149A5EDC05B}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

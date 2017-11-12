@@ -14,25 +14,25 @@ namespace FUNCalendar.ViewModels
             {
                 Title="Calendar",
                 PageName="CalendarPage",
-                Image=ImageSource.FromFile("CalendarIcon.png")
+                Image=ImageSource.FromFile("CalendarIcon.png"),
             },
             new MenuItem
             {
                 Title="ToDo",
                 PageName="ToDoListPage",
-                Image=ImageSource.FromFile("ToDoIcon.png")
+                Image=ImageSource.FromFile("ToDoIcon.png"),
             },
             new MenuItem
             {
                 Title="WishList",
                 PageName="WishListPage",
-                Image=ImageSource.FromFile("WishListIcon.png")
+                Image=ImageSource.FromFile("WishListIcon.png"),
             },
             new MenuItem
             {
                 Title="家計簿",
                 PageName="HouseHoldAccountsPage",
-                Image=ImageSource.FromFile("HouseHoldAccountsIcon.png")
+                Image=ImageSource.FromFile("HouseHoldAccountsIcon.png"),
             }
         };
 
@@ -52,6 +52,7 @@ namespace FUNCalendar.ViewModels
         {
             await this.NavigationService.NavigateAsync($"NavigationPage/{menuItem.PageName}");
             this.IsPresented = false;
+
         }
     }
 }

@@ -5,12 +5,12 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.CalendarPage"
              Title="Calendar">
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Reload"
+        
+        <ContentPage.ToolbarItems>
+            <ToolbarItem Text="Reload"
                      Icon ="SyncIcon.png"/>
-        <ToolbarItem Text="Add"
+            <ToolbarItem Text="Add"
                      Icon="AddIcon.png"/>
-    </ContentPage.ToolbarItems>
-
+        </ContentPage.ToolbarItems>
+    
 </ContentPage>

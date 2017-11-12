@@ -11,5 +11,5 @@
         <ToolbarItem Text="Add"
                      Icon="AddIcon.png"/>
     </ContentPage.ToolbarItems>
-  
+
 </ContentPage>
