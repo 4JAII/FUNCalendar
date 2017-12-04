@@ -13,7 +13,7 @@
         <Views:MenuPage/>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage BarBackgroundColor="Red">
+        <NavigationPage BarBackgroundColor="White">
         </NavigationPage>
     </MasterDetailPage.Detail>
 </MasterDetailPage>
