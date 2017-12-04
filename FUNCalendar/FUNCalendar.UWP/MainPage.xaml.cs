@@ -1,5 +1,6 @@
 ﻿using Prism.Unity;
 using Microsoft.Practices.Unity;
+using FUNCalendar.Models;
 
 namespace FUNCalendar.UWP
 {
@@ -17,7 +18,7 @@ namespace FUNCalendar.UWP
     {
         public void RegisterTypes(IUnityContainer container)
         {
-
+           
         }
     }
 

@@ -6,10 +6,10 @@
     "Prism.Forms": "6.3.0",
     "Prism.Unity.Forms": "6.3.0",
     "Unity": "4.0.1",
-    "Xamarin.Forms": "2.3.3.193"
+    "Xamarin.Forms": "2.4.0.38779"
   },
   "frameworks": {
-    "uap10.0": {}
+    "uap10.0.10586": {}
   },
   "runtimes": {
     "win10-arm": {},

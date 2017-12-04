@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FUNCalendar.Views.WishListRegisterPage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="True"
+             Title="WishList画面登録">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Text="購入予定日:" Grid.Row="1" Grid.Column="1" FontSize="Medium" HorizontalOptions="End" VerticalOptions="CenterAndExpand"/>
+        <DatePicker Date="{Binding Date.Value}" Grid.Row="1" Grid.Column="2" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Entry Text="{Binding Name.Value}" FontSize="Large" Placeholder="商品名を入力" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="値段を入力" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterWishItemCommand}" Grid.Row="7" Grid.Column="1" />
+        <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}" Grid.Row="7" Grid.Column="2" />
+    </Grid>
+</ContentPage>

@@ -2,12 +2,11 @@
 
 namespace FUNCalendar.Views
 {
-    public partial class WishListPage : ContentPage
+    public partial class WishListRegisterPage : ContentPage
     {
-        public WishListPage()
+        public WishListRegisterPage()
         {
             InitializeComponent();
-            
         }
     }
 }

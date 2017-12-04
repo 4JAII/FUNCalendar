@@ -1,6 +1,9 @@
 ﻿using Prism.Unity;
 using FUNCalendar.Views;
+using FUNCalendar.Models;
+using System.Collections.Generic;
 using Xamarin.Forms;
+using Microsoft.Practices.Unity;
 
 namespace FUNCalendar
 {
@@ -17,13 +20,17 @@ namespace FUNCalendar
 
         protected override void RegisterTypes()
         {
-
+            /* 画面をDIコンテナに登録 */
             Container.RegisterTypeForNavigation<RootPage>();
             Container.RegisterTypeForNavigation<NavigationPage>();
             Container.RegisterTypeForNavigation<MenuPage>();
             Container.RegisterTypeForNavigation<CalendarPage>();
             Container.RegisterTypeForNavigation<WishListPage>();
             Container.RegisterTypeForNavigation<ToDoListPage>();
+            Container.RegisterTypeForNavigation<WishListRegisterPage>();
+            /* 共有のインスタンスをDIコンテナに登録 */
+            var wishList = new WishList();
+            Container.RegisterType<IWishList,WishList>(new ContainerControlledLifetimeManager());
         }
     }
 }
