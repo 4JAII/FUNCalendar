@@ -4,14 +4,15 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"       
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.WishListPage"
-<<<<<<< HEAD
              x:Name="WishListPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="False"
              Title="WishList">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding NavigationRegisterPageCommand}"/>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"
+                     Command="{Binding NavigationRegisterPageCommand}"/>
     </ContentPage.ToolbarItems>
     
     <Grid>
@@ -121,14 +122,4 @@
             </ListView.ItemTemplate>
         </ListView>
     </Grid>
-=======
-             Title="WishList">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Reload"
-                     Icon ="SyncIcon.png"/>
-        <ToolbarItem Text="Add"
-                     Icon="AddIcon.png"/>
-    </ContentPage.ToolbarItems>
-  
->>>>>>> feature/menu
 </ContentPage>

@@ -3,13 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="FUNCalendar.Views.HouseHoldAccountsPage"
-             Title="家計簿">
+             x:Class="FUNCalendar.Views.HouseHoldAccountsPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Reload"
-                     Icon ="SyncIcon.png"/>
-        <ToolbarItem Text="Add"
-                     Icon="AddIcon.png"/>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"/>
     </ContentPage.ToolbarItems>
-
 </ContentPage>

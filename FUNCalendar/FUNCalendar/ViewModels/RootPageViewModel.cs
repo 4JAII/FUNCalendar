@@ -14,25 +14,25 @@ namespace FUNCalendar.ViewModels
             {
                 Title="Calendar",
                 PageName="CalendarPage",
-                Image=ImageSource.FromFile("CalendarIcon.png"),
+                Image=ImageSource.FromFile("icon_calendar.png"),
             },
             new MenuItem
             {
                 Title="ToDo",
                 PageName="ToDoListPage",
-                Image=ImageSource.FromFile("ToDoIcon.png"),
+                Image=ImageSource.FromFile("icon_todo.png"),
             },
             new MenuItem
             {
                 Title="WishList",
                 PageName="WishListPage",
-                Image=ImageSource.FromFile("WishListIcon.png"),
+                Image=ImageSource.FromFile("icon_wishList.png"),
             },
             new MenuItem
             {
                 Title="家計簿",
                 PageName="HouseHoldAccountsPage",
-                Image=ImageSource.FromFile("HouseHoldAccountsIcon.png"),
+                Image=ImageSource.FromFile("icon_houseHoldAccounts.png"),
             }
         };
 

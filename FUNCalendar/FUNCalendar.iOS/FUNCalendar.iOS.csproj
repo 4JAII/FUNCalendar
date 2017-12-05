@@ -156,6 +156,24 @@
     </Reference>
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icon_wishList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icon_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icon_calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icon_config.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icon_houseHoldAccounts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icon_todo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

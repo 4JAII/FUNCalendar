@@ -9,6 +9,7 @@ using Reactive.Bindings.Extensions;
 using Prism.Navigation;
 using Microsoft.Practices.Unity;
 using Prism.Services;
+using Xamarin.Forms;
 
 namespace FUNCalendar.ViewModels
 {
@@ -17,6 +18,7 @@ namespace FUNCalendar.ViewModels
         private IWishList _wishList;
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
+
         /* Picker用のソートアイテム */
         public WishListSortName[] SortNames { get; private set; }
         /* 表示用リスト */

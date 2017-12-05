@@ -35,27 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Services\IWishItem.cs" />
     <Compile Include="Services\IWishList.cs" />
     <Compile Include="Models\WishItem.cs" />
     <Compile Include="Models\WishList.cs" />
-=======
->>>>>>> feature/menu
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
-    <Compile Include="ViewModels\HouseHoldAccountsPageViewModel.cs" />
-    <Compile Include="ViewModels\MenuItem.cs" />
-    <Compile Include="ViewModels\MenuPageViewModel.cs" />
-<<<<<<< HEAD
-    <Compile Include="ViewModels\VMWishItem.cs" />
-    <Compile Include="ViewModels\WishListRegisterPageViewModel.cs" />
-    <Compile Include="ViewModels\WishListSortName.cs" />
-=======
     <Compile Include="Views\HouseHoldAccountsPage.xaml.cs">
       <DependentUpon>HouseHoldAccountsPage.xaml</DependentUpon>
     </Compile>
->>>>>>> feature/menu
+    <Compile Include="ViewModels\MenuItem.cs" />
+    <Compile Include="ViewModels\MenuPageViewModel.cs" />
+    <Compile Include="ViewModels\VMWishItem.cs" />
+    <Compile Include="ViewModels\WishListRegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\WishListSortName.cs" />
     <Compile Include="Views\ToDoListPage.xaml.cs">
       <DependentUpon>ToDoListPage.xaml</DependentUpon>
     </Compile>
@@ -196,14 +189,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <EmbeddedResource Include="Views\WishListRegisterPage.xaml">
-=======
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\icon_add.png" />
+    <EmbeddedResource Include="Resources\icon_calendar.png" />
+    <EmbeddedResource Include="Resources\icon_config.png" />
+    <EmbeddedResource Include="Resources\icon_houseHoldAccounts.png" />
+    <EmbeddedResource Include="Resources\icon_todo.png" />
+    <EmbeddedResource Include="Resources\icon_wishList.png" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\HouseHoldAccountsPage.xaml">
->>>>>>> feature/menu
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

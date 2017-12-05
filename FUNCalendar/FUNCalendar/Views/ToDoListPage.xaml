@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-<<<<<<< HEAD
              x:Class="FUNCalendar.Views.ToDoListPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"/>
+    </ContentPage.ToolbarItems>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition  Height="10" />
@@ -40,15 +43,4 @@
                 Grid.Row="3"
                 Grid.ColumnSpan="3"/>
     </Grid>
-=======
-             x:Class="FUNCalendar.Views.ToDoListPage"
-             Title="ToDo">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Reload"
-                     Icon ="SyncIcon.png"/>
-        <ToolbarItem Text="Add"
-                     Icon="AddIcon.png"/>
-    </ContentPage.ToolbarItems>
-  
->>>>>>> feature/menu
 </ContentPage>
