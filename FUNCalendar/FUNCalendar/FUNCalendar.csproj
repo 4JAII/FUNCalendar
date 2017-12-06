@@ -35,6 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\HouseHoldAccountItem.cs" />
+    <Compile Include="Models\HouseHoldAccounts.cs" />
     <Compile Include="Services\IWishItem.cs" />
     <Compile Include="Services\IWishList.cs" />
     <Compile Include="Models\WishItem.cs" />
