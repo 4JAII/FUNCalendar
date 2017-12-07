@@ -189,20 +189,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\WishListRegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\icon_add.png" />
-    <EmbeddedResource Include="Resources\icon_calendar.png" />
-    <EmbeddedResource Include="Resources\icon_config.png" />
-    <EmbeddedResource Include="Resources\icon_houseHoldAccounts.png" />
-    <EmbeddedResource Include="Resources\icon_todo.png" />
-    <EmbeddedResource Include="Resources\icon_wishList.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\HouseHoldAccountsPage.xaml">

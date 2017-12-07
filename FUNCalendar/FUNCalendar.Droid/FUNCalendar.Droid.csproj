@@ -134,7 +134,9 @@
     <AndroidResource Include="Resources\layout\tabs.xml" />
     <AndroidResource Include="Resources\layout\toolbar.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
-    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\styles.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\values-v21\styles.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -147,22 +149,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_wishList.png" />
+    <AndroidResource Include="Resources\drawable\icon_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_add.png" />
+    <AndroidResource Include="Resources\drawable\icon_calendar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_calendar.png" />
+    <AndroidResource Include="Resources\drawable\icon_config.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_config.png" />
+    <AndroidResource Include="Resources\drawable\icon_houseHoldAccounts.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_houseHoldAccounts.png" />
+    <AndroidResource Include="Resources\drawable\icon_todo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_todo.png" />
+    <AndroidResource Include="Resources\drawable\icon_wishList.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

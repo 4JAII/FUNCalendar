@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar", "FunCalendar\FunCalendar\FUNCalendar.csproj", "{71A1EA7A-3FC5-47E0-A9EE-C149A5EDC05B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar", "FUNCalendar\FUNCalendar\FUNCalendar.csproj", "{71A1EA7A-3FC5-47E0-A9EE-C149A5EDC05B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar.Droid", "FunCalendar\FunCalendar.Droid\FUNCalendar.Droid.csproj", "{918DBC9C-5377-4513-9715-C3594D0B0DD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar.Droid", "FUNCalendar\FUNCalendar.Droid\FUNCalendar.Droid.csproj", "{918DBC9C-5377-4513-9715-C3594D0B0DD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar.iOS", "FunCalendar\FunCalendar.iOS\FUNCalendar.iOS.csproj", "{9073F835-1150-434A-A1AC-8464C9287011}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar.iOS", "FUNCalendar\FUNCalendar.iOS\FUNCalendar.iOS.csproj", "{9073F835-1150-434A-A1AC-8464C9287011}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar.UWP", "FunCalendar\FunCalendar.UWP\FUNCalendar.UWP.csproj", "{3B7E05EE-335A-412E-83AD-0E5503647EE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar.UWP", "FUNCalendar\FUNCalendar.UWP\FUNCalendar.UWP.csproj", "{3B7E05EE-335A-412E-83AD-0E5503647EE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
