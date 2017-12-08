@@ -36,22 +36,25 @@ namespace FUNCalendar.ViewModels
         /* 画面遷移用 */
         public AsyncReactiveCommand NavigationRegisterPageCommand { get; private set; }
         /* 削除用 */
-        public AsyncReactiveCommand<object> DeleteWishItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> DeleteWishItemCommand { get; private set; } = new ReactiveCommand();
         /* 編集用 */
-        public AsyncReactiveCommand<object> EditWishItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> EditWishItemCommand { get; private set; } = new ReactiveCommand();
         /* 購読解除用 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
- 
 
-        public WishListPageViewModel(IWishList wishList,INavigationService navigationService,IPageDialogService pageDialogService)
+        private LocalStorage localStorage = new LocalStorage();
+
+
+        public WishListPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._wishList = wishList;
+            
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
             NavigationRegisterPageCommand = new AsyncReactiveCommand();
             SelectedSortName = new ReactiveProperty<WishListSortName>();
-
+        
             /* WishItemをVMWishItemに変換しつつReactiveCollection化 */
             DisplayWishList = _wishList.SortedWishList.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(disposable);
             SortNames = new[]{ /* Pickerのアイテムセット */
@@ -89,7 +92,12 @@ namespace FUNCalendar.ViewModels
             DeleteWishItemCommand.Subscribe(async(obj)=>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
-                if (result) _wishList.Remove(VMWishItem.ToWishItem(obj as VMWishItem));
+                if (result)
+                {
+                    var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
+                    _wishList.Remove(wishItem);
+                    await localStorage.DeleteItem(wishItem);
+                }
             });
 
             /*画面遷移設定*/

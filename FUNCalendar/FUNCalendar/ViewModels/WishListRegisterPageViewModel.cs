@@ -15,20 +15,21 @@ using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Prism.Navigation;
 using System.Text.RegularExpressions;
+using System.Reactive.Disposables;
 
 namespace FUNCalendar.ViewModels
 {
-	public class WishListRegisterPageViewModel : BindableBase,INavigationAware
-	{
+    public class WishListRegisterPageViewModel : BindableBase, INavigationAware
+    {
         private IWishList _wishList;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
 
         /* WishItem登録用 */
         public int ID { get; private set; } = -1;
-        [Required(ErrorMessage = "商品名がありません")]
+        [Required(ErrorMessage = "商品名がありません"),StringLength(32)]
         public ReactiveProperty<string> Name { get; private set; } = new ReactiveProperty<string>();
-        [Required(ErrorMessage = "値段がありません")]
+        [Required(ErrorMessage = "値段がありません"),StringLength(9)]
         [RegularExpression("[0-9]+")]
         public ReactiveProperty<string> Price { get; private set; } = new ReactiveProperty<string>();
         [Required(ErrorMessage = "日付がありません")]
@@ -43,9 +44,16 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
-  
-        public WishListRegisterPageViewModel(IWishList wishList,INavigationService navigationService,IPageDialogService pageDialogService)
+        /* データベース用 */
+        private LocalStorage localStorage;
+
+        /* 廃棄 */
+        private CompositeDisposable disposable { get; } = new CompositeDisposable();
+
+        public WishListRegisterPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
         {
+            localStorage = new LocalStorage();
+
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._wishList = wishList;
             this._navigationService = navigationService;
@@ -69,18 +77,24 @@ namespace FUNCalendar.ViewModels
 
             /* 登録して遷移 */
             RegisterWishItemCommand = CanRegister.ToAsyncReactiveCommand();
-            RegisterWishItemCommand.Subscribe(async ()=> 
+            RegisterWishItemCommand.Subscribe(async () =>
             {
                 if (ID != -1)
                 {
                     var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought);
-                    _wishList.EditWishItem(_wishList.DisplayWishItem, VMWishItem.ToWishItem(vmWishItem));
-                 }
+                    var wishItem = VMWishItem.ToWishItem(vmWishItem);
+                    await localStorage.EditItem(wishItem);
+                    _wishList.EditWishItem(_wishList.DisplayWishItem, wishItem);
+
+                }
                 else
                 {
-                    _wishList.AddWishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false, false);
+                    var wishItem = new WishItem { Name = this.Name.Value, Price = int.Parse(this.Price.Value), Date = Date.Value, IsBought = false };
+                    await localStorage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false));
+                    wishItem.ID = localStorage.LastAddedWishItemID;
+                    _wishList.AddWishItem(wishItem);
                 }
-                await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");   
+                await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
             });
 
             /* 登録をキャンセルして遷移(確認もあるよ)  */
@@ -88,7 +102,7 @@ namespace FUNCalendar.ViewModels
             CancelCommand.Subscribe(async () =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");
-                if(result) await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
+                if (result) await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
             });
 
             /* 登録できるなら水色,エラーなら灰色 */
@@ -100,7 +114,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-            
+
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
@@ -111,14 +125,14 @@ namespace FUNCalendar.ViewModels
             Regex re = new Regex(@"[^0-9]");
             ID = vmWishItem.ID;
             Name.Value = vmWishItem.Name;
-            Price.Value = re.Replace(vmWishItem.Price,"");
+            Price.Value = re.Replace(vmWishItem.Price, "");
             Date.Value = _wishList.DisplayWishItem.Date;
             isBought = vmWishItem.IsBought;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
-            
+
         }
     }
 }

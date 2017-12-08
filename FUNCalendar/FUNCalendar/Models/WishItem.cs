@@ -1,8 +1,10 @@
 ﻿using System;
 using Prism.Mvvm;
+using SQLite;
 
 namespace FUNCalendar.Models
 {
+    [Table("WishItem")]
    public  class WishItem:BindableBase,IWishItem
     {
         /*プロパティ用変数定義*/
@@ -13,12 +15,13 @@ namespace FUNCalendar.Models
         private bool _isBought;
 
         /*プロパティ定義(変更通知機能あり)*/
+        [PrimaryKey,AutoIncrement]
         public int ID
         {
             get { return this._id; }
             set { this.SetProperty(ref this._id, value); }
         }
-
+        [MaxLength(32)]
         public string Name
         {
             get { return this._name; }
@@ -30,7 +33,7 @@ namespace FUNCalendar.Models
             get { return this._price; }
             set { this.SetProperty(ref this._price, value); }
         }
-
+      
         public DateTime Date
         {
             get { return this._date; }
@@ -44,6 +47,8 @@ namespace FUNCalendar.Models
         }
 
         /*コンストラクタ*/
+        public WishItem() { }
+
         public WishItem(int id,string name,int price,DateTime date,bool isBought)
         {
             ID = id;
@@ -55,6 +60,7 @@ namespace FUNCalendar.Models
 
         public WishItem(string name,int price,DateTime date,bool isBought)
         {
+            ID = 0;
             Name = name;
             Price = price;
             Date = date;
