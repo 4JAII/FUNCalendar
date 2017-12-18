@@ -13,7 +13,6 @@ namespace FUNCalendar.Models
         ObservableCollection<WishItem> SortedWishList { get; }
         WishItem DisplayWishItem { get; set; }
         bool IsAscending { get; set; }
-        int IDCount { get; }
         void SortByID();
         void SortByName();
         void SortByPrice();

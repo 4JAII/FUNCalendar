@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Prism.Mvvm;
 using Xamarin.Forms;
-using FUNCalendar.Models;
 using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
@@ -13,9 +12,6 @@ namespace FUNCalendar.Models
     {
         private List<WishItem> allWishList;
         private Func<WishItem, WishItem, int> selectedSortMethod;
-
-        private static int idCount;
-        public int IDCount { get { return idCount; } private set { idCount = value; } }
         public ObservableCollection<WishItem> SortedWishList { get; private set; }
         public WishItem DisplayWishItem { get; set; }
 

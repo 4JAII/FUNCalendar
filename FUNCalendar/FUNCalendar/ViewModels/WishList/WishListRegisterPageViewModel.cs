@@ -27,13 +27,14 @@ namespace FUNCalendar.ViewModels
 
         /* WishItem登録用 */
         public int ID { get; private set; } = -1;
-        [Required(ErrorMessage = "商品名がありません"),StringLength(32)]
+        [Required(ErrorMessage = "商品名がありません"), StringLength(32)]
         public ReactiveProperty<string> Name { get; private set; } = new ReactiveProperty<string>();
-        [Required(ErrorMessage = "値段がありません"),StringLength(9)]
+        [Required(ErrorMessage = "値段がありません"), StringLength(9)]
         [RegularExpression("[0-9]+")]
         public ReactiveProperty<string> Price { get; private set; } = new ReactiveProperty<string>();
         [Required(ErrorMessage = "日付がありません")]
         public ReactiveProperty<DateTime> Date { get; private set; } = new ReactiveProperty<DateTime>();
+        public bool NeedsAdd { get; set; } = false;
         private string isBought;
 
         /* 登録・キャンセルするときの処理用 */
@@ -84,13 +85,23 @@ namespace FUNCalendar.ViewModels
                     var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought);
                     var wishItem = VMWishItem.ToWishItem(vmWishItem);
                     await localStorage.EditItem(wishItem);
+                    if (NeedsAdd)
+                    {
+                        /* wishItemをToDoItemに変換してadd処理 
+                         * localStorage.AddItem(todoItem);*/
+                    }
                     _wishList.EditWishItem(_wishList.DisplayWishItem, wishItem);
 
                 }
                 else
                 {
+                    if (NeedsAdd)
+                    {
+                        /* wishItemをToDoItemに変換してadd処理 
+                         * localStorage.AddItem(todoItem);*/
+                    }
                     var wishItem = new WishItem { Name = this.Name.Value, Price = int.Parse(this.Price.Value), Date = Date.Value, IsBought = false };
-                    await localStorage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false));
+                    await localStorage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
                     wishItem.ID = localStorage.LastAddedWishItemID;
                     _wishList.AddWishItem(wishItem);
                 }

@@ -35,13 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Models\Configuration.cs" />
-    <Compile Include="Models\FileReadWriteService.cs" />
-    <Compile Include="Models\LocalStorage.cs" />
-    <Compile Include="Services\IWishItem.cs" />
+    <Compile Include="Models\Others\Configuration.cs" />
+    <Compile Include="Models\Others\FileReadWriteService.cs" />
+    <Compile Include="Models\Others\LocalStorage.cs" />
+    <Compile Include="Services\IStorageService.cs" />
     <Compile Include="Services\IWishList.cs" />
-    <Compile Include="Models\WishItem.cs" />
-    <Compile Include="Models\WishList.cs" />
+    <Compile Include="Models\WishList\WishItem.cs" />
+    <Compile Include="Models\WishList\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
     <Compile Include="Views\HouseHoldAccountsPage.xaml.cs">
@@ -49,14 +49,14 @@
     </Compile>
     <Compile Include="ViewModels\MenuItem.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
-    <Compile Include="ViewModels\VMWishItem.cs" />
-    <Compile Include="ViewModels\WishListRegisterPageViewModel.cs" />
-    <Compile Include="ViewModels\WishListSortName.cs" />
+    <Compile Include="ViewModels\WishList\VMWishItem.cs" />
+    <Compile Include="ViewModels\WishList\WishListRegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\WishList\WishListSortName.cs" />
     <Compile Include="Views\ToDoListPage.xaml.cs">
       <DependentUpon>ToDoListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ToDoListPageViewModel.cs" />
-    <Compile Include="ViewModels\WishListPageViewModel.cs" />
+    <Compile Include="ViewModels\WishList\WishListPageViewModel.cs" />
     <Compile Include="Views\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
     </Compile>
