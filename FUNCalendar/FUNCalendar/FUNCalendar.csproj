@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\Householdaccounts\HouseholdaccountBalanceITem.cs" />
     <Compile Include="Models\Householdaccounts\HouseholdaccountHeaders.cs" />
     <Compile Include="Models\Householdaccounts\HouseHoldAccountItem.cs" />
     <Compile Include="Models\Householdaccounts\HouseholdaccountPieSliceItem.cs" />

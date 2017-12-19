@@ -117,16 +117,11 @@ namespace FUNCalendar.ViewModels
             CurrentBalance = String.Format("支出 : {0}", DisplayTotalOutgoing.Value);
             _plotmodel.Title = CurrentBalance;
 
-            // _plotmodel.InvalidatePlot(true);
-
-            /*
-            DisplaySlices.Clear();
-            DisplaySlices.AddRange(Slices.Where(x => x.Price > 0).Select(x => new PieSlice(x.Label, x.Price) { Fill = OxyColor.Parse(x.ColorPath) }));
-            */
-
             /* plotmodelにsliceを追加 */
             pieseries.Slices = DisplaySlices;
             this._plotmodel.Series.Add(pieseries);
+            UpdatePie();
+
 
             /* レンジが変更された時の処理 */
             SelectedRange.Subscribe(_ => 
@@ -135,7 +130,6 @@ namespace FUNCalendar.ViewModels
                     _householdaccouts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
                     _householdaccouts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
                     CurrentBalance = BalanceTypeToTitleString(CurrentBalanceType);
-                    PieUpdate();
                 }
             })
             .AddTo(disposable);
@@ -147,7 +141,6 @@ namespace FUNCalendar.ViewModels
                     _householdaccouts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
                     _householdaccouts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
                     CurrentBalance = BalanceTypeToTitleString(CurrentBalanceType);
-                    PieUpdate();
                 }
             })
             .AddTo(disposable);
@@ -158,7 +151,6 @@ namespace FUNCalendar.ViewModels
                 CurrentBalanceType = Balancetype.incomes;
                 CurrentBalance = BalanceTypeToTitleString(CurrentBalanceType);
                 _householdaccouts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
-                PieUpdate();
             })
             .AddTo(disposable);
 
@@ -168,7 +160,6 @@ namespace FUNCalendar.ViewModels
                 CurrentBalanceType = Balancetype.outgoings;
                 CurrentBalance = BalanceTypeToTitleString(CurrentBalanceType);
                 _householdaccouts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
-                PieUpdate();
             })
             .AddTo(disposable);
 
@@ -178,7 +169,6 @@ namespace FUNCalendar.ViewModels
                 CurrentBalanceType = Balancetype.difference;
                 CurrentBalance = BalanceTypeToTitleString(CurrentBalanceType);
                 _householdaccouts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
-                PieUpdate();
             })
             .AddTo(disposable);
 
@@ -194,8 +184,9 @@ namespace FUNCalendar.ViewModels
                 _householdaccouts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
                 _householdaccouts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
                 CurrentBalance = BalanceTypeToTitleString(CurrentBalanceType);
-                PieUpdate();
             }).AddTo(disposable);
+
+            Slices.CollectionChangedAsObservable().Subscribe(_ => { UpdatePie(); });
         }
 
         /* 購読解除 */
@@ -205,17 +196,12 @@ namespace FUNCalendar.ViewModels
         }
 
         /* グラフの更新 */
-        private void PieUpdate()
+        private void UpdatePie()
         {
             DisplaySlices.Clear();
             DisplaySlices.AddRange(Slices.Where(x => x.Price > 0).Select(x => new PieSlice(null, x.Price) { Fill = OxyColor.Parse(x.ColorPath) }));
-            // pieseries.Slices = DisplaySlices;
-            // _plotmodel.Series.Add(pieseries);
             _plotmodel.Title = CurrentBalance;
             DisplayPlotModel = _plotmodel;
-            DisplayPlotModel.InvalidatePlot(true);
-            DisplayPlotModel.InvalidatePlot(true);
-            DisplayPlotModel.InvalidatePlot(true);
             DisplayPlotModel.InvalidatePlot(true);
         }
 

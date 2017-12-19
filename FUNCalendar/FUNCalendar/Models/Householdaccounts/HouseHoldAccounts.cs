@@ -26,7 +26,7 @@ namespace FUNCalendar.Models
         private string _settotaloutgoing;
         private string _setdifference;
         public ObservableCollection<HouseholdaccountScStatisticsItem> SetSIncomes { get; private set; }       //各概略カテゴリーの収入の合計値を格納
-        public ObservableCollection<HouseholdaccountScStatisticsItem> SetSOutgoings { get; private set;}         //各概略カテゴリーの支出の合計値を格納
+        public ObservableCollection<HouseholdaccountScStatisticsItem> SetSOutgoings { get; private set; }         //各概略カテゴリーの支出の合計値を格納
 
         /* グラフ */
         public ObservableCollection<HouseholdaccountPieSliceItem> SetPieSlice { get; private set; }
@@ -39,9 +39,46 @@ namespace FUNCalendar.Models
         public ObservableCollection<HouseHoldAccountsItem> DisplayHouseHoldAccountsList { get; private set; }
         */
 
+        /* 残高画面 */
+        public ObservableCollection<HouseholdaccountBalanceITem> SetBalances { get; private set; } = new ObservableCollection<HouseholdaccountBalanceITem>()
+        {
+                new HouseholdaccountBalanceITem
+                {
+                    St = StorageTypes.財布,
+                    Price = 0,
+                    //Image = Imagesource.FromFile(".png")
+                },
+                new HouseholdaccountBalanceITem
+                {
+                    St = StorageTypes.クレジットカード,
+                    Price = 0,
+                    //Image = Imagesource.FromFile(".png")
+                },
+                new HouseholdaccountBalanceITem
+                {
+                    St = StorageTypes.貯金,
+                    Price = 0,
+                    //Image = Imagesource.FromFile(".png")
+                },
+                new HouseholdaccountBalanceITem
+                {
+                    St = StorageTypes.銀行,
+                    Price = 0,
+                    //Image = Imagesource.FromFile(".png")
+                },
+                new HouseholdaccountBalanceITem
+                {
+                    St = StorageTypes.その他,
+                    Price = 0,
+                    //Image = Imagesource.FromFile(".png")
+                }
+        };
+        public int TotalBalance { get; private set; }
+
+
         public string SetTotalIncome
         {
-            get { return this._settotalincome;}
+            get { return this._settotalincome; }
             set { this.SetProperty(ref this._settotalincome, value); }
         }
         public string SetTotalOutgoing
@@ -62,17 +99,17 @@ namespace FUNCalendar.Models
             SetSOutgoings = new ObservableCollection<HouseholdaccountScStatisticsItem>();
             SetPieSlice = new ObservableCollection<HouseholdaccountPieSliceItem>();
 
-    }
+        }
 
-    public void AddHouseHoldAccountsItem(string name, int count, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
+        public void AddHouseHoldAccountsItem(string name, int count, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
-            HouseHoldAccountsItem item = new HouseHoldAccountsItem(IDCount,name,count,price,date,detailcategory,summarycategory,storagetype,isoutgoings);
+            HouseHoldAccountsItem item = new HouseHoldAccountsItem(IDCount, name, count, price, date, detailcategory, summarycategory, storagetype, isoutgoings);
             IDCount++;
             allHouseHoldAccounts.Add(item);
         }
 
         /* 全体の支出・収入の合計を計算 */
-        public int CalucAllBalance(Range r,DateTime date,bool isOutgoings)
+        public int CalucAllBalance(Range r, DateTime date, bool isOutgoings)
         {
             int sum = 0;
             switch (r)
@@ -107,13 +144,13 @@ namespace FUNCalendar.Models
 
 
         /* 全体の差分を計算 */
-        public int CalucAllDifference(Range r,DateTime date)
+        public int CalucAllDifference(Range r, DateTime date)
         {
-            return CalucAllBalance(r,date,false) - CalucAllBalance(r,date,true);
+            return CalucAllBalance(r, date, false) - CalucAllBalance(r, date, true);
         }
 
         /* 概略カテゴリーごとの合計を計算 */
-        public int CalucSCategory(Range r,SCategorys sc,DateTime date)
+        public int CalucSCategory(Range r, SCategorys sc, DateTime date)
         {
             int sum = 0;
 
@@ -124,7 +161,7 @@ namespace FUNCalendar.Models
                 case Range.Day:
                     foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
                     {
-                        if (n.Date == date && (int)n.DetailCategory > StartPoint && (int)n.DetailCategory<EndPoint)
+                        if (n.Date == date && (int)n.DetailCategory > StartPoint && (int)n.DetailCategory < EndPoint)
                             sum += n.Price;
                     }
                     break;
@@ -157,7 +194,8 @@ namespace FUNCalendar.Models
             int Total, Stotal;
             Stotal = CalucSCategory(r, sc, date);
             Total = CalucAllBalance(r, date, isOutgoings);
-            if (Total > 0){
+            if (Total > 0)
+            {
                 ratio = 100 * Stotal / Total;
                 remain = 100 * Stotal % Total;
                 if (remain >= 0.5 * Total)
@@ -170,9 +208,9 @@ namespace FUNCalendar.Models
             }
             return ratio;
         }
-        
+
         /* 詳細カテゴリーごとの合計を計算 */
-        public int CalucDCategory(Range r, DCategorys dc,DateTime date)
+        public int CalucDCategory(Range r, DCategorys dc, DateTime date)
         {
             int sum = 0;
             switch (r)
@@ -206,8 +244,8 @@ namespace FUNCalendar.Models
 
         }
 
-         /* 詳細カテゴリーごとの割合を計算 */
-         public int CalucDCategoryRatio(Range r, DCategorys dc, DateTime date)
+        /* 詳細カテゴリーごとの割合を計算 */
+        public int CalucDCategoryRatio(Range r, DCategorys dc, DateTime date)
         {
             int ratio, scnum;
             double remain;
@@ -233,18 +271,18 @@ namespace FUNCalendar.Models
         }
 
         /* 全体の統計を表示するためのメソッド(main page) */
-        public void SetAllStatics(Range r,DateTime date)
+        public void SetAllStatics(Range r, DateTime date)
         {
             HouseholdaccountScStatisticsItem item;
             int price, ratio;
             SetSIncomes.Clear();
             SetSOutgoings.Clear();
 
-            SetTotalIncome = String.Format("{0}円" ,CalucAllBalance(r, date, false));
-            SetTotalOutgoing = String.Format("{0}円",CalucAllBalance(r, date, true));
-            SetDifference = String.Format("{0}円",CalucAllDifference(r, date));
+            SetTotalIncome = String.Format("{0}円", CalucAllBalance(r, date, false));
+            SetTotalOutgoing = String.Format("{0}円", CalucAllBalance(r, date, true));
+            SetDifference = String.Format("{0}円", CalucAllDifference(r, date));
 
-            for (int i= (int)SCategorys.start_of_収入 + 1; i < (int)SCategorys.end_of_収入; i++)
+            for (int i = (int)SCategorys.start_of_収入 + 1; i < (int)SCategorys.end_of_収入; i++)
             {
                 price = CalucSCategory(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date);
                 ratio = CalucSCategoryRatio(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date, false);
@@ -253,11 +291,11 @@ namespace FUNCalendar.Models
                 SetSIncomes.Add(item);
             }
 
-            for(int i = (int)SCategorys.start_of_支出+1; i < (int)SCategorys.end_of_支出; i++)
+            for (int i = (int)SCategorys.start_of_支出 + 1; i < (int)SCategorys.end_of_支出; i++)
             {
                 price = CalucSCategory(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date);
                 ratio = CalucSCategoryRatio(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date, true);
-                item = new HouseholdaccountScStatisticsItem(Balancetype.outgoings, (SCategorys)Enum.ToObject(typeof(SCategorys),i), price, ratio);
+                item = new HouseholdaccountScStatisticsItem(Balancetype.outgoings, (SCategorys)Enum.ToObject(typeof(SCategorys), i), price, ratio);
                 SetSOutgoings.Add(item);
             }
         }
@@ -400,6 +438,36 @@ namespace FUNCalendar.Models
             }
         }
         */
+
+        /* 残高を編集するメソッド */
+        public void EditHouseholdaccountBalance(StorageTypes st, int price)
+        {
+            foreach (HouseholdaccountBalanceITem n in SetBalances)
+            {
+                if (n.St == st)
+                    n.Price = price;
+            }
+        }
+
+        /* 残高の増減を行うメソッド */
+        public void IncrementBalancePrice(StorageTypes st, int price)
+        {
+            foreach (HouseholdaccountBalanceITem n in SetBalances)
+            {
+                if (n.St == st)
+                    n.Price += price;
+            }
+        }
+
+        /* 残高を表示するためのメソッド(実質合計残高を求めるだけ) */
+        public void SetBalamce()
+        {
+            int sum = 0;
+            foreach (HouseholdaccountBalanceITem n in SetBalances)
+                sum += n.Price;
+            TotalBalance = sum;
+        }
+
         public void ScToDcRange(SCategorys sc)
         {
             switch (sc)
