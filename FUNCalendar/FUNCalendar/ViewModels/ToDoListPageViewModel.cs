@@ -1,12 +1,130 @@
 ﻿using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using FUNCalendar.Models;
+using Reactive.Bindings;
+using System.Reactive.Disposables;
+using Reactive.Bindings.Extensions;
+using Prism.Navigation;
+using Microsoft.Practices.Unity;
+using Prism.Services;
+using Xamarin.Forms;
 
 namespace FUNCalendar.ViewModels
 {
-    public class ToDoListPageViewModel : BindableBase
+    public class ToDoListPageViewModel : BindableBase, INavigationAware, IDisposable
     {
-        public ToDoListPageViewModel()
+        private IToDoList _todoList;
+        private IPageDialogService _pageDialogService;
+        private INavigationService _navigationService;
+
+        /* Picker用のソートアイテム */
+        public ToDoListSortName[] SortNames { get; private set; }
+        /* 表示用リスト */
+        public ReadOnlyReactiveCollection<VMToDoItem> DisplayToDoList { get; private set; }
+        /* 選ばれたのはこのソートでした */
+        public ReactiveProperty<ToDoListSortName> SelectedSortName { get; private set; }
+        /* 昇順降順関係 */
+        private string order = "昇順";
+        public string Order
+        {
+            get { return this.order; }
+            set { this.SetProperty(ref this.order, value); }
+        }
+        public ReactiveCommand OrderChangeCommand { get; private set; }
+        /* 画面遷移用 */
+        public AsyncReactiveCommand NavigationRegisterPageCommand { get; private set; }
+        /* 削除用 */
+        public AsyncReactiveCommand<object> DeleteToDoItemCommand { get; private set; } = new AsyncReactiveCommand();
+        /* 編集用 */
+        public AsyncReactiveCommand<object> EditToDoItemCommand { get; private set; } = new AsyncReactiveCommand();
+        /* 購読解除用 */
+        private CompositeDisposable disposable { get; } = new CompositeDisposable();
+
+
+        public ToDoListPageViewModel(IToDoList todoList, INavigationService navigationService, IPageDialogService pageDialogService)
+        {
+            this._todoList = todoList;
+            this._pageDialogService = pageDialogService;
+            this._navigationService = navigationService;
+            OrderChangeCommand = new ReactiveCommand();
+            NavigationRegisterPageCommand = new AsyncReactiveCommand();
+            SelectedSortName = new ReactiveProperty<ToDoListSortName>();
+
+            /* ToDoItemをVMToDoItemに変換しつつReactiveCollection化 */
+            DisplayToDoList = _todoList.SortedToDoList.ToReadOnlyReactiveCollection(x => new VMToDoItem(x)).AddTo(disposable);
+            SortNames = new[]{ /* Pickerのアイテムセット */
+                new ToDoListSortName
+                {
+                    SortName = "登録順",
+                    Sort = _todoList.SortByID
+                },
+                new ToDoListSortName
+                {
+                    SortName = "項目名順",
+                    Sort = _todoList.SortByName
+                },
+                new ToDoListSortName
+                {
+                    SortName = "予定日順",
+                    Sort = _todoList.SortByDate
+                },
+                new ToDoListSortName
+                {
+                    SortName = "優先度順",
+                    Sort = _todoList.SortByPriority
+                }
+            };
+            SelectedSortName.Value = SortNames[0];
+
+            /* 編集するものをセットして遷移 */
+            EditToDoItemCommand.Subscribe(async (obj) =>
+            {
+                _todoList.SetDisplayToDoItem(VMToDoItem.ToToDoItem(obj as VMToDoItem));
+                await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T");
+            });
+
+            /* 確認して消す */
+            DeleteToDoItemCommand.Subscribe(async (obj) =>
+            {
+                var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
+                if (result) _todoList.Remove(VMToDoItem.ToToDoItem(obj as VMToDoItem));
+            });
+
+            /*画面遷移設定*/
+            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage"));
+            /* 選ばれた並べ替え方法が変わったとき */
+            SelectedSortName.Subscribe(_ => { if (_ != null) SelectedSortName.Value.Sort(); }).AddTo(disposable);
+            /* 昇順降順が変わった時 */
+            OrderChangeCommand.Subscribe(() =>
+            {
+                _todoList.IsAscending = !_todoList.IsAscending;
+                Order = _todoList.IsAscending ? "昇順" : "降順";
+                SelectedSortName.Value.Sort();
+            }).AddTo(disposable);
+        }
+
+        public void OnNavigatedFrom(NavigationParameters parameters)
+        {
+            this.Dispose();
+        }
+
+        public void OnNavigatedTo(NavigationParameters parameters)
+        {
+            _todoList.IsAscending = true;
+
+        }
+
+        public void OnNavigatingTo(NavigationParameters parameters)
         {
 
         }
+
+        public void Dispose()
+        {
+            disposable.Dispose();
+        }
     }
+
 }

@@ -35,12 +35,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\ToDoItem.cs" />
+    <Compile Include="Models\ToDoList.cs" />
+    <Compile Include="Services\IToDoItem.cs" />
+    <Compile Include="Services\IToDoList.cs" />
     <Compile Include="Services\IWishItem.cs" />
     <Compile Include="Services\IWishList.cs" />
     <Compile Include="Models\WishItem.cs" />
     <Compile Include="Models\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
+    <Compile Include="ViewModels\ToDoListRegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\ToDoListSortName.cs" />
+    <Compile Include="ViewModels\VMToDoItem.cs" />
     <Compile Include="Views\HouseHoldAccountsPage.xaml.cs">
       <DependentUpon>HouseHoldAccountsPage.xaml</DependentUpon>
     </Compile>
@@ -62,6 +69,9 @@
     </Compile>
     <Compile Include="Views\RootPage.xaml.cs">
       <DependentUpon>RootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ToDoListRegisterPage.xaml.cs">
+      <DependentUpon>ToDoListRegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WishListRegisterPage.xaml.cs">
       <DependentUpon>WishListRegisterPage.xaml</DependentUpon>
@@ -200,6 +210,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\HouseHoldAccountsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ToDoListRegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

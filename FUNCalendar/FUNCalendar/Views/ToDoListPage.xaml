@@ -3,44 +3,123 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="FUNCalendar.Views.ToDoListPage">
+             x:Class="FUNCalendar.Views.ToDoListPage"
+             x:Name="ToDoListPage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="ToDoList">
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
-                     Text="Add"/>
+                     Text="Add"
+                     Command="{Binding NavigationRegisterPageCommand}"/>
     </ContentPage.ToolbarItems>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition  Height="10" />
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition />
+            <RowDefinition  Height="*" />
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Text="ここにPicker"
-                HorizontalOptions="Center"
-                Grid.Row="1"
+
+        <Picker ItemsSource="{Binding SortNames}"
+                SelectedItem="{Binding SelectedSortName.Value}" 
+                ItemDisplayBinding="{Binding SortName}"
+                HorizontalOptions="EndAndExpand"
+                WidthRequest="200"
+                Grid.Row="0"
+                Grid.Column="1"/>
+        <Button Text="{Binding Order}"
+                Command="{Binding OrderChangeCommand}"
+                Grid.Row="0"
                 Grid.Column="2"/>
-        <!--
-        <ListView Grid.Row="3" Grid.ColumnSpan="3">
+
+        <ListView Grid.Row="1"
+                  Grid.ColumnSpan="3"
+                  ItemsSource="{Binding DisplayToDoList}"
+                  HorizontalOptions="CenterAndExpand"
+                  SeparatorVisibility="Default"
+                  HasUnevenRows="True">
+            <ListView.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <BoxView Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="3" BackgroundColor="#B1D781" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                    <BoxView Grid.ColumnSpan="9" Grid.Row="0" BackgroundColor="DarkGray" HeightRequest="1" VerticalOptions="StartAndExpand" HorizontalOptions="Fill"/>
+                    <BoxView Grid.Column="0" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="StartAndExpand"/>
+
+                    <Label Text="項目" FontAttributes="Bold" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" />
+                    <BoxView Grid.Column="2" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="Center"/>
+                    <Label Text="予定日" FontAttributes="Bold" Grid.Column="3" Grid.Row="1" HorizontalOptions="Center" />
+                    <BoxView Grid.Column="4" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="Center"/>
+                    <Label Text="優先度" FontAttributes="Bold" Grid.Column="5" Grid.Row="1" HorizontalOptions="Center"/>
+                    <BoxView Grid.Column="6" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="Center"/>
+                    <Label Text="完了" FontAttributes="Bold" Grid.Column="7" Grid.Row="1" HorizontalOptions="Center" />
+                    <BoxView Grid.Column="8" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="EndAndExpand"/>
+                    <BoxView Grid.ColumnSpan="9" Grid.Row="2" BackgroundColor="DarkGray" HeightRequest="1" VerticalOptions="EndAndExpand" HorizontalOptions="Fill"/>
+                </Grid>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal">
+                        <ViewCell.ContextActions>
+                            <!-- 長押しのやつ -->
+                            <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditToDoItemCommand, Source={x:Reference ToDoListPage}}" CommandParameter="{Binding .}"/>
+                            <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteToDoItemCommand, Source={x:Reference ToDoListPage}}" CommandParameter="{Binding .}"  />
+                        </ViewCell.ContextActions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        </StackLayout>
+                            <BoxView Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="3" BackgroundColor="#EEEEEE" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                            <BoxView Grid.Column="0" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="Start"/>
+                            <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
+                            <BoxView Grid.Column="2" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Date}" Grid.Column="3" Grid.Row="1" HorizontalOptions="Center"/>
+                            <BoxView Grid.Column="4" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Priority}" Grid.Column="5" Grid.Row="1" HorizontalOptions="Center"/>
+                            <BoxView Grid.Column="6" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="Center"/>
+                            <Label Text="{Binding IsCompleted}" Grid.Column="7" Grid.Row="1" HorizontalOptions="Center"/>
+                            <BoxView Grid.Column="8" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="End"/>
+                            <BoxView Grid.ColumnSpan="9" Grid.Row="2" BackgroundColor="DarkGray" HeightRequest="1" VerticalOptions="EndAndExpand" HorizontalOptions="Fill"/>
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        -->
-        <Label Text="******* ここにList ********"
-                HorizontalOptions="Center"
-                Grid.Row="3"
-                Grid.ColumnSpan="3"/>
     </Grid>
 </ContentPage>

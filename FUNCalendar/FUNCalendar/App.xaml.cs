@@ -27,10 +27,12 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<CalendarPage>();
             Container.RegisterTypeForNavigation<WishListPage>();
             Container.RegisterTypeForNavigation<ToDoListPage>();
+            Container.RegisterTypeForNavigation<ToDoListRegisterPage>();
             Container.RegisterTypeForNavigation<WishListRegisterPage>();
             Container.RegisterTypeForNavigation<HouseHoldAccountsPage>();
             /* 共有のインスタンスをDIコンテナに登録 */
             Container.RegisterType<IWishList,WishList>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IToDoList,ToDoList>(new ContainerControlledLifetimeManager());
         }
     }
 }
