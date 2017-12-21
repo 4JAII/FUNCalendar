@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="FUNCalendar.Views.WishListRegisterPage"
+             x:Class="FUNCalendar.Views.ToDoListRegisterPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="True"
-             Title="WishList画面登録">
+             Title="ToDoList画面登録">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,11 +27,11 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Text="購入予定日:" Grid.Row="1" Grid.Column="1" FontSize="Medium" HorizontalOptions="End" VerticalOptions="CenterAndExpand"/>
+        <Label Text="予定日:" Grid.Row="1" Grid.Column="1" FontSize="Medium" HorizontalOptions="End" VerticalOptions="CenterAndExpand"/>
         <DatePicker Date="{Binding Date.Value}" Grid.Row="1" Grid.Column="2" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
-        <Entry Text="{Binding Name.Value}" FontSize="Large" Placeholder="商品名を入力" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="値段を入力" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterWishItemCommand}" Grid.Row="7" Grid.Column="1" />
+        <Entry Text="{Binding Name.Value}" FontSize="Large" Placeholder="項目名を入力" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Entry Text="{Binding Priority.Value}" FontSize="Large" Placeholder="優先度を入力" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterToDoItemCommand}" Grid.Row="7" Grid.Column="1" />
         <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}" Grid.Row="7" Grid.Column="2" />
     </Grid>
 </ContentPage>

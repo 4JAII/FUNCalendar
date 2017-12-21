@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Prism.Mvvm;
 using Xamarin.Forms;
-using FUNCalendar.Models;
+using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
 {
 
-    public class WishList : BindableBase,IWishList
+    public class WishList : BindableBase, IWishList
     {
         private List<WishItem> allWishList;
         private Func<WishItem, WishItem, int> selectedSortMethod;
-        /* private データベース操作 変数 */
-        private static int idCount;
-        public int IDCount { get { return idCount; } private set { idCount = value; } }
         public ObservableCollection<WishItem> SortedWishList { get; private set; }
         public WishItem DisplayWishItem { get; set; }
 
@@ -26,22 +23,15 @@ namespace FUNCalendar.Models
             set { this.SetProperty(ref this.isAscending, value); }
         }
 
-        /* 
-        public WishList(List<WishItem> list)
-        {
-            allWishList = list;
-            SortedWishList = new ObservableCollection<WishItem>();
-            SortByID();
-        }
-        */
-       
+        private static bool isInitialized = false;
+
         public WishList()
         {
             SortedWishList = new ObservableCollection<WishItem>();
             allWishList = new List<WishItem>();
             selectedSortMethod = WishItem.CompareByID;
         }
-        
+
 
         /* リスト更新 */
         private void UpdateSortedList()
@@ -85,26 +75,17 @@ namespace FUNCalendar.Models
             selectedSortMethod = WishItem.CompareByDate;
             Sort();
         }
-
-        /* アイテム追加 */
-        public void AddWishItem(string name, int price, DateTime date, bool isBought, bool IsAddToDo)
+        public void InitializeList(List<WishItem> list)
         {
-            WishItem wishItem = new WishItem(IDCount, name, price, date, isBought);
-            IDCount++;
-            allWishList.Add(wishItem);
-            Sort();
-            /* データベースにIDCount allWishList 書き出し　コスト高めなら要検討 */
-            if (IsAddToDo)/* データベースにToDoデータAdd */
-            {
-                ;
-            }
+            if (isInitialized) return;
+            this.allWishList = list;
+            isInitialized = true;
         }
 
+        /* アイテム追加 */
         public void AddWishItem(WishItem wishItem)
         {
             allWishList.Add(wishItem);
-            IDCount++;
-            /* データベースにIDCount allWishList 書き出し　コスト高めなら要検討 */
             Sort();
         }
 
@@ -117,14 +98,14 @@ namespace FUNCalendar.Models
         /* アイテム削除 */
         public void Remove(WishItem wishItem)
         {
-            allWishList.RemoveAll(x=>x.ID==wishItem.ID);
+            allWishList.RemoveAll(x => x.ID == wishItem.ID);
             UpdateSortedList();
         }
 
         /* 特定のIDを持つアイテムを編集 */
-        public void EditWishItem(WishItem deleteWishItem,WishItem addWishItem)
+        public void EditWishItem(WishItem deleteWishItem, WishItem addWishItem)
         {
-            allWishList.RemoveAll((item) => item.ID == deleteWishItem.ID);
+            allWishList.RemoveAll(item => item.ID == deleteWishItem.ID);
             AddWishItem(addWishItem);
             Sort();
         }

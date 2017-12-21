@@ -35,10 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Services\IWishItem.cs" />
-    <Compile Include="Services\IWishList.cs" />
-    <Compile Include="Models\WishItem.cs" />
-    <Compile Include="Models\WishList.cs" />
+    <Compile Include="Models\Others\Configuration.cs" />
+    <Compile Include="Models\Others\FileReadWriteService.cs" />
+    <Compile Include="Models\Others\LocalStorage.cs" />
+    <Compile Include="Services\Others\IStorageService.cs" />
+    <Compile Include="Services\WishList\IWishList.cs" />
+    <Compile Include="Models\WishList\WishItem.cs" />
+    <Compile Include="Models\WishList\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
     <Compile Include="Views\HouseHoldAccountsPage.xaml.cs">
@@ -46,14 +49,14 @@
     </Compile>
     <Compile Include="ViewModels\MenuItem.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
-    <Compile Include="ViewModels\VMWishItem.cs" />
-    <Compile Include="ViewModels\WishListRegisterPageViewModel.cs" />
-    <Compile Include="ViewModels\WishListSortName.cs" />
+    <Compile Include="ViewModels\WishList\VMWishItem.cs" />
+    <Compile Include="ViewModels\WishList\WishListRegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\WishList\WishListSortName.cs" />
     <Compile Include="Views\ToDoListPage.xaml.cs">
       <DependentUpon>ToDoListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ToDoListPageViewModel.cs" />
-    <Compile Include="ViewModels\WishListPageViewModel.cs" />
+    <Compile Include="ViewModels\WishList\WishListPageViewModel.cs" />
     <Compile Include="Views\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
     </Compile>
@@ -63,10 +66,10 @@
     <Compile Include="Views\RootPage.xaml.cs">
       <DependentUpon>RootPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WishListRegisterPage.xaml.cs">
+    <Compile Include="Views\WishList\WishListRegisterPage.xaml.cs">
       <DependentUpon>WishListRegisterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WishListPage.xaml.cs">
+    <Compile Include="Views\WishList\WishListPage.xaml.cs">
       <DependentUpon>WishListPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -83,6 +86,9 @@
     <Compile Include="ViewModels\RootPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FubarCoder.RestSharp.Portable.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=be81bb0f53eab22f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FubarCoder.RestSharp.Portable.Core.4.0.8\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -116,8 +122,8 @@
     <Reference Include="ReactiveProperty, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ReactiveProperty.3.6.0\lib\portable-net45+win81+MonoTouch+MonoAndroid\ReactiveProperty.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite-net, Version=1.4.118.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\sqlite-net-pcl.1.4.118\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+    <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sqlite-net-pcl.1.3.3\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.5\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
@@ -176,7 +182,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\WishListPage.xaml">
+    <EmbeddedResource Include="Views\WishList\WishListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -192,7 +198,7 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\WishListRegisterPage.xaml">
+    <EmbeddedResource Include="Views\WishList\WishListRegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

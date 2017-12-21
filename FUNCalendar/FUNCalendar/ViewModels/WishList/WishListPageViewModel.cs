@@ -13,7 +13,7 @@ using Xamarin.Forms;
 
 namespace FUNCalendar.ViewModels
 {
-    public class WishListPageViewModel : BindableBase,INavigationAware,IDisposable
+    public class WishListPageViewModel : BindableBase, INavigationAware, IDisposable
     {
         private IWishList _wishList;
         private IPageDialogService _pageDialogService;
@@ -36,16 +36,19 @@ namespace FUNCalendar.ViewModels
         /* 画面遷移用 */
         public AsyncReactiveCommand NavigationRegisterPageCommand { get; private set; }
         /* 削除用 */
-        public AsyncReactiveCommand<object> DeleteWishItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> DeleteWishItemCommand { get; private set; } = new ReactiveCommand();
         /* 編集用 */
-        public AsyncReactiveCommand<object> EditWishItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> EditWishItemCommand { get; private set; } = new ReactiveCommand();
         /* 購読解除用 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
- 
 
-        public WishListPageViewModel(IWishList wishList,INavigationService navigationService,IPageDialogService pageDialogService)
+        private LocalStorage localStorage = new LocalStorage();
+
+
+        public WishListPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._wishList = wishList;
+
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
@@ -79,21 +82,26 @@ namespace FUNCalendar.ViewModels
             SelectedSortName.Value = SortNames[0];
 
             /* 編集するものをセットして遷移 */
-            EditWishItemCommand.Subscribe(async (obj) => 
+            EditWishItemCommand.Subscribe(async (obj) =>
             {
                 _wishList.SetDisplayWishItem(VMWishItem.ToWishItem(obj as VMWishItem));
                 await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
             });
-   
+
             /* 確認して消す */
-            DeleteWishItemCommand.Subscribe(async(obj)=>
+            DeleteWishItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
-                if (result) _wishList.Remove(VMWishItem.ToWishItem(obj as VMWishItem));
+                if (result)
+                {
+                    var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
+                    _wishList.Remove(wishItem);
+                    await localStorage.DeleteItem(wishItem);
+                }
             });
 
             /*画面遷移設定*/
-            NavigationRegisterPageCommand.Subscribe(async()=>await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage"));
+            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage"));
             /* 選ばれた並べ替え方法が変わったとき */
             SelectedSortName.Subscribe(_ => { if (_ != null) SelectedSortName.Value.Sort(); }).AddTo(disposable);
             /* 昇順降順が変わった時 */
