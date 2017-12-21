@@ -36,6 +36,7 @@ namespace FUNCalendar.ViewModels
         public ReactiveProperty<DateTime> Date { get; private set; } = new ReactiveProperty<DateTime>();
         public bool NeedsAdd { get; set; } = false;
         private string isBought;
+        private int todoID;
 
         /* 登録・キャンセルするときの処理用 */
         public ReactiveProperty<bool> CanRegister { get; private set; }
@@ -82,7 +83,7 @@ namespace FUNCalendar.ViewModels
             {
                 if (ID != -1)
                 {
-                    var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought);
+                    var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought, todoID);
                     var wishItem = VMWishItem.ToWishItem(vmWishItem);
                     await localStorage.EditItem(wishItem);
                     if (NeedsAdd)
@@ -139,6 +140,7 @@ namespace FUNCalendar.ViewModels
             Price.Value = re.Replace(vmWishItem.Price, "");
             Date.Value = _wishList.DisplayWishItem.Date;
             isBought = vmWishItem.IsBought;
+            todoID = vmWishItem.ToDoID;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

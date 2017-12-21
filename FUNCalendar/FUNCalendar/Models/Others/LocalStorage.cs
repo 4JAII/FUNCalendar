@@ -43,7 +43,9 @@ namespace FUNCalendar.Models
                 file = await fileReadWriteService.ReadFileAsync(databaseFileName);
                 connection = new SQLiteAsyncConnection(file.Path);
                 await connection.CreateTableAsync<WishItem>();
-                /* 他のアイテムも追加 */
+              /*await connection.CreateTableAsync<ToDoItem>();   
+                await connection.CreateTableAsync<HouseHoldAccountsItem>();
+                */
 
             }
             file = await fileReadWriteService.ReadFileAsync(databaseFileName);
