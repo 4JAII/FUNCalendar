@@ -27,8 +27,7 @@ namespace FUNCalendar.Models
 
         public LocalStorage()
         {
-            rootFolder = FileSystem.Current.LocalStorage;
-            fileReadWriteService = new FileReadWriteService();
+
         }
 
         private async Task CreateConnection()
@@ -36,6 +35,8 @@ namespace FUNCalendar.Models
             if (isInitialized) return;
             IFile file;
             SQLiteAsyncConnection connection;
+            rootFolder = FileSystem.Current.LocalStorage;
+            fileReadWriteService = new FileReadWriteService();
             var result = await fileReadWriteService.ExistsAsync(databaseFileName).ConfigureAwait(false);
             if (!result)
             {

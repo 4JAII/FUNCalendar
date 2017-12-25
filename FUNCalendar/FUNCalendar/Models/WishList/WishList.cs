@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Prism.Mvvm;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using FUNCalendar.Services;
 
 namespace FUNCalendar.Models
 {

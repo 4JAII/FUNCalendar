@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using Reactive.Bindings;
 using FUNCalendar.Models;
+using FUNCalendar.Services;
 using System;
 
 namespace FUNCalendar.ViewModels
@@ -26,7 +27,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-
+           
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)

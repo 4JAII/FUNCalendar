@@ -38,6 +38,8 @@
     <Compile Include="Models\Others\Configuration.cs" />
     <Compile Include="Models\Others\FileReadWriteService.cs" />
     <Compile Include="Models\Others\LocalStorage.cs" />
+    <Compile Include="Models\Others\RemoteStorage.cs" />
+    <Compile Include="Models\Others\StorageService.cs" />
     <Compile Include="Services\Others\IStorageService.cs" />
     <Compile Include="Services\WishList\IWishList.cs" />
     <Compile Include="Models\WishList\WishItem.cs" />

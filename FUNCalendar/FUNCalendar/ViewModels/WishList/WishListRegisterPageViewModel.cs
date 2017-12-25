@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FUNCalendar.Models;
-using FUNCalendar.Views;
+using FUNCalendar.Services;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using Reactive.Bindings.Binding;
@@ -54,7 +54,7 @@ namespace FUNCalendar.ViewModels
 
         public WishListRegisterPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            localStorage = new LocalStorage();
+            localStorage = new LocalStorage();/* MVVM違反？あとでDIさせて解決 */
 
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._wishList = wishList;
@@ -103,7 +103,7 @@ namespace FUNCalendar.ViewModels
                     }
                     var wishItem = new WishItem { Name = this.Name.Value, Price = int.Parse(this.Price.Value), Date = Date.Value, IsBought = false };
                     await localStorage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
-                    wishItem.ID = localStorage.LastAddedWishItemID;
+                    wishItem.ID = localStorage.LastAddedWishItemID;/* mvvm違反？最新IDを同期する感じに変える */
                     _wishList.AddWishItem(wishItem);
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
