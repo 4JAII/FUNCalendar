@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FUNCalendar.Views.CalendarDetailPage"
+             x:Name="CalendarDetailPage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="CalendarDetailPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"
+                     Command="{Binding NavigationRegisterPageCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <DatePicker Date="{Binding DateData.Value}" Grid.Row="1" Grid.Column="1"
+                    HorizontalOptions="Center" VerticalOptions="Center"/>
+
+        <ScrollView Grid.Row="2" Grid.Column="1">
+            <ScrollView.Content>
+                <StackLayout Spacing="1">
+                    <Button Text="ToDo" Command="{Binding ToDoListOpenCloseCommand}"
+                            HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding ToDoListHeight.Value}" Color="Red"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding ToDoListHeight.Value}" Color="Aquamarine"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding ToDoListHeight.Value}" Color="PaleGreen"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <Button Text="WishList" Command="{Binding WishListOpenCloseCommand}"
+                            HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding WishListHeight.Value}" Color="Aqua"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding WishListHeight.Value}" Color="Yellow"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <Button Text="家計簿" Command="{Binding HouseHoldAccountsListOpenCloseCommand}"
+                            HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Orange"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Turquoise"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Pink"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Brown"
+                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                </StackLayout>
+            </ScrollView.Content>
+        </ScrollView>
+
+        <Button Text="戻る" Grid.Row="3" Grid.Column="1"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center" Command="{Binding BackCommand}"/>
+        
+        <!-- デバッグ用 -->
+        <!--
+        <Label Text="{Binding DebugText.Value}" Grid.Row="3" Grid.Column="1"
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+        -->
+        
+        
+    </Grid>
+</ContentPage>
