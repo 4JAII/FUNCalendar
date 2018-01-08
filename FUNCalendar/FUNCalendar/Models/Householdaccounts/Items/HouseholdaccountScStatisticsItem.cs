@@ -8,14 +8,14 @@ namespace FUNCalendar.Models
 {
     public class HouseholdaccountScStatisticsItem :HouseholdaccountStatisticItem
     {
-        public SCategorys Sc { get; set; }
+        public SCategorys Scategory { get; set; }
         public int Ratio { get; set; }
 
-        public HouseholdaccountScStatisticsItem(Balancetype bt,SCategorys sc, int price, int ratio):base(bt,price)
+        public HouseholdaccountScStatisticsItem(BalanceTypes balancetype,SCategorys scategory, int price, int ratio):base(balancetype,price)
         {
-            this.Bt = bt;
+            this.BalanceType = balancetype;
             this.Price = price;
-            this.Sc = sc;
+            this.Scategory = scategory;
             this.Ratio = ratio;
         }
     }

@@ -14,7 +14,7 @@ namespace FUNCalendar.ViewModels
 
         public VMHouseholdaccountStatisticItem(HouseholdaccountStatisticItem item)
         {
-            this.Bt = Enum.GetName(typeof(Balancetype), item.Bt);
+            this.Bt = Enum.GetName(typeof(BalanceTypes), item.BalanceType);
             this.Price = string.Format("{0}円", item.Price);
         }
     }

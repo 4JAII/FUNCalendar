@@ -31,7 +31,7 @@ namespace FUNCalendar.ViewModels
             new MenuItem
             {
                 Title="家計簿",
-                PageName="HouseHoldAccountsPage",
+                PageName="HouseHoldAccountsStatisticsPage",
                 Image=ImageSource.FromFile("icon_houseHoldAccounts.png"),
             }
         };
@@ -50,7 +50,19 @@ namespace FUNCalendar.ViewModels
         }
         public async Task PageChangeAsync(MenuItem menuItem)
         {
-            await this.NavigationService.NavigateAsync($"NavigationPage/{menuItem.PageName}");
+            switch (menuItem.Title)
+            {
+                case "WishList":
+                case "Calendar":
+                case "ToDo":
+                    await this.NavigationService.NavigateAsync($"NavigationPage/{menuItem.PageName}");
+                    break;
+                case "家計簿":
+                    await this.NavigationService.NavigateAsync($"NavigationPage/{menuItem.PageName}");
+                    break;
+                default:
+                    break;
+            }
             this.IsPresented = false;
 
         }

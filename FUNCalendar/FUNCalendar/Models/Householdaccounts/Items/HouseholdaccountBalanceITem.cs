@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
 {
-    public class HouseholdaccountBalanceITem
+    public class HouseholdaccountBalanceItem
     {
         public StorageTypes St { get; set; }
         public int Price { get; set; }

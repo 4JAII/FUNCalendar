@@ -11,18 +11,30 @@ using System.ComponentModel;
 
 namespace FUNCalendar.Models
 {
-    public interface IHouseHoldAccounts:INotifyPropertyChanged
+    public interface IHouseHoldAccounts : INotifyPropertyChanged
     {
-        string SetTotalIncome { get; }
-        string SetTotalOutgoing { get; }
-        string SetDifference { get; }
-        ObservableCollection<HouseholdaccountScStatisticsItem> SetSIncomes { get; }
-        ObservableCollection<HouseholdaccountScStatisticsItem> SetSOutgoings { get; }
-        ObservableCollection<HouseholdaccountPieSliceItem> SetPieSlice { get; }
-
+        string TotalIncome { get; }
+        string TotalOutgoing { get; }
+        string Difference { get; }
+        string TotalBalance { get; }
+        string SCategoryTotal { get; }
+        ObservableCollection<HouseholdaccountScStatisticsItem> SIncomes { get; }
+        ObservableCollection<HouseholdaccountScStatisticsItem> SOutgoings { get; }
+        ObservableCollection<HouseholdaccountPieSliceItem> PieSlice { get; }
+        ObservableCollection<HouseholdaccountBalanceItem> Balances { get; }
+        ObservableCollection<HouseholdaccountLegendItem> Legend { get; }
+        ObservableCollection<HouseholdaccountDcStatisticsItem> ScategoryItems { get; }
+        ObservableCollection<HouseHoldAccountsItem> DisplayHouseholdaccountList { get; }
 
         void SetAllStatics(Range r, DateTime date);
-        void SetAllStaticsPie(Range r, Balancetype b, DateTime date);
-        void AddHouseHoldAccountsItem(string name, int count, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings);
+        void SetAllStaticsPie(Range r, BalanceTypes b, DateTime date);
+        void SetAllHistory(Range r, DateTime date);
+        void SetSCategoryStatics(Range r, BalanceTypes b, DateTime date, SCategorys sc);
+        void SetSCategoryStatisticsPie(Range r, DateTime date, SCategorys sc);
+        void SetDCategoryHistory(Range r, DateTime date, DCategorys dc);
+        void AddHouseHoldAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings);
+        void SetBalance();
+        void IncrementBalancePrice(StorageTypes st, int price);
+        void EditHouseholdaccountBalance(StorageTypes st, int price);
     }
 }

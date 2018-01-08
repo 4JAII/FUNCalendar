@@ -6,20 +6,14 @@ using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
 {
-    public enum Balancetype
-    {
-        incomes = 1,
-        outgoings,
-        difference
-    } 
     public class HouseholdaccountStatisticItem
     {
-        public Balancetype Bt { get; set; }
+        public BalanceTypes BalanceType { get; set; }
         public int Price { get; set; }
 
-        public HouseholdaccountStatisticItem(Balancetype bc,int price)
+        public HouseholdaccountStatisticItem(BalanceTypes balanctype,int price)
         {
-            this.Bt = bc;
+            this.BalanceType = balanctype;
             this.Price = price;
         }
     }

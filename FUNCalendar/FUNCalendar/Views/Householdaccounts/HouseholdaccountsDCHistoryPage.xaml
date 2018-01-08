@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:local="clr-namespace:FUNCalendar.ViewModels"
+             xmlns:b="clr-namespace:FUNCalendar.Behaviors"
+             x:Class="FUNCalendar.Views.HouseholdaccountsDCHistoryPage"
+             Title="{Binding DCategoryTitle}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"
+                     Command="{Binding ResistCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button Text="BackPage"
+                Command="{Binding BackPageCommand}"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="9"/>
+
+        <DatePicker Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="5"
+                    Format="yyyy/mm/dd"
+                    Date="{Binding SelectedDate.Value}"/>
+
+        <Picker ItemsSource="{Binding RangeNames}"
+                SelectedItem="{Binding SelectedRange.Value}"
+                ItemDisplayBinding="{Binding RangeName}"
+                HorizontalOptions="EndAndExpand"
+                WidthRequest="400"
+                Grid.Row="1"
+                Grid.Column="6"
+                Grid.ColumnSpan="2"/>
+
+
+        <ListView ItemsSource="{Binding DisplayHistoryCollection}"
+                  HorizontalOptions="Center"
+                  SeparatorVisibility ="None"
+                  Grid.Row="2"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="7">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Frame BackgroundColor="White"
+                               OutlineColor="Navy"
+                               Padding="0"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               Margin="10,10,10,10">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="100*"/>
+                                        <ColumnDefinition Width="100*"/>
+                                        <ColumnDefinition Width="100*"/>
+                                        <ColumnDefinition Width="200*"/>
+                                        <ColumnDefinition Width="50*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"/>
+                                    <Label Text="{Binding Price}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Row="0" Grid.Column="4"/>
+                                    <Label Text="{Binding Date}" Grid.Row="1" Grid.Column="1"/>
+                                    <Label Text="{Binding CategoryData}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+    </Grid>
+</ContentPage>

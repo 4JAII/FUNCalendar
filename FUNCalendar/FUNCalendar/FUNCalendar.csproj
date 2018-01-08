@@ -35,13 +35,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Models\Householdaccounts\HouseholdaccountBalanceITem.cs" />
+    <Compile Include="Behaviors\ItemSelectedToCommandBehavior.cs" />
+    <Compile Include="Models\Householdaccounts\Items\HouseholdaccountDcStatisticsItem.cs" />
+    <Compile Include="Models\Householdaccounts\Items\HouseholdaccountBalanceItem.cs" />
     <Compile Include="Models\Householdaccounts\HouseholdaccountHeaders.cs" />
-    <Compile Include="Models\Householdaccounts\HouseHoldAccountItem.cs" />
-    <Compile Include="Models\Householdaccounts\HouseholdaccountPieSliceItem.cs" />
+    <Compile Include="Models\Householdaccounts\Items\HouseHoldAccountItem.cs" />
+    <Compile Include="Models\Householdaccounts\Items\HouseholdaccountLegendItem.cs" />
+    <Compile Include="Models\Householdaccounts\Items\HouseholdaccountPieSliceItem.cs" />
     <Compile Include="Models\Householdaccounts\HouseHoldAccounts.cs" />
-    <Compile Include="Models\Householdaccounts\HouseholdaccountScStatisticsItem.cs" />
-    <Compile Include="Models\Householdaccounts\HouseholdaccountStatisticItem.cs" />
+    <Compile Include="Models\Householdaccounts\Items\HouseholdaccountScStatisticsItem.cs" />
+    <Compile Include="Models\Householdaccounts\Items\HouseholdaccountStatisticItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsRegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsHistoryPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsDCHistoryPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseHoldAccountsSCStatisticsPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountNavigationItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountBalanceItem.cs" />
     <Compile Include="Services\Householdaccounts\IHouseHoldAccounts.cs" />
     <Compile Include="Services\IWishItem.cs" />
     <Compile Include="Services\IWishList.cs" />
@@ -49,15 +58,31 @@
     <Compile Include="Models\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountPie.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseholdaccoutHistoryPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseholdaccoutRange.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseHoldAccountsPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\VMHouseholdaccountScStatisticsItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\VMHouseHoldAccountsItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\VMHouseholdaccountStatisticItem.cs" />
-    <Compile Include="Views\Householdaccounts\HouseHoldAccountsPage.xaml.cs">
-      <DependentUpon>HouseHoldAccountsPage.xaml</DependentUpon>
+    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountBalancePageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccoutRangeItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseHoldAccountsStatisticsPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountDcStatisticsItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountLegendItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountScStatisticsItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseHoldAccountsItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountStatisticItem.cs" />
+    <Compile Include="Views\Householdaccounts\HouseholdaccountsRegisterPage.xaml.cs">
+      <DependentUpon>HouseholdaccountsRegisterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Householdaccounts\HouseholdaccountsHistoryPage.xaml.cs">
+      <DependentUpon>HouseholdaccountsHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Householdaccounts\HouseholdaccountBalancePage.xaml.cs">
+      <DependentUpon>HouseholdaccountBalancePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Householdaccounts\HouseholdaccountsDCHistoryPage.xaml.cs">
+      <DependentUpon>HouseholdaccountsDCHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Householdaccounts\HouseHoldAccountsSCStatisticsPage.xaml.cs">
+      <DependentUpon>HouseHoldAccountsSCStatisticsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Householdaccounts\HouseHoldAccountsStatisticsPage.xaml.cs">
+      <DependentUpon>HouseHoldAccountsStatisticsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MenuItem.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
@@ -220,7 +245,37 @@
     <EmbeddedResource Include="Resources\icon_wishList.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Householdaccounts\HouseHoldAccountsPage.xaml">
+    <EmbeddedResource Include="Views\Householdaccounts\HouseHoldAccountsStatisticsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Householdaccounts\HouseHoldAccountsSCStatisticsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountsDCHistoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountBalancePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountsHistoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountsRegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

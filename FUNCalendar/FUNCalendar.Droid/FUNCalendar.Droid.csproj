@@ -18,7 +18,7 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
@@ -159,22 +159,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_wishList.png" />
+    <Content Include="Resources\drawable\icon_wishList.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_add.png" />
+    <Content Include="Resources\drawable\icon_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_calendar.png" />
+    <Content Include="Resources\drawable\icon_calendar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_config.png" />
+    <Content Include="Resources\drawable\icon_config.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_houseHoldAccounts.png" />
+    <Content Include="Resources\drawable\icon_houseHoldAccounts.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon_todo.png" />
+    <Content Include="Resources\drawable\icon_todo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

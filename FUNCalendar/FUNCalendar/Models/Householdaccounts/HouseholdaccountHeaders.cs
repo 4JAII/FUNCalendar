@@ -135,5 +135,11 @@ namespace FUNCalendar.Models
         その他
     }
 
+    public enum BalanceTypes
+    {
+        incomes = 1,
+        outgoings,
+        difference
+    }
 
 }

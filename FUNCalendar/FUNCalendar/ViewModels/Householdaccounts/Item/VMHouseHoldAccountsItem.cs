@@ -9,42 +9,39 @@ namespace FUNCalendar.ViewModels
 {
     public class VMHouseHoldAccountsItem
     {
-        public int ID { get; private set; }
         public string Name { get; private set; }
-        public string Count { get; private set; }
         public string Price { get; private set; }
         public string Date { get; private set; }
-        public string Summarycategory { get; private set; }
-        public string Detailcategory { get; private set; }
+        public string SCategory { get; private set; }
+        public string DCategory { get; private set; }
         public string Storagetype { get; private set; }
+        public string CategoryData { get; private set; }
         public string IsOutGoings { get; private set; }
 
         /* コンストラクタ(HouseHoldAccountsItem To VMHouseHoldAccountsItem) */
         public VMHouseHoldAccountsItem(HouseHoldAccountsItem item)
         {
-            this.ID = item.ID;
             this.Name = item.Name;
-            this.Count = string.Format("{0}個", item.Count);
             this.Price = string.Format("{0}円", item.Price);
             this.Date = item.Date.ToString("yyyy/mm/dd");
-            this.Summarycategory = Enum.GetName(typeof(SCategorys), item.SummaryCategory);
-            this.Detailcategory = Enum.GetName(typeof(DCategorys), item.DetailCategory);
+            this.SCategory = Enum.GetName(typeof(SCategorys), item.SCategory);
+            this.DCategory = Enum.GetName(typeof(DCategorys), item.DCategory);
             this.Storagetype = Enum.GetName(typeof(StorageTypes), item.StorageType);
             this.IsOutGoings = item.IsOutGoings ? "支出" : "収入";
+            this.CategoryData = string.Format("{0}>{1}", item.SCategory, item.DCategory);
         }
 
         /* 編集用 */
-        public VMHouseHoldAccountsItem(int id,string name,string count,string price,DateTime date,string summarycategory,string detailcategory,string storagetype,string isoutogoings)
+        public VMHouseHoldAccountsItem(string name, string price, DateTime date, string scategory, string dcategory, string storagetype, string isoutogoings)
         {
-            this.ID = id;
             this.Name = name;
-            this.Count = count;
             this.Price = price;
             this.Date = date.Date.ToString("yyyy/mm/dd");
-            this.Summarycategory = summarycategory;
-            this.Detailcategory = detailcategory;
+            this.SCategory = scategory;
+            this.DCategory = dcategory;
             this.Storagetype = storagetype;
             this.IsOutGoings = isoutogoings;
+            this.CategoryData = string.Format("{0}>{1}", scategory, dcategory);
         }
     }
 }

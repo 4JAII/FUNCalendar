@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using FUNCalendar.Models;
 
 namespace FUNCalendar.ViewModels
 {
-    class HouseholdaccountPie
+    public class HouseholdaccountRangeItem
     {
-
+        public string RangeName { get; set; }
+        public Range R { get;  set; }
     }
 }

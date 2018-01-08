@@ -15,7 +15,7 @@ namespace FUNCalendar
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsPage");
+            NavigationService.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsStatisticsPage");
         }
 
         protected override void RegisterTypes()
@@ -28,10 +28,16 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<WishListPage>();
             Container.RegisterTypeForNavigation<ToDoListPage>();
             Container.RegisterTypeForNavigation<WishListRegisterPage>();
-            Container.RegisterTypeForNavigation<HouseHoldAccountsPage>();
+            Container.RegisterTypeForNavigation<HouseHoldAccountsStatisticsPage>();
+            Container.RegisterTypeForNavigation<HouseHoldAccountsSCStatisticsPage>();
+
             /* 共有のインスタンスをDIコンテナに登録 */
             Container.RegisterType<IWishList,WishList>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IHouseHoldAccounts, HouseHoldAccounts>(new ContainerControlledLifetimeManager());
+            Container.RegisterTypeForNavigation<HouseholdaccountsDCHistoryPage>();
+            Container.RegisterTypeForNavigation<HouseholdaccountBalancePage>();
+            Container.RegisterTypeForNavigation<HouseholdaccountsHistoryPage>();
+            Container.RegisterTypeForNavigation<HouseholdaccountsRegisterPage>();
         }
     }
 }
