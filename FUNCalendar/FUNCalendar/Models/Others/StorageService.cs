@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using FUNCalendar.Services;
 using FUNCalendar.Models;
 
-namespace FUNCalendar.Models.Others
+namespace FUNCalendar.Models
 {
-    class StorageService//:IStorageService
+    public class StorageService//:IStorageService
     {
         
     }

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace FUNCalendar.Models
 {
-    class Configuration
+    public class Configuration
     {
         public bool IsUsedRemoteStorage;
 

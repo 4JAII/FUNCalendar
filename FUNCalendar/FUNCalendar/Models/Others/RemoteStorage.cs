@@ -4,33 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FUNCalendar.Services;
+using RestSharp;
+using RestSharp.Portable;
 
-namespace FUNCalendar.Models.Others
+namespace FUNCalendar.Models
 {
-    class RemoteStorage : IStorageService
+    public class RemoteStorage : IStorageService
     {
         public int LastAddedWishItemID { get; private set; }
 
         public int LastAddedToDoItemID { get; private set; }
 
-        public int LastAddedHouseHoldAccountsID { get; private set; }
+        public int LastAddedHouseholdAccountsID { get; private set; }
 
-        public Task<bool> AddItem(WishItem item)
+        public async Task<bool> AddItem(WishItem item)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteItem(WishItem item)
+        public async Task<bool> DeleteItem(WishItem item)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> EditItem(WishItem item)
+        public async Task<bool> EditItem(WishItem item)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<WishItem>> ReadFile()
+        public async Task<List<WishItem>> ReadFile()
         {
             throw new NotImplementedException();
         }

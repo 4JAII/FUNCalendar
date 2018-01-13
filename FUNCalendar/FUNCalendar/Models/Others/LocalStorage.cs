@@ -23,7 +23,7 @@ namespace FUNCalendar.Models
         /* 最後に追加したIDを保持 */
         public int LastAddedWishItemID { get; private set; }
         public int LastAddedToDoItemID { get; private set; }
-        public int LastAddedHouseHoldAccountsID { get; private set; }
+        public int LastAddedHouseholdAccountsID { get; private set; }
 
         public LocalStorage()
         {
