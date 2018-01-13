@@ -12,6 +12,8 @@ namespace FUNCalendar.Models
     {
         ObservableCollection<WishItem> SortedWishList { get; }
         WishItem DisplayWishItem { get; set; }
+        ObservableCollection<WishItem> WishListForCalendar { get; }
+        bool DateWithWishList { get; }
         bool IsAscending { get; set; }
         void SortByID();
         void SortByName();
@@ -22,5 +24,8 @@ namespace FUNCalendar.Models
         void SetDisplayWishItem(WishItem wishItem);
         void Remove(WishItem wishItem);
         void EditWishItem(WishItem deleteWishItem,WishItem addWishItem);
+        void SetWishListForCalendar(DateTime date);
+        void ClearWishListForCalendar();
+        void SetDateWithWishList(DateTime date);
     }
 }

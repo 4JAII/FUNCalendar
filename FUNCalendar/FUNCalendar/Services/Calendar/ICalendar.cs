@@ -18,5 +18,6 @@ namespace FUNCalendar.Models
         void BackPrevMonth();
         void GoNextMonth();
         void SetDisplayDate(Date date);
+        void SetHasList(IWishList wishList);
     }
 }

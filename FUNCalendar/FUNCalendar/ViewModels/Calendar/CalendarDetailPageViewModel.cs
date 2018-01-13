@@ -23,6 +23,7 @@ namespace FUNCalendar.ViewModels
     public class CalendarDetailPageViewModel : BindableBase, INavigationAware
     {
         private ICalendar _calendar;
+        private IWishList _wishList;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
 
@@ -38,19 +39,14 @@ namespace FUNCalendar.ViewModels
         public ReactiveCommand WishListOpenCloseCommand { get; private set; }
         public ReactiveCommand HouseHoldAccountsListOpenCloseCommand { get; private set; }
 
-        /* デバッグ用 */
-        //public ReactiveProperty<string> DebugText { get; private set; } = new ReactiveProperty<string>("まだボタンは押されていません");
-        public ReactiveProperty<int> ToDoListHeight { get; private set; } = new ReactiveProperty<int>(0);
-        public ReactiveProperty<int> WishListHeight { get; private set; } = new ReactiveProperty<int>(0);
-        public ReactiveProperty<int> HouseHoldAccountsListHeight { get; private set; } = new ReactiveProperty<int>(0);
-
         /* 廃棄 */
         private CompositeDisposable Disposable { get; } = new CompositeDisposable();
 
-        public CalendarDetailPageViewModel(ICalendar calendar, INavigationService navigationService, IPageDialogService pageDialogService)
+        public CalendarDetailPageViewModel(ICalendar calendar,IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._calendar = calendar;
+            this._wishList = wishList;
             this._navigationService = navigationService;
             this._pageDialogService = pageDialogService;
 
@@ -58,6 +54,18 @@ namespace FUNCalendar.ViewModels
             ToDoListOpenCloseCommand = new ReactiveCommand();
             WishListOpenCloseCommand = new ReactiveCommand();
             HouseHoldAccountsListOpenCloseCommand = new ReactiveCommand();
+
+            DisplayWishList = _wishList.WishListForCalendar.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(Disposable);
+            //DisplayWishList = _wishList.WishListForCalendar.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(Disposable);
+            //DisplayWishList = _wishList.WishListForCalendar.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(Disposable);
+
+            /* DatePicker */
+            DateData.Subscribe( _ =>
+            {
+                _wishList.ClearWishListForCalendar();
+                //_todoList.ClearToDoListForCalendar();
+                //_houseHoldAccountsList.ClearHouseHoldAcountsListForCalendar();
+            });
 
             /* 戻る処理 */
             BackCommand.Subscribe(async () =>
@@ -68,38 +76,42 @@ namespace FUNCalendar.ViewModels
             /* List開閉処理 */
             ToDoListOpenCloseCommand.Subscribe(() =>
             {
-                if (ToDoListHeight.Value > 0)
+                /*
+                if (_todoList.ToDoListForCalendar.Any())
                 {
-                    ToDoListHeight.Value = 0;
+                    _todoList.ClearToDoListForCalendar();
                 }
                 else
                 {
-                    ToDoListHeight.Value = 100;
+                    _todoList.SetToDoListForCalendar(DateData.Value);
                 }
+                */
             });
 
             WishListOpenCloseCommand.Subscribe(() =>
             {
-                if (WishListHeight.Value > 0)
+                if (_wishList.WishListForCalendar.Any())
                 {
-                    WishListHeight.Value = 0;
+                    _wishList.ClearWishListForCalendar();
                 }
                 else
                 {
-                    WishListHeight.Value = 100;
+                    _wishList.SetWishListForCalendar(DateData.Value);
                 }
             });
 
             HouseHoldAccountsListOpenCloseCommand.Subscribe(() =>
             {
-                if (HouseHoldAccountsListHeight.Value > 0)
+                /*
+                if (_houseHoldAccountsList.HouseHoldAccountsListForCalendar.Any())
                 {
-                    HouseHoldAccountsListHeight.Value = 0;
+                    _houseHoldAccountsList.ClearHouseHoldAccountsListForCalendar();
                 }
                 else
                 {
-                    HouseHoldAccountsListHeight.Value = 100;
+                    _houseHoldAccountsList.SetHouseHoldAccountsListForCalendar(DateData.Value);
                 }
+                */
             });
         }
 
@@ -110,9 +122,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            VMDate vmDate = new VMDate(_calendar.DisplayDate);
-            DateData.Value = vmDate.DateData;
-            DisplayWishList = new ObservableCollection<WishItem>(vmDate.WishList).ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(Disposable);
+            DateData.Value = _calendar.DisplayDate.DateData;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

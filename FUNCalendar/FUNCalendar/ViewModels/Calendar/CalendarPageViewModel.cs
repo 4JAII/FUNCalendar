@@ -41,6 +41,18 @@ namespace FUNCalendar.ViewModels
             get { return this.currentDate; }
             set { this.SetProperty(ref this.currentDate, value); }
         }
+        private string calendarYear;
+        public string CalendarYear
+        {
+            get { return this.calendarYear; }
+            set { this.SetProperty(ref this.calendarYear, value); }
+        }
+        private string calendarMonth;
+        public string CalendarMonth
+        {
+            get { return this.calendarMonth; }
+            set { this.SetProperty(ref this.calendarMonth, value); }
+        }
 
         public ReactiveCommand TapCommand { get; private set; }
         public ReactiveCommand BackPrevMonth { get; private set; }
@@ -64,6 +76,7 @@ namespace FUNCalendar.ViewModels
 
             /* 以下、変更箇所 */
             this._calendar = calendar;
+            _calendar.SetHasList(_wishList);
             
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
@@ -73,8 +86,11 @@ namespace FUNCalendar.ViewModels
             BackPrevMonth = new ReactiveCommand();
             GoNextMonth = new ReactiveCommand();
 
-            CurrentYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
-            CurrentMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
+            CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
+            CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
+            CurrentYear = string.Format("{0}年", DateTime.Now.ToString("yyyy"));
+            CurrentMonth = string.Format("{0}月", DateTime.Now.ToString("%M"));
+            CurrentDate = string.Format("{0}日", DateTime.Now.ToString("%d"));
 
             DisplayCalendar = _calendar.ListedAMonthDateData.ToReadOnlyReactiveCollection(x => new VMDate(x)).AddTo(Disposable);
 
@@ -84,23 +100,21 @@ namespace FUNCalendar.ViewModels
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/CalendarDetailPage");
             });
 
-            BackPrevMonth.Subscribe(async () =>
+            BackPrevMonth.Subscribe(() =>
             {
                 _calendar.BackPrevMonth();
-                CurrentYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
-                CurrentMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
-                DisplayCalendar = _calendar.ListedAMonthDateData.ToReadOnlyReactiveCollection(x => new VMDate(x)).AddTo(Disposable);
-                await _navigationService.NavigateAsync($"/RootPage/NavigationPage/CalendarPage");/* いちいち画面遷移 */
-            }).AddTo(Disposable);
+                _calendar.SetHasList(_wishList);
+                CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
+                CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
+            });
 
-            GoNextMonth.Subscribe(async () =>
+            GoNextMonth.Subscribe(() =>
             {
                 _calendar.GoNextMonth();
-                CurrentYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
-                CurrentMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
-                DisplayCalendar = _calendar.ListedAMonthDateData.ToReadOnlyReactiveCollection(x => new VMDate(x)).AddTo(Disposable);
-                await _navigationService.NavigateAsync($"/RootPage/NavigationPage/CalendarPage");/* いちいち画面遷移 */
-            }).AddTo(Disposable);
+                _calendar.SetHasList(_wishList);
+                CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
+                CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
+            });
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Prism.Mvvm;
 
 namespace FUNCalendar.Models
@@ -8,9 +9,9 @@ namespace FUNCalendar.Models
 {
         /* privateで定義 */
         private DateTime dateData;
-        private List<WishItem> wishList = new List<WishItem>();
-        private List</*ToDoItem*/string> todoList = new List</*ToDoItem*/string>();
-        private List</*家計簿*/string> houseHoldAccountsList = new List</*家計簿*/string>();
+        private bool hasWishList;
+        private bool hasToDoList;
+        private bool hasHouseHoldAccountsList;
         private DayOfWeek dayOfTheWeek;
 
         /* プロパティ */
@@ -27,22 +28,22 @@ namespace FUNCalendar.Models
             }
         }
 
-        public List<WishItem> WishList
+        public bool HasWishList
         {
-            get { return this.wishList; }
-            set { this.SetProperty(ref this.wishList, value); }
+            get { return this.hasWishList; }
+            set { this.SetProperty(ref this.hasWishList, value); }
         }
 
-        public List</*ToDoItem*/string> ToDoList
+        public bool HasToDoList
         {
-            get { return this.todoList; }
-            set { this.SetProperty(ref this.todoList,value); }
+            get { return this.hasToDoList; }
+            set { this.SetProperty(ref this.hasToDoList, value); }
         }
 
-        public List</*家計簿*/string> HouseHoldAccountsList
+        public bool HasHouseHoldAccountsList
         {
-            get { return this.houseHoldAccountsList; }
-            set { this.SetProperty(ref this.houseHoldAccountsList,value); }
+            get { return this.hasHouseHoldAccountsList; }
+            set { this.SetProperty(ref this.hasHouseHoldAccountsList, value); }
         }
 
         public DayOfWeek DayOfTheWeek
@@ -59,6 +60,7 @@ namespace FUNCalendar.Models
 
         public Date()
         {
+
         }
     }
 }

@@ -34,44 +34,140 @@
 
         <ScrollView Grid.Row="2" Grid.Column="1">
             <ScrollView.Content>
-                <StackLayout Spacing="1">
+                <StackLayout Spacing="5">
+                    
                     <Button Text="ToDo" Command="{Binding ToDoListOpenCloseCommand}"
                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding ToDoListHeight.Value}" Color="Red"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding ToDoListHeight.Value}" Color="Aquamarine"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding ToDoListHeight.Value}" Color="PaleGreen"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <!--
+                    <ListView ItemsSource="{Binding DisplayToDoList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="100"
+                              SeparatorVisibility="Default">
+                    -->
+                    <ListView ItemsSource="{Binding DisplayWishList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="100"
+                              SeparatorColor="White"
+                              SeparatorVisibility="Default">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <!--
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference WishListPage}}" CommandParameter="{Binding .}"/>
+                                        <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference WishListPage}}" CommandParameter="{Binding .}"  />
+                                    </ViewCell.ContextActions>
+                                    -->
+                                    <Frame OutlineColor="Red">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Date}" Grid.Column="5" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding IsBought}" Grid.Column="7" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
                     <Button Text="WishList" Command="{Binding WishListOpenCloseCommand}"
                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding WishListHeight.Value}" Color="Aqua"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding WishListHeight.Value}" Color="Yellow"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <ListView ItemsSource="{Binding DisplayWishList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="100"
+                              SeparatorVisibility="Default">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame OutlineColor="Aqua">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Date}" Grid.Column="5" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding IsBought}" Grid.Column="7" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
                     <Button Text="家計簿" Command="{Binding HouseHoldAccountsListOpenCloseCommand}"
                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Orange"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Turquoise"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Pink"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                    <BoxView HeightRequest="{Binding HouseHoldAccountsListHeight.Value}" Color="Brown"
-                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <!--
+                    <ListView ItemsSource="{Binding DisplayHouseHoldAccountsList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="100"
+                              SeparatorVisibility="Default">
+                    -->
+                    <ListView ItemsSource="{Binding DisplayWishList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="100"
+                              SeparatorVisibility="Default">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame OutlineColor="Orange">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Date}" Grid.Column="5" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding IsBought}" Grid.Column="7" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
                 </StackLayout>
             </ScrollView.Content>
         </ScrollView>
 
         <Button Text="戻る" Grid.Row="3" Grid.Column="1"
                 HorizontalOptions="FillAndExpand" VerticalOptions="Center" Command="{Binding BackCommand}"/>
-        
-        <!-- デバッグ用 -->
-        <!--
-        <Label Text="{Binding DebugText.Value}" Grid.Row="3" Grid.Column="1"
-               HorizontalOptions="Center" VerticalOptions="Center"/>
-        -->
-        
         
     </Grid>
 </ContentPage>

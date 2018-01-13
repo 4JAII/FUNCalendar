@@ -21,8 +21,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -39,8 +42,8 @@
 
         <Button Image="Calendar_BackPrevMonth.png" Grid.Row="1" Grid.Column="1" Command="{Binding BackPrevMonth}" BorderWidth="0"
                 HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CurrentYear}" Grid.Row="1" Grid.Column="3"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CurrentMonth}" Grid.Row="1" Grid.Column="5"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarYear}" Grid.Row="1" Grid.Column="3"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="1" Grid.Column="5"/>
         <Button Image="Calendar_GoNextMonth.png" Grid.Row="1" Grid.Column="7" Command="{Binding GoNextMonth}" BorderWidth="0"
                 HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
         
@@ -60,39 +63,67 @@
                                       Grid.Row="3"
                                       Grid.Column="1"
                                       Grid.ColumnSpan="7"
-                                      VerticalOptions="Center"
+                                      VerticalOptions="FillAndExpand"
                                       HorizontalOptions="Center">
             <AiForms:RepeatableWrapLayout.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout BackgroundColor="{Binding BackgroundColor}"
-                                 Orientation="Vertical">
+                    <StackLayout BackgroundColor="{Binding BackgroundColor}">
                         <Label VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"
                                FontSize="Medium"
+                               FontAttributes="Bold"
+                               HeightRequest="20"
                                Text="{Binding StrDate}"/>
-                        <StackLayout BackgroundColor="{Binding BackgroundColor}"
-                                     Orientation="Horizontal">
-                            <Image Source="{Binding HasWishList}"
-                                   VerticalOptions="CenterAndExpand"
-                                   HorizontalOptions="CenterAndExpand"
-                                   WidthRequest="10"
-                                   Aspect="AspectFit"/>
+
+                        <Grid HeightRequest="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <BoxView BackgroundColor="{Binding BackgroundColor}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill"
+                                     Grid.Column="0"/>
                             <Image Source="{Binding HasToDoList}"
-                                   VerticalOptions="CenterAndExpand"
-                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
                                    WidthRequest="10"
-                                   Aspect="AspectFit"/>
+                                   Aspect="AspectFit"
+                                   Grid.Column="0"/>
+                            <BoxView BackgroundColor="{Binding BackgroundColor}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill"
+                                     Grid.Column="1"/>
+                            <Image Source="{Binding HasWishList}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   WidthRequest="10"
+                                   Aspect="AspectFit"
+                                   Grid.Column="1"/>
+                            <BoxView BackgroundColor="{Binding BackgroundColor}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill"
+                                     Grid.Column="2"/>
                             <Image Source="{Binding HasHouseHoldAccountsList}"
-                                   VerticalOptions="CenterAndExpand"
-                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
                                    WidthRequest="10"
-                                   Aspect="AspectFit"/>
-                        </StackLayout>
+                                   Aspect="AspectFit"
+                                   Grid.Column="2"/>
+                        </Grid>
+                        
                         <Label VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"
                                VerticalOptions="CenterAndExpand"
                                HorizontalOptions="CenterAndExpand"
-                               Text="+○円 -○円"/>
+                               Text="+○円 -○円"
+                               FontSize="10"
+                               HeightRequest="10"/>
                     </StackLayout>
                 </DataTemplate>
             </AiForms:RepeatableWrapLayout.ItemTemplate>
@@ -110,7 +141,70 @@
                FontSize="Medium"
                Text="{Binding CurrentMonth}"
                Grid.Row="4"
+               Grid.Column="3"
+               Grid.ColumnSpan="3"/>
+        <Label VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               FontSize="Medium"
+               Text="{Binding CurrentDate}"
+               Grid.Row="4"
                Grid.Column="4"
                Grid.ColumnSpan="3"/>
+
+        <Image Source="Calendar_HasToDoList.png"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               WidthRequest="15"
+               Aspect="AspectFit"
+               Grid.Row="5"
+               Grid.Column="1"/>
+        <Label Text="ToDo"
+               Grid.Row="5"
+               Grid.Column="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"/>
+        <Image Source="Calendar_HasWishList.png"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               WidthRequest="15"
+               Aspect="AspectFit"
+               Grid.Row="6"
+               Grid.Column="1"/>
+        <Label Text="WishList"
+               Grid.Row="6"
+               Grid.Column="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"/>
+        <Image Source="Calendar_HasHouseHoldAccountsList.png"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               WidthRequest="15"
+               Aspect="AspectFit"
+               Grid.Row="7"
+               Grid.Column="1"/>
+        <Label Text="家計簿"
+               Grid.Row="7"
+               Grid.Column="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"/>
+
+        <Label Text="{Binding CalendarMonth}"
+               Grid.Row="5"
+               Grid.Column="5"
+               Grid.ColumnSpan="3"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+        <Label Text="支出：○○○○○円"
+               Grid.Row="6"
+               Grid.Column="5"
+               Grid.ColumnSpan="3"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+        <Label Text="収入：○○○○○円"
+               Grid.Row="7"
+               Grid.Column="5"
+               Grid.ColumnSpan="3"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
     </Grid>
 </ContentPage>

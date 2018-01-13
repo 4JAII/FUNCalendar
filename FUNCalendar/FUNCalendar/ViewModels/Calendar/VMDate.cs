@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using FUNCalendar.Models;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace FUNCalendar.ViewModels
 {
@@ -18,9 +19,6 @@ namespace FUNCalendar.ViewModels
         public string StrYear { get; private set; }
         public string StrMonth { get; private set; }
         public string StrDate { get; private set; }
-        public List<WishItem> WishList { get; private set; }
-        public List</*ToDoItem*/string> ToDoList { get; private set; }
-        public List</*家計簿*/string> HouseHoldAccountsList { get; private set; }
         public ImageSource HasWishList { get; private set; }
         public ImageSource HasToDoList { get; private set; }
         public ImageSource HasHouseHoldAccountsList { get; private set; }
@@ -34,12 +32,9 @@ namespace FUNCalendar.ViewModels
             this.StrYear = date.DateData.ToString("yyyy");
             this.StrMonth = date.DateData.ToString("%M");
             this.StrDate = date.DateData.ToString("%d");
-            this.WishList = date.WishList;
-            this.ToDoList = date.ToDoList;
-            this.HouseHoldAccountsList = date.HouseHoldAccountsList;
-            this.HasWishList = date.WishList.Any() ? ImageSource.FromFile("Calendar_HasWishList.png") : ImageSource.FromFile("Calendar_HasWishList.png");//nullにする
-            this.HasToDoList = date.ToDoList.Any() ? ImageSource.FromFile("Calendar_HasToDoList.png") : ImageSource.FromFile("Calendar_HasToDoList.png");//nullにする
-            this.HasHouseHoldAccountsList = date.HouseHoldAccountsList.Any() ? ImageSource.FromFile("Calendar_HasHouseHoldAccountsList.png") : ImageSource.FromFile("Calendar_HasHouseHoldAccountsList.png");//nullにする
+            this.HasWishList = date.HasWishList ? ImageSource.FromFile("Calendar_HasWishList.png") : null;
+            this.HasToDoList = date.HasToDoList ? ImageSource.FromFile("Calendar_HasToDoList.png") : null;
+            this.HasHouseHoldAccountsList = date.HasHouseHoldAccountsList ? ImageSource.FromFile("Calendar_HasHouseHoldAccountsList.png") : null;
             this.DayOfTheWeek = dayOfTheWeekArray[(int)date.DayOfTheWeek];
             switch((int)date.DayOfTheWeek)
             {
@@ -52,11 +47,7 @@ namespace FUNCalendar.ViewModels
         /* 変換 */
         public static Date ToDate(VMDate vmDate)
         {
-            var dateData = vmDate.DateData;
-            var wishList = vmDate.WishList;
-            var todoList = vmDate.ToDoList;
-            var houseHoldAccountsList = vmDate.HouseHoldAccountsList;
-            return new Date { DateData = dateData, WishList = wishList, ToDoList = todoList, HouseHoldAccountsList = houseHoldAccountsList };
+            return new Date(vmDate.DateData);
         }
     }
 }

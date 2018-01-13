@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Prism.Mvvm;
 
 namespace FUNCalendar.Models
@@ -14,7 +15,7 @@ namespace FUNCalendar.Models
         private int i, j;
         private List<Date> tempList = new List<Date>();
 
-        public ObservableCollection<Date> ListedAMonthDateData { get; private set; }
+        public ObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ObservableCollection<Date>();
         public Date DisplayDate { get; set; }
 
         /* プロパティ */
@@ -103,7 +104,11 @@ namespace FUNCalendar.Models
 
             tempList.Clear();
             tempList = new List<Date>(aMonthDateData);
-            ListedAMonthDateData = new ObservableCollection<Date>(tempList);
+            ListedAMonthDateData.Clear();
+            foreach(Date x in tempList)
+            {
+                ListedAMonthDateData.Add(x);
+            }
         }
 
         /* 一つ前の月へ */
@@ -136,7 +141,14 @@ namespace FUNCalendar.Models
             DisplayDate = date;
         }
 
-        /* データベースから取得? */
-        /* データベースに格納? */
+        /* WishList,ToDoList,HouseholdAccountsListを持っているか登録 */
+        public void SetHasList(IWishList wishList)
+        {
+            foreach (Date x in ListedAMonthDateData)
+            {
+                wishList.SetDateWithWishList(x.DateData);
+                x.HasWishList = wishList.DateWithWishList;
+            }
+        }
     }
 }
