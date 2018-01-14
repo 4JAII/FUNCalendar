@@ -11,17 +11,19 @@ namespace FUNCalendar.ViewModels
     {
         /* 全てのリストを初期化 */
         private static ReactiveProperty<bool> canInitializeList= new ReactiveProperty<bool>();
-        private LocalStorage localStorage = new LocalStorage();
+        private IStorageService _storageService;
 
         private IWishList _wishList;
 
-        public CalendarPageViewModel(IWishList wishList)
+        public CalendarPageViewModel(IStorageService storageService)
         {
-            this._wishList = wishList;
+            this._storageService = storageService;
 
             canInitializeList.Subscribe(async _ =>
             {
-                _wishList.InitializeList(await localStorage.ReadFile());
+                await _storageService.InitializeAsync();
+                await _storageService.ReadFile();
+                this._wishList = _storageService.WishList;
             });
         }
 

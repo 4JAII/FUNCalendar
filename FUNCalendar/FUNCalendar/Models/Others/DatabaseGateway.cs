@@ -21,6 +21,7 @@ namespace FUNCalendar.Models
         {
             restClient = new RestClient(apiUrl);
             restClient.Authenticator = new HttpBasicAuthenticator(username, password);
+            restClient.IgnoreResponseStatusCode = true;
         }
 
         private async Task<IRestResponse> GetAsync(string requestPath)

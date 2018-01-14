@@ -43,13 +43,11 @@ namespace FUNCalendar.ViewModels
         /* 購読解除用 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        private LocalStorage localStorage = new LocalStorage();
 
 
-        public WishListPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListPageViewModel(IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            this._wishList = wishList;
-
+            this._wishList = storageService.WishList;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
@@ -96,8 +94,7 @@ namespace FUNCalendar.ViewModels
                 if (result)
                 {
                     var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
-                    _wishList.Remove(wishItem);
-                    await localStorage.DeleteItem(wishItem);
+                    await storageService.DeleteItem(wishItem);
                 }
             });
 

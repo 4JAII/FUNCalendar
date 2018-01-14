@@ -12,7 +12,7 @@ using FUNCalendar.Services;
 
 namespace FUNCalendar.Models
 {
-    public class LocalStorage : IStorageService
+    public class LocalStorage : IStorage
     {
         private IFolder rootFolder;
         private readonly string databaseFileName = "FUNCalendarDB.db";
@@ -25,10 +25,6 @@ namespace FUNCalendar.Models
         public int LastAddedToDoItemID { get; private set; }
         public int LastAddedHouseholdAccountsID { get; private set; }
 
-        public LocalStorage()
-        {
-
-        }
 
         private async Task CreateConnection()
         {
@@ -210,7 +206,7 @@ namespace FUNCalendar.Models
         }
         */
 
-        public async Task<List<WishItem>> ReadFile()
+        public async Task<List<WishItem>> ReadWishList()
         {
             await CreateConnection();
             return await asyncConnection.Table<WishItem>().ToListAsync();

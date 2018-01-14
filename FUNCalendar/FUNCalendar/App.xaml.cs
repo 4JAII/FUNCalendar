@@ -31,8 +31,7 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<WishListRegisterPage>();
             Container.RegisterTypeForNavigation<HouseHoldAccountsPage>();
             /* 共有のインスタンスをDIコンテナに登録 */
-            Container.RegisterType<IWishList, WishList>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IStorageService, LocalStorage>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
         }
     }
 }

@@ -46,18 +46,17 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
-        /* データベース用 */
-        private LocalStorage localStorage;
+        private IStorageService storage;
 
         /* 廃棄 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        public WishListRegisterPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListRegisterPageViewModel(IStorageService storage, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            localStorage = new LocalStorage();/* MVVM違反？あとでDIさせて解決 */
+            this.storage = storage;
 
             /* コンストラクタインジェクションされたインスタンスを保持 */
-            this._wishList = wishList;
+            this._wishList = storage.WishList;
             this._navigationService = navigationService;
             this._pageDialogService = pageDialogService;
             /* 属性を有効化 */
@@ -85,26 +84,13 @@ namespace FUNCalendar.ViewModels
                 {
                     var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought, todoID);
                     var wishItem = VMWishItem.ToWishItem(vmWishItem);
-                    await localStorage.EditItem(wishItem);
-                    if (NeedsAdd)
-                    {
-                        /* wishItemをToDoItemに変換してadd処理 
-                         * localStorage.AddItem(todoItem);*/
-                    }
-                    _wishList.EditWishItem(_wishList.DisplayWishItem, wishItem);
+                    await storage.EditItem(_wishList.DisplayWishItem, wishItem);
 
                 }
                 else
                 {
-                    if (NeedsAdd)
-                    {
-                        /* wishItemをToDoItemに変換してadd処理 
-                         * localStorage.AddItem(todoItem);*/
-                    }
                     var wishItem = new WishItem { Name = this.Name.Value, Price = int.Parse(this.Price.Value), Date = Date.Value, IsBought = false };
-                    await localStorage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
-                    wishItem.ID = localStorage.LastAddedWishItemID;/* mvvm違反？最新IDを同期する感じに変える */
-                    _wishList.AddWishItem(wishItem);
+                    await storage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
             });

@@ -44,10 +44,11 @@
     <Compile Include="Models\Others\LocalStorage.cs" />
     <Compile Include="Models\Others\RemoteStorage.cs" />
     <Compile Include="Models\Others\StorageService.cs" />
-    <Compile Include="Services\Others\IStorageService.cs" />
-    <Compile Include="Services\WishList\IWishList.cs" />
     <Compile Include="Models\WishList\WishItem.cs" />
     <Compile Include="Models\WishList\WishList.cs" />
+    <Compile Include="Services\Others\IStorage.cs" />
+    <Compile Include="Services\Others\IStorageService.cs" />
+    <Compile Include="Services\WishList\IWishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
     <Compile Include="Views\HouseHoldAccountsPage.xaml.cs">
@@ -210,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Models\Householdaccounts\Items\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
