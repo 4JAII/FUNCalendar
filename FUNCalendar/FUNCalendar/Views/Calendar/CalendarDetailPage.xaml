@@ -36,7 +36,7 @@
             <ScrollView.Content>
                 <StackLayout Spacing="5">
                     
-                    <Button Text="ToDo" Command="{Binding ToDoListOpenCloseCommand}"
+                    <Button Text="ToDo" Command="{Binding ToDoListOpenCloseCommand}" BackgroundColor="#F69229"
                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                     <!--
                     <ListView ItemsSource="{Binding DisplayToDoList}"
@@ -48,8 +48,8 @@
                     <ListView ItemsSource="{Binding DisplayWishList}"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
-                              HeightRequest="100"
-                              SeparatorColor="White"
+                              HeightRequest="200"
+                              HasUnevenRows="True"
                               SeparatorVisibility="Default">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -85,12 +85,13 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     
-                    <Button Text="WishList" Command="{Binding WishListOpenCloseCommand}"
+                    <Button Text="WishList" Command="{Binding WishListOpenCloseCommand}" BackgroundColor="#B1D781"
                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                     <ListView ItemsSource="{Binding DisplayWishList}"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
-                              HeightRequest="100"
+                              HeightRequest="200"
+                              HasUnevenRows="True"
                               SeparatorVisibility="Default">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -120,7 +121,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <Button Text="家計簿" Command="{Binding HouseHoldAccountsListOpenCloseCommand}"
+                    <Button Text="家計簿" Command="{Binding HouseHoldAccountsListOpenCloseCommand}" BackgroundColor="#1FAB9E"
                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                     <!--
                     <ListView ItemsSource="{Binding DisplayHouseHoldAccountsList}"
@@ -132,7 +133,8 @@
                     <ListView ItemsSource="{Binding DisplayWishList}"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
-                              HeightRequest="100"
+                              HeightRequest="200"
+                              HasUnevenRows="True"
                               SeparatorVisibility="Default">
                         <ListView.ItemTemplate>
                             <DataTemplate>
