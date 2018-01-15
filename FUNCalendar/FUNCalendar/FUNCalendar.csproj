@@ -213,6 +213,7 @@
     <Folder Include="Controls\" />
     <Folder Include="Models\Householdaccounts\Items\" />
     <Folder Include="Resources\" />
+    <Folder Include="ViewModels\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\WishList\WishListRegisterPage.xaml">

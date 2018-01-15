@@ -19,6 +19,7 @@ namespace FUNCalendar.ViewModels
         private IWishList _wishList;
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
+        private IStorageService _storageService;
 
         /* Picker用のソートアイテム */
         public WishListSortName[] SortNames { get; private set; }
@@ -45,9 +46,10 @@ namespace FUNCalendar.ViewModels
 
 
 
-        public WishListPageViewModel(IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListPageViewModel(IWishList wishList,IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            this._wishList = storageService.WishList;
+            this._wishList = wishList;
+            this._storageService = storageService;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
@@ -94,7 +96,7 @@ namespace FUNCalendar.ViewModels
                 if (result)
                 {
                     var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
-                    await storageService.DeleteItem(wishItem);
+                    await _storageService.DeleteItem(wishItem);
                 }
             });
 

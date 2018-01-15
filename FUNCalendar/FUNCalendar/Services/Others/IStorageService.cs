@@ -12,7 +12,7 @@ namespace FUNCalendar.Services
         Configuration Config { get; }
         IWishList WishList { get; }
         bool HasError { get; }
-        Task InitializeAsync();
+        Task InitializeAsync(IWishList wishList/*,,,*/);
 
         Task AddItem(WishItem item);
         //Task AddItem(ToDoItem item);

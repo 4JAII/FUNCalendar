@@ -24,6 +24,7 @@ namespace FUNCalendar.ViewModels
         private IWishList _wishList;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
+        private IStorageService _storageService;
 
         /* WishItem登録用 */
         public int ID { get; private set; } = -1;
@@ -46,17 +47,16 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
-        private IStorageService storage;
 
         /* 廃棄 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        public WishListRegisterPageViewModel(IStorageService storage, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListRegisterPageViewModel(IWishList wishList,IStorageService storage, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            this.storage = storage;
+            this._storageService = storage;
 
             /* コンストラクタインジェクションされたインスタンスを保持 */
-            this._wishList = storage.WishList;
+            this._wishList = wishList;
             this._navigationService = navigationService;
             this._pageDialogService = pageDialogService;
             /* 属性を有効化 */
@@ -84,13 +84,13 @@ namespace FUNCalendar.ViewModels
                 {
                     var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought, todoID);
                     var wishItem = VMWishItem.ToWishItem(vmWishItem);
-                    await storage.EditItem(_wishList.DisplayWishItem, wishItem);
+                    await _storageService.EditItem(_wishList.DisplayWishItem, wishItem);
 
                 }
                 else
                 {
                     var wishItem = new WishItem { Name = this.Name.Value, Price = int.Parse(this.Price.Value), Date = Date.Value, IsBought = false };
-                    await storage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
+                    await _storageService.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
             });

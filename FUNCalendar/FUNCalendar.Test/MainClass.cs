@@ -16,11 +16,11 @@ namespace FUNCalendar.Test
         public static async Task MainBody()
         {
             DatabaseGateway databaseGateway = new DatabaseGateway("gunma", "akagi");
-            //List<WishItem> list;
-            //list = await databaseGateway.GetWishListAsync();
-            //string jsonWishList = JsonConvert.SerializeObject(new JsonWishList { VMValue = list.Select(x => new VMWishItem(x)).ToList() },Formatting.Indented);
-            int temp = await databaseGateway.DeleteWishListAsync(new WishItem {ID = 17, Name = "更新アイテム", Price = 14514, Date = DateTime.Now, IsBought = false, ToDoID = 0 });
-            Console.WriteLine("HTTP_STATUS_CODE:"+temp);
+            List<WishItem> list;
+            list = await databaseGateway.GetWishListAsync();
+            string jsonWishList = JsonConvert.SerializeObject(new JsonWishList { VMValue = list.Select(x => new VMWishItem(x)).ToList() },Formatting.Indented);
+            
+            Console.WriteLine(jsonWishList);
             
         }
 

@@ -10,20 +10,20 @@ namespace FUNCalendar.ViewModels
     public class CalendarPageViewModel : BindableBase,INavigationAware
     {
         /* 全てのリストを初期化 */
-        private static ReactiveProperty<bool> canInitializeList= new ReactiveProperty<bool>();
+        private static ReactiveProperty<bool> canInitialize= new ReactiveProperty<bool>();
         private IStorageService _storageService;
 
         private IWishList _wishList;
 
-        public CalendarPageViewModel(IStorageService storageService)
+        public CalendarPageViewModel(IWishList wishList,IStorageService storageService)
         {
             this._storageService = storageService;
-
-            canInitializeList.Subscribe(async _ =>
+            this._wishList = wishList;
+            canInitialize.Subscribe(async _ =>
             {
-                await _storageService.InitializeAsync();
+                await _storageService.InitializeAsync(this._wishList);
                 await _storageService.ReadFile();
-                this._wishList = _storageService.WishList;
+                
             });
         }
 
@@ -34,7 +34,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            canInitializeList.Value = true;
+            canInitialize.Value = true;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

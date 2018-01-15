@@ -19,13 +19,14 @@ namespace FUNCalendar.Models
 
         public StorageService()
         {
-            WishList = new WishList();
-            /*他のやつも*/
+
         }
 
-        public async Task InitializeAsync()
+        public async Task InitializeAsync(IWishList wishList/*,,*/)
         {
             if (isInitialized) return;
+            WishList = wishList;
+            /*他のやつも*/
             Config = await Configuration.InitializeAsync();
             if (Config.IsEnableRemoteStorage)
                 storage = new RemoteStorage(Config.Username, Config.Password);
