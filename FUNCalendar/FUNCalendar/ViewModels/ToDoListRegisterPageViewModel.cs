@@ -36,8 +36,8 @@ namespace FUNCalendar.ViewModels
 
         /* 登録・キャンセルするときの処理用 */
         public ReactiveProperty<bool> CanRegister { get; private set; }
-        public AsyncReactiveCommand RegisterToDoItemCommand { get; private set; }
-        public AsyncReactiveCommand CancelCommand { get; private set; }
+        public ReactiveCommand RegisterToDoItemCommand { get; private set; }
+        public ReactiveCommand CancelCommand { get; private set; }
 
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
@@ -68,7 +68,7 @@ namespace FUNCalendar.ViewModels
             .ToReactiveProperty<bool>();
 
             /* 登録して遷移 */
-            RegisterToDoItemCommand = CanRegister.ToAsyncReactiveCommand();
+            RegisterToDoItemCommand = CanRegister.ToReactiveCommand();
             RegisterToDoItemCommand.Subscribe(async () =>
             {
                 if (ID != -1)
@@ -85,7 +85,7 @@ namespace FUNCalendar.ViewModels
             });
 
             /* 登録をキャンセルして遷移(確認もあるよ)  */
-            CancelCommand = new AsyncReactiveCommand();
+            CancelCommand = new ReactiveCommand();
             CancelCommand.Subscribe(async () =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");

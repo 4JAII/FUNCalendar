@@ -64,7 +64,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <BoxView Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="3" BackgroundColor="#B1D781" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                    <BoxView Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="3" BackgroundColor="#F69229" VerticalOptions="Fill" HorizontalOptions="Fill"/>
                     <BoxView Grid.ColumnSpan="9" Grid.Row="0" BackgroundColor="DarkGray" HeightRequest="1" VerticalOptions="StartAndExpand" HorizontalOptions="Fill"/>
                     <BoxView Grid.Column="0" Grid.RowSpan="3" BackgroundColor="DarkGray" WidthRequest="1" VerticalOptions="Fill" HorizontalOptions="StartAndExpand"/>
 
