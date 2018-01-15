@@ -7,26 +7,24 @@ using FUNCalendar.Models;
 
 namespace FUNCalendar.Services
 {
-    interface IStorageService
+    public interface IStorageService
     {
-        int LastAddedWishItemID { get; }
-        int LastAddedToDoItemID { get; }
-        int LastAddedHouseHoldAccountsID { get; }
+        Configuration Config { get; }
+        IWishList WishList { get; }
+        bool HasError { get; }
+        Task InitializeAsync(IWishList wishList/*,,,*/);
 
-        Task<bool> AddItem(WishItem item);
-        //Task<bool> AddItem(ToDoItem item);
-        //Task<bool> AddItem(BalanceItem item);
-        //Task<bool> AddItem(HouseHoldAccountsItem item);
-        Task<bool> DeleteItem(WishItem item);
-        //Task<bool> DeleteItem(ToDoItem item);
-        //Task<bool> DeleteItem(HouseHoldAccountsItem item);
-        Task<bool> EditItem(WishItem item);
-        //Task<bool> EditItem(ToDoItem item);
-        //Task<bool> EditItem(HouseHoldAccountsItem item);
-        Task<List<WishItem>> ReadFile();
-        //Task<List<ToDoItem>> ReadFile();
-        //Task<List<BalanceItem>> ReadFile();
-        //Task<List<HouseHoldAccountsItem>> ReadFile();
+        Task AddItem(WishItem item);
+        //Task AddItem(ToDoItem item);
+        //Task AddItem(BalanceItem item);
+        //Task AddItem(HouseholdAccountsItem item);
+        Task DeleteItem(WishItem item);
+        //Task DeleteItem(ToDoItem item);
+        //Task DeleteItem(HouseholdAccountsItem item);
+        Task EditItem(WishItem deleteItem,WishItem addItem);
+        //Task EditItem(ToDoItem item);
+        //Task EditItem(HouseholdAccountsItem item);
+        Task ReadFile();
 
     }
 }

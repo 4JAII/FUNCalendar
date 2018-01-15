@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FUNCalendar.Models;
 
-namespace FUNCalendar.Models
+namespace FUNCalendar.Services
 {
     public interface IWishList
     {

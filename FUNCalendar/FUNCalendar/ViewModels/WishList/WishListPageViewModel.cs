@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FUNCalendar.Models;
+using FUNCalendar.Services;
 using Reactive.Bindings;
 using System.Reactive.Disposables;
 using Reactive.Bindings.Extensions;
@@ -18,6 +19,7 @@ namespace FUNCalendar.ViewModels
         private IWishList _wishList;
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
+        private IStorageService _storageService;
 
         /* Picker用のソートアイテム */
         public WishListSortName[] SortNames { get; private set; }
@@ -42,13 +44,12 @@ namespace FUNCalendar.ViewModels
         /* 購読解除用 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        private LocalStorage localStorage = new LocalStorage();
 
 
-        public WishListPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListPageViewModel(IWishList wishList,IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._wishList = wishList;
-
+            this._storageService = storageService;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
@@ -95,8 +96,7 @@ namespace FUNCalendar.ViewModels
                 if (result)
                 {
                     var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
-                    _wishList.Remove(wishItem);
-                    await localStorage.DeleteItem(wishItem);
+                    await _storageService.DeleteItem(wishItem);
                 }
             });
 
@@ -107,7 +107,7 @@ namespace FUNCalendar.ViewModels
             /* 昇順降順が変わった時 */
             OrderChangeCommand.Subscribe(() =>
             {
-                _wishList.IsAscending = !_wishList.IsAscending;
+                _wishList.IsAscending = !_wishList.IsAscending;/* MVVM違反？*/
                 Order = _wishList.IsAscending ? "昇順" : "降順";
                 SelectedSortName.Value.Sort();
             }).AddTo(disposable);
@@ -120,7 +120,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            _wishList.IsAscending = true;
+            _wishList.IsAscending = true;/* MVVM違反？ */
 
         }
 

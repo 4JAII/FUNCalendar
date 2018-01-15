@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FUNCalendar.Models;
-using FUNCalendar.Views;
+using FUNCalendar.Services;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using Reactive.Bindings.Binding;
@@ -24,6 +24,7 @@ namespace FUNCalendar.ViewModels
         private IWishList _wishList;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
+        private IStorageService _storageService;
 
         /* WishItem登録用 */
         public int ID { get; private set; } = -1;
@@ -46,15 +47,13 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
-        /* データベース用 */
-        private LocalStorage localStorage;
 
         /* 廃棄 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        public WishListRegisterPageViewModel(IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListRegisterPageViewModel(IWishList wishList,IStorageService storage, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            localStorage = new LocalStorage();
+            this._storageService = storage;
 
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._wishList = wishList;
@@ -85,26 +84,13 @@ namespace FUNCalendar.ViewModels
                 {
                     var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought, todoID);
                     var wishItem = VMWishItem.ToWishItem(vmWishItem);
-                    await localStorage.EditItem(wishItem);
-                    if (NeedsAdd)
-                    {
-                        /* wishItemをToDoItemに変換してadd処理 
-                         * localStorage.AddItem(todoItem);*/
-                    }
-                    _wishList.EditWishItem(_wishList.DisplayWishItem, wishItem);
+                    await _storageService.EditItem(_wishList.DisplayWishItem, wishItem);
 
                 }
                 else
                 {
-                    if (NeedsAdd)
-                    {
-                        /* wishItemをToDoItemに変換してadd処理 
-                         * localStorage.AddItem(todoItem);*/
-                    }
                     var wishItem = new WishItem { Name = this.Name.Value, Price = int.Parse(this.Price.Value), Date = Date.Value, IsBought = false };
-                    await localStorage.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
-                    wishItem.ID = localStorage.LastAddedWishItemID;
-                    _wishList.AddWishItem(wishItem);
+                    await _storageService.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
             });

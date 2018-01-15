@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Prism.Mvvm;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using FUNCalendar.Services;
 
 namespace FUNCalendar.Models
 {
@@ -98,7 +99,8 @@ namespace FUNCalendar.Models
         /* アイテム削除 */
         public void Remove(WishItem wishItem)
         {
-            allWishList.RemoveAll(x => x.ID == wishItem.ID);
+            if (allWishList.Count == 1) allWishList.RemoveAt(0);
+            else allWishList.RemoveAll(x => x.ID == wishItem.ID);
             UpdateSortedList();
         }
 

@@ -12,7 +12,7 @@ using FUNCalendar.Services;
 
 namespace FUNCalendar.Models
 {
-    public class LocalStorage : IStorageService
+    public class LocalStorage : IStorage
     {
         private IFolder rootFolder;
         private readonly string databaseFileName = "FUNCalendarDB.db";
@@ -23,19 +23,16 @@ namespace FUNCalendar.Models
         /* 最後に追加したIDを保持 */
         public int LastAddedWishItemID { get; private set; }
         public int LastAddedToDoItemID { get; private set; }
-        public int LastAddedHouseHoldAccountsID { get; private set; }
+        public int LastAddedHouseholdAccountsID { get; private set; }
 
-        public LocalStorage()
-        {
-            rootFolder = FileSystem.Current.LocalStorage;
-            fileReadWriteService = new FileReadWriteService();
-        }
 
         private async Task CreateConnection()
         {
             if (isInitialized) return;
             IFile file;
             SQLiteAsyncConnection connection;
+            rootFolder = FileSystem.Current.LocalStorage;
+            fileReadWriteService = new FileReadWriteService();
             var result = await fileReadWriteService.ExistsAsync(databaseFileName).ConfigureAwait(false);
             if (!result)
             {
@@ -209,7 +206,7 @@ namespace FUNCalendar.Models
         }
         */
 
-        public async Task<List<WishItem>> ReadFile()
+        public async Task<List<WishItem>> ReadWishList()
         {
             await CreateConnection();
             return await asyncConnection.Table<WishItem>().ToListAsync();

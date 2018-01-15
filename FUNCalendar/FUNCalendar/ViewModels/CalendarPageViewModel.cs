@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using Reactive.Bindings;
 using FUNCalendar.Models;
+using FUNCalendar.Services;
 using System;
 
 namespace FUNCalendar.ViewModels
@@ -9,29 +10,31 @@ namespace FUNCalendar.ViewModels
     public class CalendarPageViewModel : BindableBase,INavigationAware
     {
         /* 全てのリストを初期化 */
-        private static ReactiveProperty<bool> canInitializeList= new ReactiveProperty<bool>();
-        private LocalStorage localStorage = new LocalStorage();
+        private static ReactiveProperty<bool> canInitialize= new ReactiveProperty<bool>();
+        private IStorageService _storageService;
 
         private IWishList _wishList;
 
-        public CalendarPageViewModel(IWishList wishList)
+        public CalendarPageViewModel(IWishList wishList,IStorageService storageService)
         {
+            this._storageService = storageService;
             this._wishList = wishList;
-
-            canInitializeList.Subscribe(async _ =>
+            canInitialize.Subscribe(async _ =>
             {
-                _wishList.InitializeList(await localStorage.ReadFile());
+                await _storageService.InitializeAsync(this._wishList);
+                await _storageService.ReadFile();
+                
             });
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-
+           
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            canInitializeList.Value = true;
+            canInitialize.Value = true;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)
