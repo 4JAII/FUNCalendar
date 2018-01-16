@@ -4,11 +4,15 @@
     "FubarCoder.RestSharp.Portable.Core": "4.0.8",
     "FubarCoder.RestSharp.Portable.HttpClient": "4.0.8",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+<<<<<<< HEAD
     "NETStandard.Library": "1.6.1",
     "Newtonsoft.Json": "10.0.3",
     "OxyPlot.Core": "1.0.0",
     "OxyPlot.Xamarin.Forms": "1.0.0",
     "PCLStorage": "1.0.2",
+=======
+    "OxyPlot.Xamarin.Forms": "1.1.0-unstable0011",
+>>>>>>> feature/HouseHoldAccounts
     "Prism.Core": "6.3.0",
     "Prism.Forms": "6.3.0",
     "Prism.Unity.Forms": "6.3.0",

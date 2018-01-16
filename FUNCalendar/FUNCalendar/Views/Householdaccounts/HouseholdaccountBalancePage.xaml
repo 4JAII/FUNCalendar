@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FUNCalendar.Views.HouseholdaccountBalancePage">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"
+                     Command="{Binding ResistCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Text="総残高" Grid.Row="0"
+                   Grid.Column="0"/>
+            <Label Text="{Binding DisplayTotalBalance.Value}"
+                   Grid.Row="0"
+                   Grid.Column="1"/>
+            <ListView ItemsSource="{Binding DisplayBalances}"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="50*"/>
+                                    <ColumnDefinition Width="100*"/>
+                                    <ColumnDefinition Width="100*"/>
+                                    <ColumnDefinition Width="100*"/>
+                                    <ColumnDefinition Width="200*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding StorageType}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3"/>
+                                <Label Text="{Binding Price}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Row="0" Grid.Column="5"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+        <Button Text="統計" Command="{Binding StatisticsCommand}" Grid.Row="2" Grid.Column="1"/>
+        <Button Text="履歴" Command="{Binding HistoryCommand}" Grid.Row="2" Grid.Column="2"/>
+        <Button Text="残高" Command="{Binding BalanceCommand}" Grid.Row="2" Grid.Column="3"/>
+    </Grid>
+
+</ContentPage>

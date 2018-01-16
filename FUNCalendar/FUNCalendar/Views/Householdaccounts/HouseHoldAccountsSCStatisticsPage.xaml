@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:local="clr-namespace:FUNCalendar.ViewModels"
+             xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
+             xmlns:b="clr-namespace:FUNCalendar.Behaviors"
+             x:Class="FUNCalendar.Views.HouseHoldAccountsSCStatisticsPage"
+             Title="{Binding SCategoryTitle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"
+                     Command="{Binding ResistCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="500*"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Text="BackPage"
+                   Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Command="{Binding BackPageCommand}"/>
+
+            <DatePicker Grid.Row="1"
+                    Grid.Column="1"
+                    Format="yyyy/mm/dd"
+                    Date="{Binding SelectedDate.Value}"/>
+
+            <Picker ItemsSource="{Binding RangeNames}"
+                SelectedItem="{Binding SelectedRange.Value}"
+                ItemDisplayBinding="{Binding RangeName}"
+                HorizontalOptions="EndAndExpand"
+                WidthRequest="400"
+                Grid.Row="1"
+                Grid.Column="2"/>
+
+            <oxy:PlotView Model = "{Binding DisplayPlotModel}"
+                      Grid.Row="3"
+                      Grid.Column="1"/>
+
+            <ListView ItemsSource="{Binding DisplayLegend}"
+                  HorizontalOptions="Center"
+                  SeparatorVisibility ="None"
+                  Grid.Row="3"
+                  Grid.Column="2">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Frame BackgroundColor="{Binding ColorPath}"
+                                   WidthRequest="10"
+                                   HeightRequest="10"
+                                   CornerRadius="50"
+                                   Padding="0"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"/>
+                                <Label Text="{Binding Label}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <Grid Grid.Row="4"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="400"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding CurrentSCategory}" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
+                <Label Text="{Binding DisplayScategoryTotal.Value}" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="4"/>
+                <ListView ItemsSource="{Binding DisplayScategoryItems}"
+                          SeparatorVisibility="None"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="4">
+
+                    <ListView.Behaviors>
+                        <b:ItemSelectedToCommandBehavior Command="{Binding ItemSelectedCommand}"/>
+                    </ListView.Behaviors>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="9*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Dcategory}" Grid.Row="0" HorizontalOptions="Start" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                    <Label Text="{Binding Ratio}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Price}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>
