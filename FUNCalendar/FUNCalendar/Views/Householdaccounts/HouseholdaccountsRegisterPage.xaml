@@ -24,7 +24,7 @@
         <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}" Grid.Row="7" Grid.Column="2" />
 
     </StackLayout>
-<!--
+    <!--
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

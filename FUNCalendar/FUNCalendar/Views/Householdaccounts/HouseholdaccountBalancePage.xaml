@@ -4,7 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.HouseholdaccountBalancePage">
-    
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
                      Text="Add"

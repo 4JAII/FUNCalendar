@@ -50,19 +50,7 @@ namespace FUNCalendar.ViewModels
         }
         public async Task PageChangeAsync(MenuItem menuItem)
         {
-            switch (menuItem.Title)
-            {
-                case "WishList":
-                case "Calendar":
-                case "ToDo":
-                    await this.NavigationService.NavigateAsync($"NavigationPage/{menuItem.PageName}");
-                    break;
-                case "家計簿":
-                    await this.NavigationService.NavigateAsync($"NavigationPage/{menuItem.PageName}");
-                    break;
-                default:
-                    break;
-            }
+            await this.NavigationService.NavigateAsync($"NavigationPage/{menuItem.PageName}");
             this.IsPresented = false;
 
         }
