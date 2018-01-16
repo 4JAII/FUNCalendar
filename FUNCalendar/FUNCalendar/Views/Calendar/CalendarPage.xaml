@@ -41,11 +41,11 @@
         </Grid.ColumnDefinitions>
 
         <Button Image="Calendar_BackPrevMonth.png" Grid.Row="1" Grid.Column="1" Command="{Binding BackPrevMonth}" BorderWidth="0"
-                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarYear}" Grid.Row="1" Grid.Column="3"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="1" Grid.Column="5"/>
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarYear}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"/>
         <Button Image="Calendar_GoNextMonth.png" Grid.Row="1" Grid.Column="7" Command="{Binding GoNextMonth}" BorderWidth="0"
-                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White"/>
         
         <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="日" Grid.Row="2" Grid.Column="1"/>
         <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="月" Grid.Row="2" Grid.Column="2"/>
@@ -70,9 +70,9 @@
                     <StackLayout BackgroundColor="{Binding BackgroundColor}">
                         <Label VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"
-                               FontSize="Medium"
+                               FontSize="Micro"
                                FontAttributes="Bold"
-                               HeightRequest="20"
+                               HeightRequest="18"
                                Text="{Binding StrDate}"/>
 
                         <Grid HeightRequest="10">
@@ -92,7 +92,7 @@
                             <Image Source="{Binding HasToDoList}"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
-                                   WidthRequest="10"
+                                   WidthRequest="8"
                                    Aspect="AspectFit"
                                    Grid.Column="0"/>
                             <BoxView BackgroundColor="{Binding BackgroundColor}"
@@ -102,7 +102,7 @@
                             <Image Source="{Binding HasWishList}"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
-                                   WidthRequest="10"
+                                   WidthRequest="8"
                                    Aspect="AspectFit"
                                    Grid.Column="1"/>
                             <BoxView BackgroundColor="{Binding BackgroundColor}"
@@ -112,11 +112,12 @@
                             <Image Source="{Binding HasHouseHoldAccountsList}"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
-                                   WidthRequest="10"
+                                   WidthRequest="8"
                                    Aspect="AspectFit"
                                    Grid.Column="2"/>
                         </Grid>
                         
+                        <!--
                         <Label VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"
                                VerticalOptions="CenterAndExpand"
@@ -124,6 +125,7 @@
                                Text="+○円 -○円"
                                FontSize="10"
                                HeightRequest="10"/>
+                        -->
                     </StackLayout>
                 </DataTemplate>
             </AiForms:RepeatableWrapLayout.ItemTemplate>
