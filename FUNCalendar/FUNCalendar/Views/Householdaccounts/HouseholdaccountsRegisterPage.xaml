@@ -4,7 +4,27 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.HouseholdaccountsRegisterPage">
+    <StackLayout>
+        <Button Text="収入" Command="{Binding IncomeCommand}" FontAttributes="{Binding IncomeFontAttributes.Value}"/>
+        <Button Text="支出" Command="{Binding OutgoingCommand}" FontAttributes="{Binding OutgoingFontAttributes.Value}"/>
+        <Picker ItemsSource="{Binding ScategoryNames}"
+                SelectedItem="{Binding CurrentScategory.Value}"
+                ItemDisplayBinding="{Binding ScategoryName}"
+                WidthRequest="400"/>
+        <Picker ItemsSource="{Binding DcategoryNames}"
+                SelectedItem="{Binding CurrentDcategory.Value}"
+                ItemDisplayBinding="{Binding DcategoryName}"/>
+        <Picker ItemsSource="{Binding StorageNames}"
+                SelectedItem="{Binding CurrentStorageType.Value}"
+                ItemDisplayBinding="{Binding StorageTypeName}"/>
+        <DatePicker Date="{Binding Date.Value}" Grid.Row="1" Grid.Column="2" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Entry Text="{Binding Name.Value}" FontSize="Large" Placeholder="商品名を入力" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="値段を入力" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterHouseholdaccountsCommand}" Grid.Row="7" Grid.Column="1" />
+        <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}" Grid.Row="7" Grid.Column="2" />
 
+    </StackLayout>
+<!--
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -16,6 +36,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,12 +45,18 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Text="購入予定日:" Grid.Row="1" Grid.Column="1" FontSize="Medium" HorizontalOptions="End" VerticalOptions="CenterAndExpand"/>
+        <Picker ItemsSource="{Binding ScategoryNames}"
+                SelectedItem="{Binding CurrentScategory.Value}"
+                ItemDisplayBinding="{Binding ScategoryName}"
+                WidthRequest="400"
+                Grid.Row="1"
+                Grid.Column="1"/>
         <DatePicker Date="{Binding Date.Value}" Grid.Row="1" Grid.Column="2" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
         <Entry Text="{Binding Name.Value}" FontSize="Large" Placeholder="商品名を入力" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="値段を入力" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterWishItemCommand}" Grid.Row="7" Grid.Column="1" />
+        <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterHouseholdaccountsCommand}" Grid.Row="7" Grid.Column="1" />
         <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}" Grid.Row="7" Grid.Column="2" />
+        <Picker ItemsSource="{Binding }"
     </Grid>
-
+-->
 </ContentPage>

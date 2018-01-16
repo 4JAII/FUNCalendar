@@ -83,24 +83,24 @@ namespace FUNCalendar.ViewModels
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:日単位",
-                    R = Range.Day
+                    RangeData = Range.Day
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:月単位" ,
-                    R = Range.Month
+                    RangeData = Range.Month
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:年単位",
-                    R = Range.Year
+                    RangeData = Range.Year
                 }
             };
 
             /* 概要カテゴリーの統計ページに遷移 */
             BackPageCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(CurrentBalanceType, CurrentSCategory, SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(CurrentBalanceType, CurrentSCategory, SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseHoldAccountsStatisticsPageViewModel.InputKey, navigationitem }
@@ -118,7 +118,7 @@ namespace FUNCalendar.ViewModels
                 _householdaccounts.AddHouseHoldAccountsItem("test3", 500, DateTime.Today, DCategorys.子供関連, SCategorys.日用雑貨, StorageTypes.財布, true);
                 _householdaccounts.AddHouseHoldAccountsItem("test4", 500, DateTime.Today, DCategorys.受取利息, SCategorys.投資収入, StorageTypes.財布, false);
                 _householdaccounts.AddHouseHoldAccountsItem("test4", 2000, temp, DCategorys.その他_収入, SCategorys.その他_収入, StorageTypes.財布, false);
-                _householdaccounts.SetDCategoryHistory(SelectedRange.Value.R, SelectedDate.Value, CurrentDCategory);
+                _householdaccounts.SetDCategoryHistory(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentDCategory);
             }).AddTo(disposable);
         }
 
@@ -141,14 +141,14 @@ namespace FUNCalendar.ViewModels
                 this.CurrentSCategory = NavigatedItem.CurrentSCategory;
                 this.CurrentDCategory = NavigatedItem.CurrentDCategory;
                 this.DCategoryTitle = String.Format("家計簿・{0}・{1}", NavigatedItem.CurrentSCategory, NavigatedItem.CurrentDCategory);
-                _householdaccounts.SetDCategoryHistory(SelectedRange.Value.R, SelectedDate.Value, CurrentDCategory);
+                _householdaccounts.SetDCategoryHistory(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentDCategory);
 
                 /* 日付が変更された時の処理 */
                 SelectedDate.Subscribe(_ =>
                 {
                     if (_ != null)
                     {
-                        _householdaccounts.SetDCategoryHistory(SelectedRange.Value.R, SelectedDate.Value, CurrentDCategory);
+                        _householdaccounts.SetDCategoryHistory(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentDCategory);
                     }
                 })
                 .AddTo(disposable);
@@ -158,7 +158,7 @@ namespace FUNCalendar.ViewModels
                 {
                     if (_ != null)
                     {
-                        _householdaccounts.SetDCategoryHistory(SelectedRange.Value.R, SelectedDate.Value, CurrentDCategory);
+                        _householdaccounts.SetDCategoryHistory(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentDCategory);
                     }
                 })
                 .AddTo(disposable);

@@ -10,6 +10,6 @@ namespace FUNCalendar.ViewModels
     public class HouseholdaccountRangeItem
     {
         public string RangeName { get; set; }
-        public Range R { get;  set; }
+        public Range RangeData { get;  set; }
     }
 }

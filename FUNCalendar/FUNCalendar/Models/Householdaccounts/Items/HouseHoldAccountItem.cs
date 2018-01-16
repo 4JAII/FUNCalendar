@@ -1,5 +1,6 @@
 ﻿using System;
 using Prism.Mvvm;
+using FUNCalendar.ViewModels;
 
 namespace FUNCalendar.Models
 {
@@ -77,6 +78,8 @@ namespace FUNCalendar.Models
             StorageType = storagetype;
             IsOutGoings = isoutgoings;
         }
+
+        public HouseHoldAccountsItem(){ }
 
         /* Sort */
         public static int CompareByID(HouseHoldAccountsItem a, HouseHoldAccountsItem b)

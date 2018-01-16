@@ -40,7 +40,7 @@ namespace FUNCalendar.ViewModels
 
 
         /* デバッグ用 */
-        public ReactiveCommand ResistCommand { get; private set; }
+        public AsyncReactiveCommand ResistCommand { get; private set; }
 
         /* Picker用のアイテム */
         public HouseholdaccountRangeItem[] RangeNames { get; private set; }
@@ -76,12 +76,15 @@ namespace FUNCalendar.ViewModels
         /* 履歴画面移行用 */
         public ReactiveCommand HistoryCommand { get; private set; }
 
+        /* 編集用 */
+        public ReactiveCommand EditCommand { get; private set; } = new ReactiveCommand();
+
 
 
         public HouseHoldAccountsStatisticsPageViewModel(IHouseHoldAccounts ihouseholdaccounts, INavigationService navigationService)
         {
             /* デバッグ用 アイテム追加コマンド */
-            this.ResistCommand = new ReactiveCommand();
+            this.ResistCommand = new AsyncReactiveCommand();
 
             this._householdaccounts = ihouseholdaccounts;
             this._inavigationservice = navigationService;
@@ -118,25 +121,25 @@ namespace FUNCalendar.ViewModels
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:日単位",
-                    R = Range.Day
+                    RangeData = Range.Day
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:月単位" ,
-                    R = Range.Month
+                    RangeData = Range.Month
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:年単位",
-                    R = Range.Year
+                    RangeData = Range.Year
                 }
             };
             /* レンジを日単位で初期化 */
             SelectedRange.Value = RangeNames[0];
 
             /* 統計とグラフの初期化 */
-            _householdaccounts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
-            _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+            _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
+            _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
 
             /* グラフに表示するジャンルを支出で初期化 */
             CurrentBalanceType = BalanceTypes.outgoings;
@@ -154,8 +157,8 @@ namespace FUNCalendar.ViewModels
             {
                 if (_ != null)
                 {
-                    _householdaccounts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
-                    _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+                    _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
+                    _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
                 }
             })
             .AddTo(disposable);
@@ -165,8 +168,8 @@ namespace FUNCalendar.ViewModels
             {
                 if (_ != null)
                 {
-                    _householdaccounts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
-                    _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+                    _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
+                    _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
                 }
             })
             .AddTo(disposable);
@@ -175,14 +178,14 @@ namespace FUNCalendar.ViewModels
             SelectIncome.Subscribe(_ =>
             {
                 CurrentBalanceType = BalanceTypes.incomes;
-                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
             });
 
             /* グラフの種類が支出に設定された時の処理 */
             SelectOutgoing.Subscribe(_ =>
             {
                 CurrentBalanceType = BalanceTypes.outgoings;
-                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
             })
             .AddTo(disposable);
 
@@ -190,16 +193,19 @@ namespace FUNCalendar.ViewModels
             SelectDifference.Subscribe(_ =>
             {
                 CurrentBalanceType = BalanceTypes.difference;
-                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
             })
             .AddTo(disposable);
 
-            /* デバッグ用 アイテム追加ボタンが押された時の処理 */
-            ResistCommand.Subscribe(_ =>
+            /* アイテム追加ボタンが押された時の処理 */
+            ResistCommand.Subscribe(async _ =>
             {
-                _householdaccounts.AddHouseHoldAccountsItem("test4", 2000, DateTime.Today, DCategorys.その他_収入, SCategorys.その他_収入, StorageTypes.財布, false);
-                _householdaccounts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
-                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var navigationparameter = new NavigationParameters()
+                {
+                    {HouseholdaccountsRegisterPageViewModel.InputKey, navigationitem }
+                };
+                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountsRegisterPage",navigationparameter);
             }).AddTo(disposable);
 
             /* グラフのデータが変更された時の処理 */
@@ -210,7 +216,7 @@ namespace FUNCalendar.ViewModels
             {
                 var currentbalancetype = (BalanceTypes)Enum.Parse(typeof(BalanceTypes), x.Balancetype);
                 var currentscategory = (SCategorys)Enum.Parse(typeof(SCategorys), x.Scategory);
-                var navigationitem = new HouseholdaccountNavigationItem(currentbalancetype, currentscategory, SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(currentbalancetype, currentscategory, SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseHoldAccountsSCStatisticsPageViewModel.InputKey, navigationitem }
@@ -218,10 +224,22 @@ namespace FUNCalendar.ViewModels
                 _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsSCStatisticsPage", navigationparameter);
             });
 
+            /* アイテムを編集するときの処理 */
+            EditCommand.Subscribe(async (obj) =>
+            {
+                _householdaccounts.SetHouseholdaccountsItem(VMHouseHoldAccountsItem.ToHouseholdaccountsItem(obj as VMHouseHoldAccountsItem));
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var navigationparameter = new NavigationParameters()
+                {
+                    {HouseholdaccountsRegisterPageViewModel.InputKey, navigationitem }
+                };
+                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountsRegisterPage", navigationparameter);
+            });
+
             /* 残高ボタンが押されたときの処理 */
             BalanceCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }
@@ -232,7 +250,7 @@ namespace FUNCalendar.ViewModels
             /* 履歴ボタンが押されたときの処理 */
             HistoryCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }
@@ -275,8 +293,8 @@ namespace FUNCalendar.ViewModels
                     (NavigatedItem.CurrentRange == Range.Year) ? RangeNames[2] : null;
 
                 CurrentBalanceType = BalanceTypes.outgoings;
-                _householdaccounts.SetAllStatics(SelectedRange.Value.R, SelectedDate.Value);
-                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value);
+                _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
+                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
             }
         }
 

@@ -45,6 +45,9 @@
     <Compile Include="Models\Householdaccounts\HouseHoldAccounts.cs" />
     <Compile Include="Models\Householdaccounts\Items\HouseholdaccountScStatisticsItem.cs" />
     <Compile Include="Models\Householdaccounts\Items\HouseholdaccountStatisticItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountsStorageTypeItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountsDcategoryItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountsSCategoryItem.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsRegisterPageViewModel.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsHistoryPageViewModel.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsDCHistoryPageViewModel.cs" />

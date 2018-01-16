@@ -159,22 +159,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\drawable\icon_wishList.png" />
+    <AndroidResource Include="Resources\drawable\icon_wishList.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\drawable\icon_add.png" />
+    <AndroidResource Include="Resources\drawable\icon_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\drawable\icon_calendar.png" />
+    <AndroidResource Include="Resources\drawable\icon_calendar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\drawable\icon_config.png" />
+    <AndroidResource Include="Resources\drawable\icon_config.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\drawable\icon_houseHoldAccounts.png" />
+    <AndroidResource Include="Resources\drawable\icon_houseHoldAccounts.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\drawable\icon_todo.png" />
+    <AndroidResource Include="Resources\drawable\icon_todo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

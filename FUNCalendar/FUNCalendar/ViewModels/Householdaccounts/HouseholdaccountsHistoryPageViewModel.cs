@@ -79,17 +79,17 @@ namespace FUNCalendar.ViewModels
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:日単位",
-                    R = Range.Day
+                    RangeData = Range.Day
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:月単位" ,
-                    R = Range.Month
+                    RangeData = Range.Month
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:年単位",
-                    R = Range.Year
+                    RangeData = Range.Year
                 }
             };
 
@@ -102,13 +102,13 @@ namespace FUNCalendar.ViewModels
                 _householdaccounts.AddHouseHoldAccountsItem("test3", 500, DateTime.Today, DCategorys.子供関連, SCategorys.日用雑貨, StorageTypes.財布, true);
                 _householdaccounts.AddHouseHoldAccountsItem("test4", 500, DateTime.Today, DCategorys.受取利息, SCategorys.投資収入, StorageTypes.財布, false);
                 _householdaccounts.AddHouseHoldAccountsItem("test4", 2000, temp, DCategorys.その他_収入, SCategorys.その他_収入, StorageTypes.財布, false);
-                _householdaccounts.SetAllHistory(SelectedRange.Value.R, SelectedDate.Value);
+                _householdaccounts.SetAllHistory(SelectedRange.Value.RangeData, SelectedDate.Value);
             }).AddTo(disposable);
 
             /* 統計ボタンが押されたときの処理 */
             StatisticsCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }
@@ -120,7 +120,7 @@ namespace FUNCalendar.ViewModels
             /* 残高ボタンが押されたときの処理 */
             BalanceCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }
@@ -148,14 +148,14 @@ namespace FUNCalendar.ViewModels
                     (NavigatedItem.CurrentRange == Range.Year) ? RangeNames[2] : null;
                 this.CurrentSCategory = NavigatedItem.CurrentSCategory;
                 this.CurrentDCategory = NavigatedItem.CurrentDCategory;
-                _householdaccounts.SetAllHistory(SelectedRange.Value.R, SelectedDate.Value);
+                _householdaccounts.SetAllHistory(SelectedRange.Value.RangeData, SelectedDate.Value);
 
                 /* 日付が変更された時の処理 */
                 SelectedDate.Subscribe(_ =>
                 {
                     if (_ != null)
                     {
-                        _householdaccounts.SetAllHistory(SelectedRange.Value.R, SelectedDate.Value);
+                        _householdaccounts.SetAllHistory(SelectedRange.Value.RangeData, SelectedDate.Value);
                     }
                 })
                 .AddTo(disposable);
@@ -165,7 +165,7 @@ namespace FUNCalendar.ViewModels
                 {
                     if (_ != null)
                     {
-                        _householdaccounts.SetAllHistory(SelectedRange.Value.R, SelectedDate.Value);
+                        _householdaccounts.SetAllHistory(SelectedRange.Value.RangeData, SelectedDate.Value);
                     }
                 })
                 .AddTo(disposable);

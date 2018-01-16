@@ -74,24 +74,24 @@ namespace FUNCalendar.ViewModels
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:日単位",
-                    R = Range.Day
+                    RangeData = Range.Day
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:月単位" ,
-                    R = Range.Month
+                    RangeData = Range.Month
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:年単位",
-                    R = Range.Year
+                    RangeData = Range.Year
                 }
             };
 
             /* 履歴ボタンが押されたときの処理 */
             HistoryCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }
@@ -102,7 +102,7 @@ namespace FUNCalendar.ViewModels
             /* 統計ボタンが押されたときの処理 */
             StatisticsCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }

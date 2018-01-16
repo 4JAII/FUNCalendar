@@ -115,17 +115,17 @@ namespace FUNCalendar.ViewModels
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:日単位",
-                    R = Range.Day
+                    RangeData = Range.Day
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:月単位" ,
-                    R = Range.Month
+                    RangeData = Range.Month
                 },
                 new HouseholdaccountRangeItem
                 {
                     RangeName = "統計:年単位",
-                    R = Range.Year
+                    RangeData = Range.Year
                 }
             };
 
@@ -142,7 +142,7 @@ namespace FUNCalendar.ViewModels
             /* メインページに遷移 */
             BackPageCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseHoldAccountsStatisticsPageViewModel.InputKey, navigationitem }
@@ -157,7 +157,7 @@ namespace FUNCalendar.ViewModels
                 var currentscategory = (SCategorys)Enum.Parse(typeof(SCategorys), x.Scategory);
                 var currentdcategory = (DCategorys)Enum.Parse(typeof(DCategorys), x.Dcategory);
 
-                var navigationitem = new HouseholdaccountNavigationItem(currentbalancetype, currentscategory, currentdcategory, SelectedDate.Value, SelectedRange.Value.R);
+                var navigationitem = new HouseholdaccountNavigationItem(currentbalancetype, currentscategory, currentdcategory, SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdaccountsDCHistoryPageViewModel.InputKey, navigationitem }
@@ -174,8 +174,8 @@ namespace FUNCalendar.ViewModels
                 _householdaccounts.AddHouseHoldAccountsItem("test3", 500, DateTime.Today, DCategorys.子供関連, SCategorys.日用雑貨, StorageTypes.財布, true);
                 _householdaccounts.AddHouseHoldAccountsItem("test4", 500, DateTime.Today, DCategorys.受取利息, SCategorys.投資収入, StorageTypes.財布, false);
                 _householdaccounts.AddHouseHoldAccountsItem("test4", 2000, temp, DCategorys.その他_収入, SCategorys.その他_収入, StorageTypes.財布, false);
-                _householdaccounts.SetSCategoryStatics(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
-                _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.R, SelectedDate.Value, CurrentSCategory);
+                _householdaccounts.SetSCategoryStatics(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
+                _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentSCategory);
             }).AddTo(disposable);
 
         }
@@ -202,8 +202,8 @@ namespace FUNCalendar.ViewModels
                 this.CurrentSCategory = NavigatedItem.CurrentSCategory;
                 this.SCategoryTitle = String.Format("家計簿・{0}", NavigatedItem.CurrentSCategory);
 
-                _householdaccounts.SetSCategoryStatics(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
-                _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.R, SelectedDate.Value, CurrentSCategory);
+                _householdaccounts.SetSCategoryStatics(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
+                _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentSCategory);
                 this.DisplayScategoryTotal = _householdaccounts.ObserveProperty(h => h.SCategoryTotal).ToReactiveProperty().AddTo(disposable);
 
                 /* ReactiveProperty化(グラフ) */
@@ -214,8 +214,8 @@ namespace FUNCalendar.ViewModels
                 {
                     if (_ != null)
                     {
-                        _householdaccounts.SetSCategoryStatics(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
-                        _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.R, SelectedDate.Value, CurrentSCategory);
+                        _householdaccounts.SetSCategoryStatics(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
+                        _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentSCategory);
                     }
                 })
                 .AddTo(disposable);
@@ -225,8 +225,8 @@ namespace FUNCalendar.ViewModels
                 {
                     if (_ != null)
                     {
-                        _householdaccounts.SetSCategoryStatics(SelectedRange.Value.R, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
-                        _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.R, SelectedDate.Value, CurrentSCategory);
+                        _householdaccounts.SetSCategoryStatics(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
+                        _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentSCategory);
                     }
                 })
                 .AddTo(disposable);

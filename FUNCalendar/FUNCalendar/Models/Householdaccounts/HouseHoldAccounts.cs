@@ -14,6 +14,7 @@ namespace FUNCalendar.Models
     public class HouseHoldAccounts : BindableBase, IHouseHoldAccounts
     {
         private List<HouseHoldAccountsItem> allHouseHoldAccounts;
+        public HouseHoldAccountsItem SelectedItem { get; set; }
         private static int idCount;
         public int IDCount { get { return idCount; } private set { idCount = value; } }
 
@@ -127,6 +128,33 @@ namespace FUNCalendar.Models
                 price = -price;
             }
             IncrementBalancePrice(storagetype, price);
+            SetBalance();
+        }
+
+        /* アイテム追加 */
+        public void AddHouseHoldAccountsItem(HouseHoldAccountsItem item)
+        {
+            allHouseHoldAccounts.Add(item);
+            var price = item.Price;
+            if (item.IsOutGoings)
+            {
+               price = -price;
+            }
+            IncrementBalancePrice(item.StorageType, price);
+            SetBalance();
+        }
+
+        /* アイテム設定 */
+        public void SetHouseholdaccountsItem(HouseHoldAccountsItem item)
+        {
+            SelectedItem = item;
+        }
+
+        /* アイテムの編集 */
+        public void EditHouseholdaccountsItem(HouseHoldAccountsItem deleteItem, HouseHoldAccountsItem additem)
+        {
+            allHouseHoldAccounts.RemoveAll(item => item.ID == deleteItem.ID);
+            AddHouseHoldAccountsItem(additem);
             SetBalance();
         }
 
@@ -616,6 +644,95 @@ namespace FUNCalendar.Models
             }
 
         }
+
+        private int start;
+        /* Scategory To DcategoryStartpoint */
+        public int ScToDcStart(SCategorys sc)
+        {
+            switch (sc)
+            {
+                case SCategorys.食費:
+                    start = (int)DCategorys.start_of_食費;
+                    break;
+                case SCategorys.日用雑貨:
+                    start = (int)DCategorys.start_of_日用雑貨;
+                    break;
+                case SCategorys.交通費:
+                    start = (int)DCategorys.start_of_交通費;
+                    break;
+                case SCategorys.娯楽費:
+                    start = (int)DCategorys.start_of_娯楽費;
+                    break;
+                case SCategorys.医療費:
+                    start = (int)DCategorys.start_of_医療費;
+                    break;
+                case SCategorys.通信費:
+                    start = (int)DCategorys.start_of_通信費;
+                    break;
+                case SCategorys.水道_光熱費:
+                    start = (int)DCategorys.start_of_水道_光熱費;
+                    break;
+                case SCategorys.その他_支出:
+                    start = (int)DCategorys.start_of_その他_支出;
+                    break;
+                case SCategorys.給料:
+                    start = (int)DCategorys.start_of_給料;
+                    break;
+                case SCategorys.投資収入:
+                    start = (int)DCategorys.start_of_投資収入;
+                    break;
+                case SCategorys.その他_収入:
+                    start = (int)DCategorys.start_of_その他_収入;
+                    break;
+            }
+            return start;
+        }
+
+        private int end;
+        /* Scategory To DcategoryEndpoint */
+        public int ScToDcEnd(SCategorys sc)
+        {
+            switch (sc)
+            {
+                case SCategorys.食費:
+                    end = (int)DCategorys.end_of_食費;
+                    break;
+                case SCategorys.日用雑貨:
+                    end = (int)DCategorys.end_of_日用雑貨;
+                    break;
+                case SCategorys.交通費:
+                    end = (int)DCategorys.end_of_交通費;
+                    break;
+                case SCategorys.娯楽費:
+                    end = (int)DCategorys.end_of_娯楽費;
+                    break;
+                case SCategorys.医療費:
+                    end = (int)DCategorys.end_of_医療費;
+                    break;
+                case SCategorys.通信費:
+                    end = (int)DCategorys.end_of_通信費;
+                    break;
+                case SCategorys.水道_光熱費:
+                    end = (int)DCategorys.end_of_水道_光熱費;
+                    break;
+                case SCategorys.その他_支出:
+                    end = (int)DCategorys.end_of_その他_支出;
+                    break;
+                case SCategorys.給料:
+                    end = (int)DCategorys.end_of_給料;
+                    break;
+                case SCategorys.投資収入:
+                    end = (int)DCategorys.end_of_投資収入;
+                    break;
+                case SCategorys.その他_収入:
+                    end = (int)DCategorys.end_of_その他_収入;
+                    break;
+            }
+            return end;
+
+        }
+
+
 
         /* DcategoryからScategoryを求めるメソッド */
         public int DcToIntSc(DCategorys dc)

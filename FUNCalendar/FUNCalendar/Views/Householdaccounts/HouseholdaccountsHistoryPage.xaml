@@ -69,7 +69,6 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout>
                                     <Frame BackgroundColor="White"
                                OutlineColor="Navy"
                                Padding="0"
@@ -96,7 +95,6 @@
                                             <Label Text="{Binding CategoryData}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
                                         </Grid>
                                     </Frame>
-                                </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

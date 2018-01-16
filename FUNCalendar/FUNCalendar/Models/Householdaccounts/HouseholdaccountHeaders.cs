@@ -128,11 +128,13 @@ namespace FUNCalendar.Models
     }
     public enum StorageTypes        //お金の所在地の表
     {
+        start_of_Stype = 1,
         財布,
         貯金,
         銀行,
         クレジットカード,
-        その他
+        その他,
+        end_of_Stype
     }
 
     public enum BalanceTypes
