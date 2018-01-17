@@ -1,21 +1,15 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FUNCalendar.Models;
+﻿using FUNCalendar.Models;
 using FUNCalendar.Services;
+using Prism.Mvvm;
+using Prism.Navigation;
+using Prism.Services;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using Reactive.Bindings.Binding;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Microsoft.Practices.Unity;
-using Prism.Navigation;
-using System.Text.RegularExpressions;
 using System.Reactive.Disposables;
+using System.Text.RegularExpressions;
+using Xamarin.Forms;
 
 namespace FUNCalendar.ViewModels
 {

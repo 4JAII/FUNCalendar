@@ -24,7 +24,6 @@ namespace FUNCalendar.Models
             set { this.SetProperty(ref this.isAscending, value); }
         }
 
-        private static bool isInitialized = false;
 
         public WishList()
         {
@@ -78,9 +77,7 @@ namespace FUNCalendar.Models
         }
         public void InitializeList(List<WishItem> list)
         {
-            if (isInitialized) return;
             this.allWishList = list;
-            isInitialized = true;
         }
 
         /* アイテム追加 */
