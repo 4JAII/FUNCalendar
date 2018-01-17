@@ -14,6 +14,8 @@ namespace FUNCalendar.Services
         bool HasError { get; }
         Task InitializeAsync(IWishList wishList/*,,,*/);
 
+        void AfterResolveError();
+        Task SetConfig(bool isEnableRemoteStorage, string username, string password);
         Task AddItem(WishItem item);
         //Task AddItem(ToDoItem item);
         //Task AddItem(BalanceItem item);
@@ -25,6 +27,5 @@ namespace FUNCalendar.Services
         //Task EditItem(ToDoItem item);
         //Task EditItem(HouseholdAccountsItem item);
         Task ReadFile();
-
     }
 }

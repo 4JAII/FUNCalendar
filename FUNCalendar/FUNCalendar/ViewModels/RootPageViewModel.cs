@@ -33,6 +33,12 @@ namespace FUNCalendar.ViewModels
                 Title="家計簿",
                 PageName="HouseHoldAccountsPage",
                 Image=ImageSource.FromFile("icon_houseHoldAccounts.png"),
+            },
+            new MenuItem
+            {
+                Title="Config",
+                PageName="ConfigurationPage",
+                Image = ImageSource.FromFile("icon_config.png"),
             }
         };
 

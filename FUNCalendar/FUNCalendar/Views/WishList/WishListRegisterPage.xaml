@@ -6,7 +6,7 @@
              x:Class="FUNCalendar.Views.WishListRegisterPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="True"
-             Title="WishList画面登録">
+             Title="WishList登録画面">
 
     <Grid>
         <Grid.RowDefinitions>

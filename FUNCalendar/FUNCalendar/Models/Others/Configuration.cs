@@ -4,24 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Prism.Mvvm;
 
 namespace FUNCalendar.Models
 {
     [JsonObject("config")]
-    public class Configuration
+    public class Configuration : BindableBase
     {
-        [JsonProperty("is_used_remote_storage")]
-        public bool IsEnableRemoteStorage { get; private set; }
+        [JsonIgnore]
+        private bool isEnableRemoteStorage;
+        [JsonProperty("is_enable_remote_storage")]
+        public bool IsEnableRemoteStorage
+        {
+            get { return this.isEnableRemoteStorage; }
+            set { this.SetProperty(ref this.isEnableRemoteStorage, value); }
+        }
         [JsonIgnore]
         private readonly static string configFileName = "config.json";
         [JsonIgnore]
         private static FileReadWriteService fileReadWriteService;
-        [JsonProperty("username")]
-        public string Username { get; set; }
-        [JsonProperty("password")]
-        public string Password { get; set; }
         [JsonIgnore]
-        private bool isInitialized = false;
+        private string username;
+        [JsonProperty("username")]
+        public string Username
+        {
+            get { return this.username; }
+            set { this.SetProperty(ref this.username, value); }
+        }
+        [JsonIgnore]
+        private string password;
+        [JsonProperty("password")]
+        public string Password
+        {
+            get { return this.password; }
+            set { this.SetProperty(ref this.password, value); }
+        }
 
         public Configuration()
         {

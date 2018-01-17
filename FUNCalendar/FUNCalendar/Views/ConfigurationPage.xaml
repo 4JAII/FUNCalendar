@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FUNCalendar.Views.ConfigurationPage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="設定">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Text="アカウント連携 :" FontSize="Medium" Grid.Row="1" Grid.Column="1"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Switch IsToggled="{Binding IsEnableRemoteStorage.Value}" Grid.Row="1" Grid.Column="4" HorizontalOptions="CenterAndExpand"/>
+        <Label Text="ユーザー名 :" FontSize="Medium" Grid.Row="2" Grid.Column="1"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Entry Text="{Binding Username.Value}" IsEnabled="{Binding IsEnableRemoteStorage.Value}" FontSize="Large" Placeholder="ユーザー名" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3"/>
+        <Label Text="パスワード :" FontSize="Medium" Grid.Row="4" Grid.Column="1"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Entry Text="{Binding Password.Value}" IsEnabled="{Binding IsEnableRemoteStorage.Value}" FontSize="Large" Placeholder="パスワード" IsPassword="True" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"/>
+        <Button Text="適用" Command="{Binding SaveConfigCommand}" IsEnabled="{Binding CanExecute.Value}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4"/>
+    </Grid>
+</ContentPage>
