@@ -30,10 +30,20 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<ToDoListPage>();
             Container.RegisterTypeForNavigation<ToDoListRegisterPage>();
             Container.RegisterTypeForNavigation<WishListRegisterPage>();
-            Container.RegisterTypeForNavigation<HouseHoldAccountsPage>();
+            Container.RegisterTypeForNavigation<HouseHoldAccountsStatisticsPage>();
+            Container.RegisterTypeForNavigation<HouseHoldAccountsSCStatisticsPage>();
+            Container.RegisterTypeForNavigation<HouseholdaccountsDCHistoryPage>();
+            Container.RegisterTypeForNavigation<HouseholdaccountBalancePage>();
+            Container.RegisterTypeForNavigation<HouseholdaccountsHistoryPage>();
+            Container.RegisterTypeForNavigation<HouseholdaccountsRegisterPage>();
+            Container.RegisterTypeForNavigation<ConfigurationPage>();
             /* 共有のインスタンスをDIコンテナに登録 */
+            Container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IWishList,WishList>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IToDoList,ToDoList>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IHouseHoldAccounts, HouseHoldAccounts>(new ContainerControlledLifetimeManager());
+            
+
         }
     }
 }

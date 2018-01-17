@@ -7,7 +7,7 @@
              x:Name="ToDoListPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="False"
-             Title="ToDoList">
+             Title="ToDo">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
