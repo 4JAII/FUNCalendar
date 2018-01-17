@@ -41,6 +41,19 @@ namespace FUNCalendar.Models
             HasError = false;
         }
 
+        public async Task SetConfig(bool isEnableRemoteStorage,string username,string password)
+        {
+            Config.IsEnableRemoteStorage = isEnableRemoteStorage;
+            Config.Username = username;
+            Config.Password = password;
+            if (Config.IsEnableRemoteStorage)
+                storage = new RemoteStorage(Config.Username, Config.Password);
+            else
+                storage = new LocalStorage();
+            await ReadFile();
+            await Config.WriteFile();
+        }
+
         public async Task AddItem(WishItem item)
         {
             if (!isInitialized)
