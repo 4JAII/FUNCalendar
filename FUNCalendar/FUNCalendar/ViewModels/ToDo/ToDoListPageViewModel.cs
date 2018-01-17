@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FUNCalendar.Models;
+using FUNCalendar.Services;
 using Reactive.Bindings;
 using System.Reactive.Disposables;
 using Reactive.Bindings.Extensions;
@@ -18,6 +19,7 @@ namespace FUNCalendar.ViewModels
         private IToDoList _todoList;
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
+        //private IStorageService _storageService;
 
         /* Picker用のソートアイテム */
         public ToDoListSortName[] SortNames { get; private set; }
@@ -43,9 +45,11 @@ namespace FUNCalendar.ViewModels
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
 
-        public ToDoListPageViewModel(IToDoList todoList, INavigationService navigationService, IPageDialogService pageDialogService)
+
+        public ToDoListPageViewModel(IToDoList todoList, /*IStorageService storageService,*/ INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._todoList = todoList;
+            //this._storageService = storageService;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
@@ -89,7 +93,12 @@ namespace FUNCalendar.ViewModels
             DeleteToDoItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
-                if (result) _todoList.Remove(VMToDoItem.ToToDoItem(obj as VMToDoItem));
+                if (result)
+                {
+                    if (result) _todoList.Remove(VMToDoItem.ToToDoItem(obj as VMToDoItem));/* いらない? */
+                    //var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
+                    //await _storageService.DeleteItem(todoItem);
+                }
             });
 
             /*画面遷移設定*/
@@ -99,7 +108,7 @@ namespace FUNCalendar.ViewModels
             /* 昇順降順が変わった時 */
             OrderChangeCommand.Subscribe(() =>
             {
-                _todoList.IsAscending = !_todoList.IsAscending;
+                _todoList.IsAscending = !_todoList.IsAscending;/* MVVM違反？*/
                 Order = _todoList.IsAscending ? "昇順" : "降順";
                 SelectedSortName.Value.Sort();
             }).AddTo(disposable);
@@ -112,7 +121,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            _todoList.IsAscending = true;
+            _todoList.IsAscending = true;/* MVVM違反？*/
 
         }
 

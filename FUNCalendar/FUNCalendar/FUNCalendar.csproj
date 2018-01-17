@@ -35,19 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Models\ToDoItem.cs" />
-    <Compile Include="Models\ToDoList.cs" />
-    <Compile Include="Services\IToDoItem.cs" />
-    <Compile Include="Services\IToDoList.cs" />
+    <Compile Include="Models\ToDo\ToDoItem.cs" />
+    <Compile Include="Models\ToDo\ToDoList.cs" />
+    <Compile Include="Services\ToDo\IToDoList.cs" />
     <Compile Include="Services\IWishItem.cs" />
     <Compile Include="Services\IWishList.cs" />
     <Compile Include="Models\WishItem.cs" />
     <Compile Include="Models\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
-    <Compile Include="ViewModels\ToDoListRegisterPageViewModel.cs" />
-    <Compile Include="ViewModels\ToDoListSortName.cs" />
-    <Compile Include="ViewModels\VMToDoItem.cs" />
+    <Compile Include="ViewModels\ToDo\ToDoListRegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\ToDo\ToDoListSortName.cs" />
+    <Compile Include="ViewModels\ToDo\VMToDoItem.cs" />
     <Compile Include="Views\HouseHoldAccountsPage.xaml.cs">
       <DependentUpon>HouseHoldAccountsPage.xaml</DependentUpon>
     </Compile>
@@ -56,10 +55,10 @@
     <Compile Include="ViewModels\VMWishItem.cs" />
     <Compile Include="ViewModels\WishListRegisterPageViewModel.cs" />
     <Compile Include="ViewModels\WishListSortName.cs" />
-    <Compile Include="Views\ToDoListPage.xaml.cs">
+    <Compile Include="Views\ToDo\ToDoListPage.xaml.cs">
       <DependentUpon>ToDoListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ToDoListPageViewModel.cs" />
+    <Compile Include="ViewModels\ToDo\ToDoListPageViewModel.cs" />
     <Compile Include="ViewModels\WishListPageViewModel.cs" />
     <Compile Include="Views\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
@@ -70,7 +69,7 @@
     <Compile Include="Views\RootPage.xaml.cs">
       <DependentUpon>RootPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ToDoListRegisterPage.xaml.cs">
+    <Compile Include="Views\ToDo\ToDoListRegisterPage.xaml.cs">
       <DependentUpon>ToDoListRegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WishListRegisterPage.xaml.cs">
@@ -192,7 +191,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ToDoListPage.xaml">
+    <EmbeddedResource Include="Views\ToDo\ToDoListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -214,7 +213,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ToDoListRegisterPage.xaml">
+    <EmbeddedResource Include="Views\ToDo\ToDoListRegisterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

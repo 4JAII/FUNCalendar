@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FUNCalendar.Models;
-using FUNCalendar.Views;
+using FUNCalendar.Services;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using Reactive.Bindings.Binding;
@@ -15,6 +15,7 @@ using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Prism.Navigation;
 using System.Text.RegularExpressions;
+using System.Reactive.Disposables;
 
 namespace FUNCalendar.ViewModels
 {
@@ -23,34 +24,42 @@ namespace FUNCalendar.ViewModels
         private IToDoList _todoList;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
+        //private IStorageService _storageService;
 
         /* ToDoItem登録用 */
         public int ID { get; private set; } = -1;
-        [Required(ErrorMessage = "項目名がありません")]
-        public ReactiveProperty<string> Name { get; private set; } = new ReactiveProperty<string>();
+        [Required(ErrorMessage = "項目名がありません"), StringLength(32)]
+        public ReactiveProperty<string> Description { get; private set; } = new ReactiveProperty<string>();
         [Required(ErrorMessage = "日付がありません")]
         public ReactiveProperty<DateTime> Date { get; private set; } = new ReactiveProperty<DateTime>();
         [Required(ErrorMessage = "優先度がありません")]
         public ReactiveProperty<int> Priority { get; private set; } = new ReactiveProperty<int>();
+        public bool NeedsAdd { get; set; } = false;
         private string isCompleted;
+        private int wishID;
 
         /* 登録・キャンセルするときの処理用 */
         public ReactiveProperty<bool> CanRegister { get; private set; }
-        public ReactiveCommand RegisterToDoItemCommand { get; private set; }
-        public ReactiveCommand CancelCommand { get; private set; }
+        public AsyncReactiveCommand RegisterToDoItemCommand { get; private set; }
+        public AsyncReactiveCommand CancelCommand { get; private set; }
 
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
+        /* 廃棄 */
+        private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        public ToDoListRegisterPageViewModel(IToDoList todoList, INavigationService navigationService, IPageDialogService pageDialogService)
+
+        public ToDoListRegisterPageViewModel(IToDoList todoList, /*IStorageService storageService,*/ INavigationService navigationService, IPageDialogService pageDialogService)
         {
+            //this._storageService = storageService;
+
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._todoList = todoList;
             this._navigationService = navigationService;
             this._pageDialogService = pageDialogService;
             /* 属性を有効化 */
-            Name.SetValidateAttribute(() => this.Name);
+            Description.SetValidateAttribute(() => this.Description);
             Date.SetValidateAttribute(() => this.Date);
             Priority.SetValidateAttribute(() => this.Priority);
 
@@ -60,7 +69,7 @@ namespace FUNCalendar.ViewModels
             /* 全てにエラーなしなら登録できるようにする */
             CanRegister = new[]
             {
-                this.Name.ObserveHasErrors,
+                this.Description.ObserveHasErrors,
                 this.Date.ObserveHasErrors,
                 this.Priority.ObserveHasErrors,
             }
@@ -68,24 +77,25 @@ namespace FUNCalendar.ViewModels
             .ToReactiveProperty<bool>();
 
             /* 登録して遷移 */
-            RegisterToDoItemCommand = CanRegister.ToReactiveCommand();
+            RegisterToDoItemCommand = CanRegister.ToAsyncReactiveCommand();
             RegisterToDoItemCommand.Subscribe(async () =>
             {
                 if (ID != -1)
                 {
-                    var vmToDoItem = new VMToDoItem(ID, Name.Value, Date.Value, Priority.Value.ToString(), isCompleted);
-                    _todoList.EditToDoItem(_todoList.DisplayToDoItem, VMToDoItem.ToToDoItem(vmToDoItem));
+                    var vmToDoItem = new VMToDoItem(ID, Description.Value, Date.Value, Priority.Value.ToString(), isCompleted, wishID);
+                    var todoItem = VMToDoItem.ToToDoItem(vmToDoItem);
+                    //await _storageService.EditItem(_todoList.DisplayToDoItem, todoItem);
                 }
                 else
                 {
-                    var todoItem = new ToDoItem { Name = this.Name.Value, Date = Date.Value, Priority = this.Priority.Value, IsCompleted = false };
-                    _todoList.AddToDoItem(todoItem);
+                    var todoItem = new ToDoItem { Description = this.Description.Value, Date = Date.Value, Priority = this.Priority.Value, IsCompleted = false };
+                    //await _StorageService.AddItem(new ToDoItem(this.Name.Value, Date.Value, int.Parse(this.Priority.Value), false, /*ここにID*/-1));
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/ToDoListPage");
             });
 
             /* 登録をキャンセルして遷移(確認もあるよ)  */
-            CancelCommand = new ReactiveCommand();
+            CancelCommand = new AsyncReactiveCommand();
             CancelCommand.Subscribe(async () =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");
@@ -110,10 +120,11 @@ namespace FUNCalendar.ViewModels
             if (parameters["CanEdit"] as string != "T") return;
             VMToDoItem vmToDoItem = new VMToDoItem(_todoList.DisplayToDoItem);
             ID = vmToDoItem.ID;
-            Name.Value = vmToDoItem.Name;
+            Description.Value = vmToDoItem.Description;
             Date.Value = _todoList.DisplayToDoItem.Date;
             Priority.Value = int.Parse(vmToDoItem.Priority);
             isCompleted = vmToDoItem.IsCompleted;
+            wishID = vmToDoItem.WishID;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

@@ -1,6 +1,7 @@
 ﻿using Prism.Unity;
 using FUNCalendar.Views;
 using FUNCalendar.Models;
+using FUNCalendar.Services;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Microsoft.Practices.Unity;

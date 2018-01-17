@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Prism.Mvvm;
 using Xamarin.Forms;
-using FUNCalendar.Models;
+using System.Threading.Tasks;
+using FUNCalendar.Services;
 
 namespace FUNCalendar.Models
 {
-    public class ToDoList : BindableBase,IToDoList
+    public class ToDoList : BindableBase, IToDoList
     {
         private List<ToDoItem> allToDoList;
         private Func<ToDoItem, ToDoItem, int> selectedSortMethod;
-        /* private データベース操作 変数 */
-
         public ObservableCollection<ToDoItem> SortedToDoList { get; private set; }
         public ToDoItem DisplayToDoItem { get; set; }
 
@@ -24,25 +23,7 @@ namespace FUNCalendar.Models
             set { this.SetProperty(ref this.isAscending, value); }
         }
 
-        /* リストが渡されたときのコンストラクタ(ViewModelにDI？(インタフェースなし)されたリストを引数とする) */
-        /*public ToDoList(List<ToDoItem> list)
-        {
-            allToDoList = list;
-            SortedToDoList = new ObservableCollection<ToDoItem>();
-            SortByID();
-        }*/
-
-        /* ToDoItemが何個か渡されたときのコンストラクタ(デバッグ用) */
-        /*public ToDoList(params ToDoItem[] todoItems)
-        {
-            allToDoList = new List<ToDoItem>();
-            SortedToDoList = new ObservableCollection<ToDoItem>();
-            foreach (var p in todoItems)
-            {
-                allToDoList.Add(p);
-            }
-            SortByID();
-        }*/
+        private static bool isInitialized = false;
 
         public ToDoList()
         {
@@ -65,6 +46,7 @@ namespace FUNCalendar.Models
         private void Sort()
         {
             int sign = IsAscending ? 1 : -1;
+            if (allToDoList.Count <= 0) return;
             allToDoList.Sort((x, y) => sign * selectedSortMethod(x, y));
             UpdateSortedList();
         }
@@ -93,31 +75,38 @@ namespace FUNCalendar.Models
             Sort();
         }
 
+        public void InitializeList(List<ToDoItem> list)
+        {
+            if (isInitialized) return;
+            this.allToDoList = list;
+            isInitialized = true;
+        }
+
         /* アイテム追加 */
         public void AddToDoItem(ToDoItem todoItem)
         {
             allToDoList.Add(todoItem);
-            /* データベースにIDCount allToDoList 書き出し　コスト高めなら要検討 */
             Sort();
         }
 
-        /* 詳細画面用のアイテムセット */
+        /* 登録画面用のアイテムセット */
         public void SetDisplayToDoItem(ToDoItem todoItem)
         {
             DisplayToDoItem = todoItem;
         }
 
-        /* 特定のIDをもつアイテム削除 */
+        /* アイテム削除 */
         public void Remove(ToDoItem todoItem)
         {
-            allToDoList.Remove(todoItem);
-            Sort();
+            if (allToDoList.Count == 1) allToDoList.RemoveAt(0);
+            else allToDoList.RemoveAll(x => x.ID == todoItem.ID);
+            UpdateSortedList();
         }
 
         /* 特定のIDを持つアイテムを編集 */
         public void EditToDoItem(ToDoItem deleteToDoItem, ToDoItem addToDoItem)
         {
-            allToDoList.RemoveAll((item) => item.ID == deleteToDoItem.ID);
+            allToDoList.RemoveAll(item => item.ID == deleteToDoItem.ID);
             AddToDoItem(addToDoItem);
             Sort();
         }

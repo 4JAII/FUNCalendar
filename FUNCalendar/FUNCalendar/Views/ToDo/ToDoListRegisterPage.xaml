@@ -32,7 +32,7 @@
 
         <Label Text="予定日:" Grid.Row="1" Grid.Column="1" FontSize="Medium" HorizontalOptions="End" VerticalOptions="CenterAndExpand" Grid.ColumnSpan="2"/>
         <DatePicker Date="{Binding Date.Value}" Grid.Row="1" Grid.Column="3" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Grid.ColumnSpan="2"/>
-        <Entry Text="{Binding Name.Value}" FontSize="Large" Placeholder="項目名を入力" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4"/>
+        <Entry Text="{Binding Description.Value}" FontSize="Large" Placeholder="項目名を入力" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4"/>
         <Label Text="優先度:" FontSize="Medium" HorizontalTextAlignment="End" Grid.Row="5" Grid.Column="2"/>
         <Label Text="{Binding Priority.Value}" FontSize="Medium" HorizontalTextAlignment="Start" Grid.Row="5" Grid.Column="3"/>
         <Label Text="低(1)←" HorizontalTextAlignment="Start" FontSize="Medium" Grid.Row="5" Grid.Column="1"/>

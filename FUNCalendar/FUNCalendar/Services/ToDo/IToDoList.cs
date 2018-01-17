@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FUNCalendar.Models;
 
-namespace FUNCalendar.Models
+namespace FUNCalendar.Services
 {
     public interface IToDoList
     {
@@ -18,6 +18,7 @@ namespace FUNCalendar.Models
         void SortByDate();
         void SortByPriority();
         void AddToDoItem(ToDoItem todoItem);
+        void InitializeList(List<ToDoItem> list);
         void SetDisplayToDoItem(ToDoItem todoItem);
         void Remove(ToDoItem todoItem);
         void EditToDoItem(ToDoItem deleteToDoItem, ToDoItem addToDoItem);
