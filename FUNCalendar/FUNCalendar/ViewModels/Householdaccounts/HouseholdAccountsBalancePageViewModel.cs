@@ -96,7 +96,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
-                _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountsHistoryPage", navigationparameter);
+                _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsHistoryPage", navigationparameter);
             }).AddTo(disposable);
 
             /* 統計ボタンが押されたときの処理 */
@@ -107,7 +107,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
-                _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsStatisticsPage", navigationparameter);
+                _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage", navigationparameter);
             }).AddTo(disposable);
 
 
@@ -116,7 +116,7 @@ namespace FUNCalendar.ViewModels
             ResistCommand.Subscribe(_ =>
             {
                 DateTime temp = new DateTime(2017, 12, 16);
-                _householdaccounts.AddHouseHoldAccountsItem("test1", 100, temp, DCategorys.朝食, SCategorys.食費, StorageTypes.財布, true);
+                _householdaccounts.AddHouseholdAccountsItem("test1", 100, temp, DCategorys.朝食, SCategorys.食費, StorageTypes.財布, true);
                 _householdaccounts.SetBalance();
             }).AddTo(disposable);
         }

@@ -205,7 +205,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
-                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountsRegisterPage",navigationparameter);
+                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage",navigationparameter);
             }).AddTo(disposable);
 
             /* グラフのデータが変更された時の処理 */
@@ -221,19 +221,19 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsSCStatisticsPageViewModel.InputKey, navigationitem }
                 };
-                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsSCStatisticsPage", navigationparameter);
+                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsSCStatisticsPage", navigationparameter);
             });
 
             /* アイテムを編集するときの処理 */
             EditCommand.Subscribe(async (obj) =>
             {
-                _householdaccounts.SetHouseholdaccountsItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
+                _householdaccounts.SetHouseholdAccountsItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
                 var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
-                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountsRegisterPage", navigationparameter);
+                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             });
 
             /* 残高ボタンが押されたときの処理 */
@@ -244,7 +244,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
-                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountBalancePage", navigationparameter);
+                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsBalancePage", navigationparameter);
             }).AddTo(disposable);
 
             /* 履歴ボタンが押されたときの処理 */
@@ -255,7 +255,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
-                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountsHistoryPage", navigationparameter);
+                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsHistoryPage", navigationparameter);
             }).AddTo(disposable);
 
         }

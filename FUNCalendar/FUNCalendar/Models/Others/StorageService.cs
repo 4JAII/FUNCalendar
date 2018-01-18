@@ -91,7 +91,7 @@ namespace FUNCalendar.Models
             }
             HasError = !await storage.AddItem(item);
             item.ID = storage.LastAddedHouseholdAccountsItemID;
-            HouseholdAccounts.AddHouseHoldAccountsItem(item);
+            HouseholdAccounts.AddHouseholdAccountsItem(item);
         }
 
 
@@ -161,7 +161,7 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.EditItem(addItem);
-            HouseholdAccounts.EditHouseholdaccountsItem(deleteItem, addItem);
+            HouseholdAccounts.EditHouseholdAccountsItem(deleteItem, addItem);
         }
 
         public async Task EditItem(HouseholdAccountsBalanceItem deleteItem,HouseholdAccountsBalanceItem addItem)

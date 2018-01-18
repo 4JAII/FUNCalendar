@@ -19,7 +19,7 @@ namespace FUNCalendar.ViewModels
         private IToDoList _todoList;
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
-        //private IStorageService _storageService;
+        private IStorageService _storageService;
 
         /* Picker用のソートアイテム */
         public ToDoListSortName[] SortNames { get; private set; }
@@ -46,10 +46,10 @@ namespace FUNCalendar.ViewModels
 
 
 
-        public ToDoListPageViewModel(IToDoList todoList, /*IStorageService storageService,*/ INavigationService navigationService, IPageDialogService pageDialogService)
+        public ToDoListPageViewModel(IToDoList todoList, IStorageService storageService,INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._todoList = todoList;
-            //this._storageService = storageService;
+            this._storageService = storageService;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
@@ -96,8 +96,8 @@ namespace FUNCalendar.ViewModels
                 if (result)
                 {
                     if (result) _todoList.Remove(VMToDoItem.ToToDoItem(obj as VMToDoItem));/* いらない? */
-                    //var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
-                    //await _storageService.DeleteItem(todoItem);
+                    var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
+                    await _storageService.DeleteItem(todoItem);
                 }
             });
 

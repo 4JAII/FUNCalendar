@@ -31,7 +31,7 @@ namespace FUNCalendar.ViewModels
             new MenuItem
             {
                 Title="家計簿",
-                PageName="HouseHoldAccountsStatisticsPage",
+                PageName="HouseholdAccountsStatisticsPage",
                 Image=ImageSource.FromFile("icon_houseHoldAccounts.png"),
             },
             new MenuItem

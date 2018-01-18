@@ -118,7 +118,7 @@ namespace FUNCalendar.Models
         }
 
         /* アイテム追加 */
-        public void AddHouseHoldAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
+        public void AddHouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
             HouseholdAccountsItem item = new HouseholdAccountsItem(IDCount, name, price, date, detailcategory, summarycategory, storagetype, isoutgoings);
             IDCount++;
@@ -132,7 +132,7 @@ namespace FUNCalendar.Models
         }
 
         /* アイテム追加 */
-        public void AddHouseHoldAccountsItem(HouseholdAccountsItem item)
+        public void AddHouseholdAccountsItem(HouseholdAccountsItem item)
         {
             allHouseHoldAccounts.Add(item);
             var price = item.Price;
@@ -145,16 +145,16 @@ namespace FUNCalendar.Models
         }
 
         /* アイテム設定 */
-        public void SetHouseholdaccountsItem(HouseholdAccountsItem item)
+        public void SetHouseholdAccountsItem(HouseholdAccountsItem item)
         {
             SelectedItem = item;
         }
 
         /* アイテムの編集 */
-        public void EditHouseholdaccountsItem(HouseholdAccountsItem deleteItem, HouseholdAccountsItem additem)
+        public void EditHouseholdAccountsItem(HouseholdAccountsItem deleteItem, HouseholdAccountsItem additem)
         {
             allHouseHoldAccounts.RemoveAll(item => item.ID == deleteItem.ID);
-            AddHouseHoldAccountsItem(additem);
+            AddHouseholdAccountsItem(additem);
             SetBalance();
         }
 
@@ -554,7 +554,7 @@ namespace FUNCalendar.Models
         }
 
         /* 残高を編集するメソッド */
-        public void EditHouseholdaccountBalance(StorageTypes st, int price)
+        public void EditHouseholdAccountsBalance(StorageTypes st, int price)
         {
             foreach (HouseholdAccountsBalanceItem n in Balances)
             {

@@ -194,9 +194,9 @@ namespace FUNCalendar.ViewModels
                     var item = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
                     //await localStorage.AddItem(new HouseholdaccontsItem(this.Name.Value, int.Parse(this.Price.Value), this.Date.Value, this.Dcategory.Value, this.Scategory.Value, this.Storagetype.Value, this.IsOutgoing.Value, -1));
                     item.ID = -1;/* localStorage.LastAddedHouseholdaccountsItemID ;*/
-                    _householdaccount.AddHouseHoldAccountsItem(item);
+                    _householdaccount.AddHouseholdAccountsItem(item);
                 }
-                 await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsStatisticsPage",navigationparameter);
+                 await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
             });
 
             /* キャンセルボタンが押された時の処理 */
@@ -209,7 +209,7 @@ namespace FUNCalendar.ViewModels
                     {HouseholdAccountsStatisticsPageViewModel.InputKey, navigationitem }
                 };
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");
-                if (result) await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsStatisticsPage", navigationparameter);
+                if (result) await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage", navigationparameter);
             });
         }
         public void OnNavigatedFrom(NavigationParameters parameters)
