@@ -2,9 +2,9 @@
 
 namespace FUNCalendar.Views
 {
-    public partial class HouseholdaccountsDCHistoryPage : ContentPage
+    public partial class HouseholdAccountsDCHistoryPage : ContentPage
     {
-        public HouseholdaccountsDCHistoryPage()
+        public HouseholdAccountsDCHistoryPage()
         {
             InitializeComponent();
         }

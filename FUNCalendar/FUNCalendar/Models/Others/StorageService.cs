@@ -16,17 +16,20 @@ namespace FUNCalendar.Models
 
         public Configuration Config { get; private set; }
         public IWishList WishList { get; private set; }
+        public IToDoList ToDoList { get; private set; }
+        public IHouseholdAccounts HouseholdAccounts{ get; private set;}
 
         public StorageService()
         {
 
         }
 
-        public async Task InitializeAsync(IWishList wishList/*,,*/)
+        public async Task InitializeAsync(IWishList wishList,IToDoList todoList,IHouseholdAccounts householdAccounts)
         {
             if (isInitialized) return;
             WishList = wishList;
-            /*他のやつも*/
+            ToDoList = todoList;
+            HouseholdAccounts = householdAccounts;
             Config = await Configuration.InitializeAsync();
             if (Config.IsEnableRemoteStorage)
                 storage = new RemoteStorage(Config.Username, Config.Password);
@@ -41,7 +44,7 @@ namespace FUNCalendar.Models
             HasError = false;
         }
 
-        public async Task SetConfig(bool isEnableRemoteStorage,string username,string password)
+        public async Task SetConfig(bool isEnableRemoteStorage, string username, string password)
         {
             Config.IsEnableRemoteStorage = isEnableRemoteStorage;
             Config.Username = username;
@@ -67,6 +70,32 @@ namespace FUNCalendar.Models
             /*ToDoID == 0以外でwishitem を変換しaddメソッド*/
         }
 
+        public async Task AddItem(ToDoItem item)
+        {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.AddItem(item);
+            item.ID = storage.LastAddedToDoItemID;
+            ToDoList.AddToDoItem(item);
+        }
+
+        public async Task AddItem(HouseholdAccountsItem item)
+        {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.AddItem(item);
+            item.ID = storage.LastAddedHouseholdAccountsItemID;
+            HouseholdAccounts.AddHouseHoldAccountsItem(item);
+        }
+
+
+
         public async Task DeleteItem(WishItem item)
         {
             if (!isInitialized)
@@ -79,6 +108,28 @@ namespace FUNCalendar.Models
             /*ToDoID == 0以外でwishitem を変換しaddメソッド*/
         }
 
+        public async Task DeleteItem(ToDoItem item)
+        {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.DeleteItem(item);
+            ToDoList.Remove(item);
+        }
+
+        public async Task DeleteItem(HouseholdAccountsItem item)
+        {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.DeleteItem(item);
+            //HouseholdAccounts.Remove(item);
+        }
+
         public async Task EditItem(WishItem deleteItem, WishItem addItem)
         {
             if (!isInitialized)
@@ -87,7 +138,41 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.EditItem(addItem);
-            WishList.EditWishItem(deleteItem,addItem);
+            WishList.EditWishItem(deleteItem, addItem);
+            //EditItem(todo)
+        }
+
+        public async Task EditItem(ToDoItem deleteItem,ToDoItem addItem)
+        {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.EditItem(addItem);
+            ToDoList.EditToDoItem(deleteItem, addItem);
+        }
+
+        public async Task EditItem(HouseholdAccountsItem deleteItem,HouseholdAccountsItem addItem)
+        {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.EditItem(addItem);
+            HouseholdAccounts.EditHouseholdaccountsItem(deleteItem, addItem);
+        }
+
+        public async Task EditItem(HouseholdAccountsBalanceItem deleteItem,HouseholdAccountsBalanceItem addItem)
+        {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.EditItem(addItem);
+            /* バランスアイテムの更新処理 */
         }
 
         public async Task ReadFile()
@@ -97,9 +182,20 @@ namespace FUNCalendar.Models
                 HasError = true;
                 return;
             }
-            
-            WishList.InitializeList(await storage.ReadWishList());
-            /*ここに他のやつも*/
+
+            WishList.UpdateList(await storage.ReadWishList());
+            ToDoList.UpdateList(await storage.ReadToDo());
+            /* householdaccountsのlist,balanceの更新処理*/
+             // HouseholdAccounts.Update(await storage.ReadHouseholdAccounts,await storage.ReadBalance);
         }
+
+        public void CompleteToDo(ToDoItem todoItem, bool hasId, bool needsResister)
+        {
+            /* todoを完了にする */
+            /* 対応するIDのwishitemを購入済みにする hasId == true*/
+            /* wishitem -> householdaccountsitemに変換し保存 needsResister == true*/
+        }
+
+
     }
 }

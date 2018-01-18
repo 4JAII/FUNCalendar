@@ -7,12 +7,12 @@ using FUNCalendar.Models;
 
 namespace FUNCalendar.ViewModels
 {
-    public class VMHouseholdaccountLegendItem
+    public class VMHouseholdAccountsLegendItem
     {
         public string ColorPath { get; set; }
         public string Label { get; set; }
         
-        public VMHouseholdaccountLegendItem(HouseholdaccountLegendItem item)
+        public VMHouseholdAccountsLegendItem(HouseholdAccountsLegendItem item)
         {
             this.ColorPath = item.ColorPath;
             this.Label = item.Label;

@@ -20,23 +20,23 @@ using Prism.Services;
 
 namespace FUNCalendar.ViewModels
 {
-    public class HouseholdaccountBalancePageViewModel : BindableBase, INavigationAware, IDisposable
+    public class HouseholdAccountsBalancePageViewModel : BindableBase, INavigationAware, IDisposable
     {
-        private IHouseHoldAccounts _householdaccounts;
+        private IHouseholdAccounts _householdaccounts;
         private INavigationService _navigationservice;
 
         public static readonly string InputKey = "InputKey";
 
 
-        public ReadOnlyReactiveCollection<VMHouseholdaccountBalanceItem> DisplayBalances { get; private set; }
+        public ReadOnlyReactiveCollection<VMHouseholdAccountsBalanceItem> DisplayBalances { get; private set; }
         public ReactiveProperty<string> DisplayTotalBalance { get; private set; }
 
-        public HouseholdaccountNavigationItem NavigatedItem { get; set; }
+        public HouseholdAccountsNavigationItem NavigatedItem { get; set; }
 
-        public HouseholdaccountRangeItem[] RangeNames { get; private set; }
+        public HouseholdAccountsRangeItem[] RangeNames { get; private set; }
 
         public ReactiveProperty<DateTime> SelectedDate { get; private set; }
-        public ReactiveProperty<HouseholdaccountRangeItem> SelectedRange { get; private set; }
+        public ReactiveProperty<HouseholdAccountsRangeItem> SelectedRange { get; private set; }
 
         /* 履歴画面移行用 */
         public ReactiveCommand HistoryCommand { get; private set; }
@@ -50,18 +50,18 @@ namespace FUNCalendar.ViewModels
 
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        public HouseholdaccountBalancePageViewModel(IHouseHoldAccounts ihouseholdaccounts, INavigationService navigationService)
+        public HouseholdAccountsBalancePageViewModel(IHouseholdAccounts ihouseholdaccounts, INavigationService navigationService)
         {
             /* デバッグ用 */
             this.ResistCommand = new ReactiveCommand();
 
             _householdaccounts = ihouseholdaccounts;
             _navigationservice = navigationService;
-            this.DisplayBalances = _householdaccounts.Balances.ToReadOnlyReactiveCollection(x => new VMHouseholdaccountBalanceItem(x)).AddTo(disposable);
+            this.DisplayBalances = _householdaccounts.Balances.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsBalanceItem(x)).AddTo(disposable);
             this.DisplayTotalBalance = _householdaccounts.ObserveProperty(h => h.TotalBalance).ToReactiveProperty().AddTo(disposable);
 
             /* インスタンス化 */
-            SelectedRange = new ReactiveProperty<HouseholdaccountRangeItem>();
+            SelectedRange = new ReactiveProperty<HouseholdAccountsRangeItem>();
             SelectedDate = new ReactiveProperty<DateTime>();
             HistoryCommand = new ReactiveCommand();
             StatisticsCommand = new ReactiveCommand();
@@ -71,17 +71,17 @@ namespace FUNCalendar.ViewModels
             /* ピッカー用のアイテムの作成 */
             RangeNames = new[]
             {
-                new HouseholdaccountRangeItem
+                new HouseholdAccountsRangeItem
                 {
                     RangeName = "統計:日単位",
                     RangeData = Range.Day
                 },
-                new HouseholdaccountRangeItem
+                new HouseholdAccountsRangeItem
                 {
                     RangeName = "統計:月単位" ,
                     RangeData = Range.Month
                 },
-                new HouseholdaccountRangeItem
+                new HouseholdAccountsRangeItem
                 {
                     RangeName = "統計:年単位",
                     RangeData = Range.Year
@@ -91,10 +91,10 @@ namespace FUNCalendar.ViewModels
             /* 履歴ボタンが押されたときの処理 */
             HistoryCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
-                    {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }
+                    {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
                 _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdaccountsHistoryPage", navigationparameter);
             }).AddTo(disposable);
@@ -102,10 +102,10 @@ namespace FUNCalendar.ViewModels
             /* 統計ボタンが押されたときの処理 */
             StatisticsCommand.Subscribe(_ =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
-                    {HouseholdaccountBalancePageViewModel.InputKey, navigationitem }
+                    {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
                 _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsStatisticsPage", navigationparameter);
             }).AddTo(disposable);
@@ -135,7 +135,7 @@ namespace FUNCalendar.ViewModels
         {
             if (parameters.ContainsKey(InputKey))
             {
-                NavigatedItem = (HouseholdaccountNavigationItem)parameters[InputKey];
+                NavigatedItem = (HouseholdAccountsNavigationItem)parameters[InputKey];
                 this.SelectedDate.Value = NavigatedItem.CurrentDate;
                 this.SelectedRange.Value = (NavigatedItem.CurrentRange == Range.Day) ? RangeNames[0] :
                     (NavigatedItem.CurrentRange == Range.Month) ? RangeNames[1] :

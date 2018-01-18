@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="FUNCalendar.Views.HouseholdaccountsRegisterPage">
+             x:Class="FUNCalendar.Views.HouseholdAccountsRegisterPage">
     <StackLayout>
         <Button Text="収入" Command="{Binding IncomeCommand}" FontAttributes="{Binding IncomeFontAttributes.Value}"/>
         <Button Text="支出" Command="{Binding OutgoingCommand}" FontAttributes="{Binding OutgoingFontAttributes.Value}"/>

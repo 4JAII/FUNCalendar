@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
 {
-    public class HouseholdaccountBalanceItem
+    public class HouseholdAccountsBalanceItem
     {
+        public int ID { get; set; }
         public StorageTypes St { get; set; }
         public int Price { get; set; }
         //public Imagesource Image { get; set; }
+
     }
 }

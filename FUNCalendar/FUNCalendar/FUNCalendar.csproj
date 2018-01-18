@@ -36,19 +36,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Behaviors\ItemSelectedToCommandBehavior.cs" />
-    <Compile Include="Models\Householdaccounts\HouseholdaccountHeaders.cs" />
-    <Compile Include="Models\Householdaccounts\HouseHoldAccounts.cs" />
-    <Compile Include="Models\Householdaccounts\Item\HouseholdaccountBalanceITem.cs" />
-    <Compile Include="Models\Householdaccounts\Item\HouseholdaccountDcStatisticsItem.cs" />
-    <Compile Include="Models\Householdaccounts\Item\HouseHoldAccountItem.cs" />
-    <Compile Include="Models\Householdaccounts\Item\HouseholdaccountLegendItem.cs" />
-    <Compile Include="Models\Householdaccounts\Item\HouseholdaccountPieSliceItem.cs" />
-    <Compile Include="Models\Householdaccounts\Item\HouseholdaccountScStatisticsItem.cs" />
-    <Compile Include="Models\Householdaccounts\Item\HouseholdaccountStatisticItem.cs" />
+    <Compile Include="Models\Householdaccounts\HouseholdAccountsHeaders.cs" />
+    <Compile Include="Models\Householdaccounts\HouseholdAccounts.cs" />
+    <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsBalanceItem.cs" />
+    <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsDcStatisticsItem.cs" />
+    <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsItem.cs" />
+    <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsLegendItem.cs" />
+    <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsPieSliceItem.cs" />
+    <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsScStatisticsItem.cs" />
+    <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsStatisticItem.cs" />
     <Compile Include="Models\Others\Configuration.cs" />
     <Compile Include="Models\Others\DatabaseGateway.cs" />
     <Compile Include="Models\Others\FileReadWriteService.cs" />
+    <Compile Include="Models\Others\JsonObject\JsonBalanceItem.cs" />
+    <Compile Include="Models\Others\JsonObject\JsonHouseholdAccountsItem.cs" />
+    <Compile Include="Models\Others\JsonObject\JsonHouseholdAccountsList.cs" />
     <Compile Include="Models\Others\JsonObject\JsonStatus.cs" />
+    <Compile Include="Models\Others\JsonObject\JsonToDoItem.cs" />
+    <Compile Include="Models\Others\JsonObject\JsonToDoList.cs" />
     <Compile Include="Models\Others\JsonObject\JsonWishItem.cs" />
     <Compile Include="Models\Others\JsonObject\JsonWishList.cs" />
     <Compile Include="Models\Others\LocalStorage.cs" />
@@ -65,24 +70,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\WishList\IWishList.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
+    <Compile Include="Models\Others\JsonObject\JsonBalanceList.cs" />
     <Compile Include="ViewModels\Others\ConfigurationPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountBalancePageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsDCHistoryPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsHistoryPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseholdaccountsRegisterPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseHoldAccountsSCStatisticsPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\HouseHoldAccountsStatisticsPageViewModel.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountNavigationItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountsDcategoryItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountsSCategoryItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccountsStorageTypeItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdaccoutRangeItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountBalanceItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountDcStatisticsItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountLegendItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountScStatisticsItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseHoldAccountsItem.cs" />
-    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdaccountStatisticItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsBalancePageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsDCHistoryPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsHistoryPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsRegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsSCStatisticsPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsStatisticsPageViewModel.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdAccountsNavigationItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdAccountsDcategoryItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdAccountsSCategoryItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdAccountsStorageTypeItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\HouseholdAccountsRangeItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdAccountsBalanceItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdAccountsDcStatisticsItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdAccountsLegendItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdAccountsScStatisticsItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdAccountsItem.cs" />
+    <Compile Include="ViewModels\Householdaccounts\Item\VMHouseholdAccountsStatisticItem.cs" />
     <Compile Include="ViewModels\ToDo\ToDoListRegisterPageViewModel.cs" />
     <Compile Include="ViewModels\ToDo\ToDoListSortName.cs" />
     <Compile Include="ViewModels\ToDo\VMToDoItem.cs" />
@@ -95,23 +101,23 @@
     </Compile>
     <Compile Include="ViewModels\MenuItem.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
-    <Compile Include="Views\Householdaccounts\HouseholdaccountBalancePage.xaml.cs">
-      <DependentUpon>HouseholdaccountBalancePage.xaml</DependentUpon>
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsBalancePage.xaml.cs">
+      <DependentUpon>HouseholdAccountsBalancePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Householdaccounts\HouseholdaccountsDCHistoryPage.xaml.cs">
-      <DependentUpon>HouseholdaccountsDCHistoryPage.xaml</DependentUpon>
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsDCHistoryPage.xaml.cs">
+      <DependentUpon>HouseholdAccountsDCHistoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Householdaccounts\HouseholdaccountsHistoryPage.xaml.cs">
-      <DependentUpon>HouseholdaccountsHistoryPage.xaml</DependentUpon>
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsHistoryPage.xaml.cs">
+      <DependentUpon>HouseholdAccountsHistoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Householdaccounts\HouseholdaccountsRegisterPage.xaml.cs">
-      <DependentUpon>HouseholdaccountsRegisterPage.xaml</DependentUpon>
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsRegisterPage.xaml.cs">
+      <DependentUpon>HouseholdAccountsRegisterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Householdaccounts\HouseHoldAccountsSCStatisticsPage.xaml.cs">
-      <DependentUpon>HouseHoldAccountsSCStatisticsPage.xaml</DependentUpon>
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsSCStatisticsPage.xaml.cs">
+      <DependentUpon>HouseholdAccountsSCStatisticsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Householdaccounts\HouseHoldAccountsStatisticsPage.xaml.cs">
-      <DependentUpon>HouseHoldAccountsStatisticsPage.xaml</DependentUpon>
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsStatisticsPage.xaml.cs">
+      <DependentUpon>HouseholdAccountsStatisticsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ToDo\ToDoListPage.xaml.cs">
       <DependentUpon>ToDoListPage.xaml</DependentUpon>
@@ -164,11 +170,11 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OxyPlot.Core.1.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+Xamarin.iOS10\OxyPlot.dll</HintPath>
+    <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Core.2.0.0-unstable0956\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+Xamarin.iOS10\OxyPlot.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot.Xamarin.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OxyPlot.Xamarin.Forms.1.0.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\OxyPlot.Xamarin.Forms.dll</HintPath>
+    <Reference Include="OxyPlot.Xamarin.Forms, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Xamarin.Forms.1.1.0-unstable0011\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\OxyPlot.Xamarin.Forms.dll</HintPath>
     </Reference>
     <Reference Include="PCLStorage, Version=1.0.2.0, Culture=neutral, PublicKeyToken=286fe515a2c35b64, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PCLStorage.1.0.2\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLStorage.dll</HintPath>
@@ -188,8 +194,8 @@
     <Reference Include="ReactiveProperty, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ReactiveProperty.3.6.0\lib\portable-net45+win81+MonoTouch+MonoAndroid\ReactiveProperty.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite-net, Version=1.4.118.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\sqlite-net-pcl.1.4.118\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+    <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sqlite-net-pcl.1.3.3\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.5\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
@@ -268,27 +274,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountBalancePage.xaml">
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsBalancePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountsDCHistoryPage.xaml">
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsDCHistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountsHistoryPage.xaml">
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsHistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Householdaccounts\HouseholdaccountsRegisterPage.xaml">
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsRegisterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Householdaccounts\HouseHoldAccountsSCStatisticsPage.xaml">
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsSCStatisticsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Householdaccounts\HouseHoldAccountsStatisticsPage.xaml">
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsStatisticsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

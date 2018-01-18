@@ -20,9 +20,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FUNCalendar.ViewModels
 {
-    public class HouseholdaccountsRegisterPageViewModel : BindableBase,INavigationAware,IDisposable
+    public class HouseholdAccountsRegisterPageViewModel : BindableBase,INavigationAware,IDisposable
     {
-        private IHouseHoldAccounts _householdaccount;
+        private IHouseholdAccounts _householdaccount;
         private INavigationService _navigationservice;
         private IPageDialogService _pageDialogService;
 
@@ -32,7 +32,7 @@ namespace FUNCalendar.ViewModels
         public static readonly string InputKey = "InputKey";
 
         /* 遷移されたときの格納用変数 */
-        public HouseholdaccountNavigationItem NavigatedItem { get; set; }
+        public HouseholdAccountsNavigationItem NavigatedItem { get; set; }
 
         /* 現在選択されている各データを保持 */
         public DateTime CurrentDate { get; private set; }
@@ -43,11 +43,11 @@ namespace FUNCalendar.ViewModels
         public ReactiveCommand OutgoingCommand { get; private set; }
 
         /* ピッカー */
-        public List<HouseholdaccountsSCategoryItem> IncomeScategoryNames { get; private set; }
-        public List<HouseholdaccountsSCategoryItem> OutgoingScategoryNames { get; private set; }
-        public ReactiveCollection<HouseholdaccountsSCategoryItem> ScategoryNames { get; private set; }
-        public ReactiveCollection<HouseholdaccountsDcategoryItem> DcategoryNames { get; private set; }
-        public List<HouseholdaccountsStorageTypeItem> StorageNames { get; private set; }
+        public List<HouseholdAccountsSCategoryItem> IncomeScategoryNames { get; private set; }
+        public List<HouseholdAccountsSCategoryItem> OutgoingScategoryNames { get; private set; }
+        public ReactiveCollection<HouseholdAccountsSCategoryItem> ScategoryNames { get; private set; }
+        public ReactiveCollection<HouseholdAccountsDcategoryItem> DcategoryNames { get; private set; }
+        public List<HouseholdAccountsStorageTypeItem> StorageNames { get; private set; }
 
         /* householdaccount登録用 */
         public int ID { get; private set; } = -1;
@@ -59,9 +59,9 @@ namespace FUNCalendar.ViewModels
         public ReactiveProperty<string> Price { get; private set; } = new ReactiveProperty<string>();
 
         public ReactiveProperty<DateTime> Date { get; private set; } = new ReactiveProperty<DateTime>();
-        public ReactiveProperty<HouseholdaccountsSCategoryItem> CurrentScategory { get; private set; }
-        public ReactiveProperty<HouseholdaccountsDcategoryItem> CurrentDcategory { get; private set; }
-        public ReactiveProperty<HouseholdaccountsStorageTypeItem> CurrentStorageType { get; private set; }
+        public ReactiveProperty<HouseholdAccountsSCategoryItem> CurrentScategory { get; private set; }
+        public ReactiveProperty<HouseholdAccountsDcategoryItem> CurrentDcategory { get; private set; }
+        public ReactiveProperty<HouseholdAccountsStorageTypeItem> CurrentStorageType { get; private set; }
         public ReactiveProperty<bool> IsOutgoing { get; private set; }
 
         /* 登録・キャンセルするときの処理用 */
@@ -78,7 +78,7 @@ namespace FUNCalendar.ViewModels
         
         
         /* コンストラクタ */
-        public HouseholdaccountsRegisterPageViewModel(IHouseHoldAccounts householdaccount, INavigationService navigationService, IPageDialogService pageDialogService)
+        public HouseholdAccountsRegisterPageViewModel(IHouseholdAccounts householdaccount, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             //localStorage = new LocalStorage();
 
@@ -91,22 +91,22 @@ namespace FUNCalendar.ViewModels
             Price.SetValidateAttribute(() => this.Price);
 
             /* ピッカー用のアイテム作成 */
-            IncomeScategoryNames = new List<HouseholdaccountsSCategoryItem>();
-            OutgoingScategoryNames = new List<HouseholdaccountsSCategoryItem>();
-            CurrentScategory = new ReactiveProperty<HouseholdaccountsSCategoryItem>();
+            IncomeScategoryNames = new List<HouseholdAccountsSCategoryItem>();
+            OutgoingScategoryNames = new List<HouseholdAccountsSCategoryItem>();
+            CurrentScategory = new ReactiveProperty<HouseholdAccountsSCategoryItem>();
 
-            DcategoryNames = new ReactiveCollection<HouseholdaccountsDcategoryItem>();
-            CurrentDcategory = new ReactiveProperty<HouseholdaccountsDcategoryItem>();
+            DcategoryNames = new ReactiveCollection<HouseholdAccountsDcategoryItem>();
+            CurrentDcategory = new ReactiveProperty<HouseholdAccountsDcategoryItem>();
 
-            StorageNames = new List<HouseholdaccountsStorageTypeItem>();
-            CurrentStorageType = new ReactiveProperty<HouseholdaccountsStorageTypeItem>();
+            StorageNames = new List<HouseholdAccountsStorageTypeItem>();
+            CurrentStorageType = new ReactiveProperty<HouseholdAccountsStorageTypeItem>();
 
             StorageNames.Clear();
             for (int i = (int)StorageTypes.start_of_Stype + 1; i < (int)StorageTypes.end_of_Stype; i++)
             {
                 var stname = Enum.GetName(typeof(StorageTypes), i);
                 var stdata = (StorageTypes)Enum.ToObject(typeof(StorageTypes), i);
-                var item = new HouseholdaccountsStorageTypeItem(stname, stdata);
+                var item = new HouseholdAccountsStorageTypeItem(stname, stdata);
                 StorageNames.Add(item);
             }
             CurrentStorageType.Value = StorageNames[0];
@@ -115,19 +115,19 @@ namespace FUNCalendar.ViewModels
             {
                 var scname = Enum.GetName(typeof(SCategorys), i);
                 var scdata = (SCategorys)Enum.ToObject(typeof(SCategorys), i);
-                var item = new HouseholdaccountsSCategoryItem(scname, scdata);
+                var item = new HouseholdAccountsSCategoryItem(scname, scdata);
                 OutgoingScategoryNames.Add(item);
             }
             for (int i = (int)SCategorys.start_of_収入 + 1; i < (int)SCategorys.end_of_収入; i++)
             {
                 var scname = Enum.GetName(typeof(SCategorys), i);
                 var scdata = (SCategorys)Enum.ToObject(typeof(SCategorys), i);
-                var item = new HouseholdaccountsSCategoryItem(scname, scdata);
+                var item = new HouseholdAccountsSCategoryItem(scname, scdata);
                 IncomeScategoryNames.Add(item);
             }
 
-            ScategoryNames = new ReactiveCollection<HouseholdaccountsSCategoryItem>();
-            foreach(HouseholdaccountsSCategoryItem x in OutgoingScategoryNames)
+            ScategoryNames = new ReactiveCollection<HouseholdAccountsSCategoryItem>();
+            foreach(HouseholdAccountsSCategoryItem x in OutgoingScategoryNames)
             {
                 ScategoryNames.Add(x);
             }
@@ -166,10 +166,10 @@ namespace FUNCalendar.ViewModels
             RegisterHouseholdaccountsCommand = CanRegister.ToAsyncReactiveCommand();
             RegisterHouseholdaccountsCommand.Subscribe(async () =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(CurrentDate, CurrentRange);
+                var navigationitem = new HouseholdAccountsNavigationItem(CurrentDate, CurrentRange);
                 var navigationparameter = new NavigationParameters()
                 {
-                    {HouseHoldAccountsStatisticsPageViewModel.InputKey, navigationitem }
+                    {HouseholdAccountsStatisticsPageViewModel.InputKey, navigationitem }
                 };
                 if (ID != -1)
                 {
@@ -177,8 +177,8 @@ namespace FUNCalendar.ViewModels
                     var dcategory = Enum.GetName(typeof(DCategorys), CurrentDcategory.Value.DcategoryData);
                     var storagetype = Enum.GetName(typeof(StorageTypes), CurrentStorageType.Value.StorageTypeData);
                     var isoutgoing = IsOutgoing.Value ? "支出": "収入";
-                    var vmitem = new VMHouseHoldAccountsItem(ID, Name.Value, Price.Value, Date.Value, scategory, dcategory, storagetype, isoutgoing);
-                    var item = VMHouseHoldAccountsItem.ToHouseholdaccountsItem(vmitem);
+                    var vmitem = new VMHouseholdAccountsItem(ID, Name.Value, Price.Value, Date.Value, scategory, dcategory, storagetype, isoutgoing);
+                    var item = VMHouseholdAccountsItem.ToHouseholdaccountsItem(vmitem);
                     // await localStorage.EditItem(item);
 
                 }
@@ -191,7 +191,7 @@ namespace FUNCalendar.ViewModels
                     var scategory = CurrentScategory.Value.ScategoryData;
                     var storagetype = CurrentStorageType.Value.StorageTypeData;
                     var isoutgoing = IsOutgoing.Value;
-                    var item = new HouseHoldAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
+                    var item = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
                     //await localStorage.AddItem(new HouseholdaccontsItem(this.Name.Value, int.Parse(this.Price.Value), this.Date.Value, this.Dcategory.Value, this.Scategory.Value, this.Storagetype.Value, this.IsOutgoing.Value, -1));
                     item.ID = -1;/* localStorage.LastAddedHouseholdaccountsItemID ;*/
                     _householdaccount.AddHouseHoldAccountsItem(item);
@@ -203,10 +203,10 @@ namespace FUNCalendar.ViewModels
             CancelCommand = new AsyncReactiveCommand();
             CancelCommand.Subscribe(async () =>
             {
-                var navigationitem = new HouseholdaccountNavigationItem(CurrentDate, CurrentRange);
+                var navigationitem = new HouseholdAccountsNavigationItem(CurrentDate, CurrentRange);
                 var navigationparameter = new NavigationParameters()
                 {
-                    {HouseHoldAccountsStatisticsPageViewModel.InputKey, navigationitem }
+                    {HouseholdAccountsStatisticsPageViewModel.InputKey, navigationitem }
                 };
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");
                 if (result) await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseHoldAccountsStatisticsPage", navigationparameter);
@@ -221,7 +221,7 @@ namespace FUNCalendar.ViewModels
         {
             if (parameters.ContainsKey(InputKey))
             {
-                NavigatedItem = (HouseholdaccountNavigationItem)parameters[InputKey];
+                NavigatedItem = (HouseholdAccountsNavigationItem)parameters[InputKey];
                 this.CurrentDate = NavigatedItem.CurrentDate;
                 this.CurrentRange = NavigatedItem.CurrentRange;
 
@@ -245,7 +245,7 @@ namespace FUNCalendar.ViewModels
             if (isoutgoing)
             {
                 ScategoryNames.Clear();
-                foreach (HouseholdaccountsSCategoryItem x in OutgoingScategoryNames)
+                foreach (HouseholdAccountsSCategoryItem x in OutgoingScategoryNames)
                 {
                     ScategoryNames.Add(x);
                 }
@@ -254,7 +254,7 @@ namespace FUNCalendar.ViewModels
             else
             {
                 ScategoryNames.Clear();
-                foreach(HouseholdaccountsSCategoryItem x in IncomeScategoryNames)
+                foreach(HouseholdAccountsSCategoryItem x in IncomeScategoryNames)
                 {
                     ScategoryNames.Add(x);
                 }
@@ -272,7 +272,7 @@ namespace FUNCalendar.ViewModels
             {
                 var dcname = Enum.GetName(typeof(DCategorys), i);
                 var dcdata = (DCategorys)Enum.ToObject(typeof(DCategorys), i);
-                var item = new HouseholdaccountsDcategoryItem(dcname, dcdata);
+                var item = new HouseholdAccountsDcategoryItem(dcname, dcdata);
 
                 DcategoryNames.Add(item);
             }

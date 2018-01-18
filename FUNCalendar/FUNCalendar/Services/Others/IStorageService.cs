@@ -12,20 +12,20 @@ namespace FUNCalendar.Services
         Configuration Config { get; }
         IWishList WishList { get; }
         bool HasError { get; }
-        Task InitializeAsync(IWishList wishList/*,,,*/);
+        Task InitializeAsync(IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts);
 
         void AfterResolveError();
         Task SetConfig(bool isEnableRemoteStorage, string username, string password);
         Task AddItem(WishItem item);
-        //Task AddItem(ToDoItem item);
-        //Task AddItem(BalanceItem item);
-        //Task AddItem(HouseholdAccountsItem item);
+        Task AddItem(ToDoItem item);
+        Task AddItem(HouseholdAccountsItem item);
         Task DeleteItem(WishItem item);
-        //Task DeleteItem(ToDoItem item);
-        //Task DeleteItem(HouseholdAccountsItem item);
-        Task EditItem(WishItem deleteItem,WishItem addItem);
-        //Task EditItem(ToDoItem item);
-        //Task EditItem(HouseholdAccountsItem item);
+        Task DeleteItem(ToDoItem item);
+        Task DeleteItem(HouseholdAccountsItem item);
+        Task EditItem(WishItem deleteItem, WishItem addItem);
+        Task EditItem(ToDoItem deleteItem,ToDoItem addItem);
+        Task EditItem(HouseholdAccountsItem deleteItem,HouseholdAccountsItem addItem);
+        Task EditItem(HouseholdAccountsBalanceItem deleteItem,HouseholdAccountsBalanceItem addItem);
         Task ReadFile();
     }
 }

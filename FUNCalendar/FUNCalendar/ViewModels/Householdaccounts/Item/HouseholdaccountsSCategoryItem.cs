@@ -7,12 +7,12 @@ using FUNCalendar.Models;
 
 namespace FUNCalendar.ViewModels
 {
-    public class HouseholdaccountsSCategoryItem
+    public class HouseholdAccountsSCategoryItem
     {
         public string ScategoryName { get; set; }
         public SCategorys ScategoryData { get; set; }
 
-        public HouseholdaccountsSCategoryItem(string name, SCategorys scategory)
+        public HouseholdAccountsSCategoryItem(string name, SCategorys scategory)
         {
             this.ScategoryName = name;
             this.ScategoryData = scategory;

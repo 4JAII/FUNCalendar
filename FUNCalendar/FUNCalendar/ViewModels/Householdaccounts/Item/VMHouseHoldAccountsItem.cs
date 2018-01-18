@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace FUNCalendar.ViewModels
 {
-    public class VMHouseHoldAccountsItem
+    public class VMHouseholdAccountsItem
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
@@ -22,7 +22,7 @@ namespace FUNCalendar.ViewModels
         public string IsOutGoings { get; private set; }
 
         /* コンストラクタ(HouseHoldAccountsItem To VMHouseHoldAccountsItem) */
-        public VMHouseHoldAccountsItem(HouseHoldAccountsItem item)
+        public VMHouseholdAccountsItem(HouseholdAccountsItem item)
         {
             this.ID = item.ID;
             this.Name = item.Name;
@@ -36,7 +36,7 @@ namespace FUNCalendar.ViewModels
         }
 
         /* 編集用 */
-        public VMHouseHoldAccountsItem(int id,string name, string price, DateTime date, string scategory, string dcategory, string storagetype, string isoutogoings)
+        public VMHouseholdAccountsItem(int id,string name, string price, DateTime date, string scategory, string dcategory, string storagetype, string isoutogoings)
         {
             this.ID = id;
             this.Name = name;
@@ -50,7 +50,7 @@ namespace FUNCalendar.ViewModels
         }
 
 
-        public static HouseHoldAccountsItem ToHouseholdaccountsItem(VMHouseHoldAccountsItem item)
+        public static HouseholdAccountsItem ToHouseholdaccountsItem(VMHouseholdAccountsItem item)
         {
             Regex re = new Regex(@"[^0-9]");
             var id = item.ID;
@@ -61,7 +61,7 @@ namespace FUNCalendar.ViewModels
             var dcategory = (DCategorys)Enum.Parse(typeof(DCategorys), item.DCategory);
             var storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), item.Storagetype);
             var isoutgoings = string.Equals(item.IsOutGoings, "支出");
-            return new HouseHoldAccountsItem { ID = id, Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoings};
+            return new HouseholdAccountsItem { ID = id, Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoings};
         }
     }
 }

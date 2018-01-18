@@ -47,6 +47,7 @@ namespace FUNCalendar.Models
         private void Sort()
         {
             int sign = IsAscending ? 1 : -1;
+            if (allWishList == null) return;
             if (allWishList.Count <= 0) return;
             allWishList.Sort((x, y) => sign * selectedSortMethod(x, y));
             UpdateSortedList();
@@ -75,7 +76,7 @@ namespace FUNCalendar.Models
             selectedSortMethod = WishItem.CompareByDate;
             Sort();
         }
-        public void InitializeList(List<WishItem> list)
+        public void UpdateList(List<WishItem> list)
         {
             this.allWishList = list;
         }

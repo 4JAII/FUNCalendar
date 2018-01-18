@@ -18,7 +18,7 @@ namespace FUNCalendar.Services
         void SortByPrice();
         void SortByDate();
         void AddWishItem(WishItem wishItem);
-        void InitializeList(List<WishItem> list);
+        void UpdateList(List<WishItem> list);
         void SetDisplayWishItem(WishItem wishItem);
         void Remove(WishItem wishItem);
         void EditWishItem(WishItem deleteWishItem,WishItem addWishItem);
