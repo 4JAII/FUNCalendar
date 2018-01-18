@@ -9,9 +9,19 @@ namespace FUNCalendar.Models
     public class HouseholdAccountsBalanceItem
     {
         public int ID { get; set; }
-        public StorageTypes St { get; set; }
+        public  StorageTypes Storagetype { get; set; }
         public int Price { get; set; }
         //public Imagesource Image { get; set; }
+
+        public HouseholdAccountsBalanceItem() { }
+
+        public HouseholdAccountsBalanceItem(int id, StorageTypes storagetype, int price /* stirng image */)
+        {
+            this.ID = id;
+            this.Storagetype = storagetype;
+            this.Price = price;
+            //ImageSource = image;
+        }
 
     }
 }

@@ -15,6 +15,7 @@ namespace FUNCalendar.Models
     {
         private List<HouseholdAccountsItem> allHouseHoldAccounts;
         public HouseholdAccountsItem SelectedItem { get; set; }
+        public HouseholdAccountsBalanceItem SelectedBalanceItem { get; set; }
         private static int idCount;
         public int IDCount { get { return idCount; } private set { idCount = value; } }
 
@@ -83,31 +84,31 @@ namespace FUNCalendar.Models
             {
                 new HouseholdAccountsBalanceItem
                 {
-                    St = StorageTypes.財布,
+                    Storagetype = StorageTypes.財布,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
                 new HouseholdAccountsBalanceItem
                 {
-                    St = StorageTypes.クレジットカード,
+                    Storagetype = StorageTypes.クレジットカード,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
                 new HouseholdAccountsBalanceItem
                 {
-                    St = StorageTypes.貯金,
+                    Storagetype = StorageTypes.貯金,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
                 new HouseholdAccountsBalanceItem
                 {
-                    St = StorageTypes.銀行,
+                    Storagetype = StorageTypes.銀行,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
                 new HouseholdAccountsBalanceItem
                 {
-                    St = StorageTypes.その他,
+                    Storagetype = StorageTypes.その他,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 }
@@ -144,15 +145,30 @@ namespace FUNCalendar.Models
             SetBalance();
         }
 
-        /* アイテム設定 */
+        /* アイテム削除 */
+        public void RemoveHouseholdAccountsItem(HouseholdAccountsItem deleteitem)
+        {
+            IncrementBalancePrice(deleteitem.StorageType, deleteitem.Price);
+            allHouseHoldAccounts.RemoveAll(item => item.ID == deleteitem.ID);
+            SetBalance();
+        }
+
+        /* 編集するHouseholdAccountsItemを設定 */
         public void SetHouseholdAccountsItem(HouseholdAccountsItem item)
         {
             SelectedItem = item;
         }
 
+        /* 編集するHousholdAccountsBalanceItemを設定 */
+        public void SetHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem item)
+        {
+            SelectedBalanceItem = item;
+        }
+
         /* アイテムの編集 */
         public void EditHouseholdAccountsItem(HouseholdAccountsItem deleteItem, HouseholdAccountsItem additem)
         {
+            IncrementBalancePrice(deleteItem.StorageType, deleteItem.Price);
             allHouseHoldAccounts.RemoveAll(item => item.ID == deleteItem.ID);
             AddHouseholdAccountsItem(additem);
             SetBalance();
@@ -355,6 +371,45 @@ namespace FUNCalendar.Models
             }
         }
 
+        /* 残高を表示するためのメソッド(実質合計残高を求めるだけ) */
+        public void SetBalance()
+        {
+            int sum = 0;
+            foreach (HouseholdAccountsBalanceItem n in Balances)
+                sum += n.Price;
+            TotalBalance = String.Format("{0}円", sum);
+        }
+
+        /* 残高を編集するメソッド */
+        public void EditHouseholdAccountsBalance(StorageTypes st, int price)
+        {
+            foreach (HouseholdAccountsBalanceItem n in Balances)
+            {
+                if (n.Storagetype == st)
+                    n.Price = price;
+            }
+        }
+
+        /* 残高の増減を行うメソッド */
+        public void IncrementBalancePrice(StorageTypes st, int price)
+        {
+            TempBalances.Clear();
+            foreach (HouseholdAccountsBalanceItem n in Balances)
+            {
+                if (n.Storagetype == st)
+                {
+                    n.Price += price;
+                }
+                TempBalances.Add(n);
+            }
+
+            Balances.Clear();
+            foreach (HouseholdAccountsBalanceItem n in TempBalances)
+            {
+                Balances.Add(n);
+            }
+        }
+
 
         /* 全体の支出・収入の合計を計算 */
         public int CalucAllBalance(Range r, DateTime date, bool isOutgoings)
@@ -553,44 +608,6 @@ namespace FUNCalendar.Models
 
         }
 
-        /* 残高を編集するメソッド */
-        public void EditHouseholdAccountsBalance(StorageTypes st, int price)
-        {
-            foreach (HouseholdAccountsBalanceItem n in Balances)
-            {
-                if (n.St == st)
-                    n.Price = price;
-            }
-        }
-
-        /* 残高の増減を行うメソッド */
-        public void IncrementBalancePrice(StorageTypes st, int price)
-        {
-            TempBalances.Clear();
-            foreach (HouseholdAccountsBalanceItem n in Balances)
-            {
-                if(n.St == st)
-                {
-                    n.Price += price;
-                }
-                TempBalances.Add(n);
-            }
-
-            Balances.Clear();
-            foreach(HouseholdAccountsBalanceItem n in TempBalances)
-            {
-                Balances.Add(n);
-            }
-        }
-
-        /* 残高を表示するためのメソッド(実質合計残高を求めるだけ) */
-        public void SetBalance()
-        {
-            int sum = 0;
-            foreach (HouseholdAccountsBalanceItem n in Balances)
-                sum += n.Price;
-            TotalBalance = String.Format("{0}円",sum);
-        }
 
         /* ScategoryからDCategoryの範囲を求めるメソッド */
         public void ScToDcRange(SCategorys sc)

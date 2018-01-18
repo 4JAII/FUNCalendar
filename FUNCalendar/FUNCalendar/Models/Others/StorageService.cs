@@ -127,7 +127,7 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.DeleteItem(item);
-            //HouseholdAccounts.Remove(item);
+            HouseholdAccounts.RemoveHouseholdAccountsItem(item);
         }
 
         public async Task EditItem(WishItem deleteItem, WishItem addItem)
@@ -174,6 +174,18 @@ namespace FUNCalendar.Models
             HasError = !await storage.EditItem(addItem);
             /* バランスアイテムの更新処理 */
         }
+
+        /* 希望
+         public async Task EditItem(StorageTypes storagetype, int price)
+         {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.EditItem(addItem);
+            HouseholdAccounts.EditHouseholdAccountsBalance(storagetype, price);
+         }*/
 
         public async Task ReadFile()
         {

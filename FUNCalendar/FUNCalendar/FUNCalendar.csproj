@@ -71,6 +71,7 @@
     <Compile Include="Services\WishList\IWishList.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
     <Compile Include="Models\Others\JsonObject\JsonBalanceList.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsEditBalancePageViewModel.cs" />
     <Compile Include="ViewModels\Others\ConfigurationPageViewModel.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsBalancePageViewModel.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsDCHistoryPageViewModel.cs" />
@@ -96,6 +97,9 @@
     <Compile Include="ViewModels\WishList\WishListPageViewModel.cs" />
     <Compile Include="ViewModels\WishList\WishListRegisterPageViewModel.cs" />
     <Compile Include="ViewModels\WishList\WishListSortName.cs" />
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsEditBalancePage.xaml.cs">
+      <DependentUpon>HouseholdAccountsEditBalancePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Others\ConfigurationPage.xaml.cs">
       <DependentUpon>ConfigurationPage.xaml</DependentUpon>
     </Compile>
@@ -304,6 +308,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WishList\WishListRegisterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsEditBalancePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

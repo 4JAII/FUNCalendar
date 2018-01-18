@@ -19,6 +19,7 @@ namespace FUNCalendar.Models
         string TotalBalance { get; }
         string SCategoryTotal { get; }
         HouseholdAccountsItem SelectedItem { get; }
+        HouseholdAccountsBalanceItem SelectedBalanceItem { get; }
         ObservableCollection<HouseholdAccountsScStatisticsItem> SIncomes { get; }
         ObservableCollection<HouseholdAccountsScStatisticsItem> SOutgoings { get; }
         ObservableCollection<HouseholdAccountsPieSliceItem> PieSlice { get; }
@@ -36,7 +37,9 @@ namespace FUNCalendar.Models
         void AddHouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings);
         void AddHouseholdAccountsItem(HouseholdAccountsItem item);
         void SetHouseholdAccountsItem(HouseholdAccountsItem item);
+        void SetHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem item); //必要？
         void EditHouseholdAccountsItem(HouseholdAccountsItem deleteItem, HouseholdAccountsItem additem);
+        void RemoveHouseholdAccountsItem(HouseholdAccountsItem deleteitem);
         void SetBalance();
         void IncrementBalancePrice(StorageTypes st, int price);
         void EditHouseholdAccountsBalance(StorageTypes st, int price);

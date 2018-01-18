@@ -14,6 +14,7 @@ namespace FUNCalendar.ViewModels
         public BalanceTypes CurrentBalanceType { get; set; }
         public SCategorys CurrentSCategory { get; set; }
         public DCategorys CurrentDCategory { get; set; }
+        public StorageTypes CurrentStoragetype { get; set; }
         public DateTime CurrentDate { get; set; }
         public Range CurrentRange { get; set; }
 
@@ -37,6 +38,13 @@ namespace FUNCalendar.ViewModels
             this.CurrentBalanceType = balancetype;
             this.CurrentSCategory = scategory;
             this.CurrentDCategory = dcategory;
+            this.CurrentDate = date;
+            this.CurrentRange = range;
+        }
+
+        public HouseholdAccountsNavigationItem(StorageTypes storagetype, DateTime date, Range range)
+        {
+            this.CurrentStoragetype = storagetype;
             this.CurrentDate = date;
             this.CurrentRange = range;
         }

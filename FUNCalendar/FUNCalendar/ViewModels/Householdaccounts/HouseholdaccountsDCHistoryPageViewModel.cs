@@ -1,29 +1,24 @@
-﻿using Prism.Commands;
+﻿using FUNCalendar.Models;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using OxyPlot;
-using OxyPlot.Xamarin.Forms;
-using OxyPlot.Series;
+using Prism.Navigation;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using FUNCalendar.Models;
+using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Xamarin.Forms;
-using Prism.Navigation;
 using Prism.Services;
+using FUNCalendar.Services;
 
 namespace FUNCalendar.ViewModels
 {
     public class HouseholdAccountsDCHistoryPageViewModel : BindableBase, INavigationAware, IDisposable
     {
-        public ReactiveCommand BackPageCommand { get; private set; }
+        public AsyncReactiveCommand BackPageCommand { get; private set; }
 
         private IHouseholdAccounts _householdaccounts;
-        private INavigationService _navigationservice;
+        private INavigationService _navigationService;
+        private IStorageService _storageService;
+        private IPageDialogService _pageDialogService;
 
         public static readonly string InputKey = "InputKey";
 
@@ -58,20 +53,33 @@ namespace FUNCalendar.ViewModels
         public ReactiveProperty<DateTime> SelectedDate { get; private set; }
         public ReactiveProperty<HouseholdAccountsRangeItem> SelectedRange { get; private set; }
 
-        public ReactiveCommand ResistCommand { get; private set; }
+        /* アイテム追加コマンド */
+        public AsyncReactiveCommand ResistCommand { get; private set; }
 
+        /* 編集コマンド */
+        public AsyncReactiveCommand EditCommand { get; private set; }
+
+        /* 削除コマンド */
+        public AsyncReactiveCommand RemoveCommand { get; private set; }
+
+        /* 監視解除 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        public HouseholdAccountsDCHistoryPageViewModel(IHouseholdAccounts householdaccounts, INavigationService navigationService)
+        public HouseholdAccountsDCHistoryPageViewModel(IHouseholdAccounts householdaccounts, IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._householdaccounts = householdaccounts;
-            this._navigationservice = navigationService;
-            this.ResistCommand = new ReactiveCommand();
+            this._storageService = storageService;
+            this._navigationService = navigationService;
+            this._pageDialogService = pageDialogService;
+
+            this.ResistCommand = new AsyncReactiveCommand();
 
             DisplayHistoryCollection = _householdaccounts.DisplayHouseholdaccountList.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsItem(x)).AddTo(disposable);
 
             /* インスタンス化 */
-            this.BackPageCommand = new ReactiveCommand();
+            this.BackPageCommand = new AsyncReactiveCommand();
+            EditCommand = new AsyncReactiveCommand();
+            RemoveCommand = new AsyncReactiveCommand();
             SelectedRange = new ReactiveProperty<HouseholdAccountsRangeItem>();
             SelectedDate = new ReactiveProperty<DateTime>();
 
@@ -98,28 +106,50 @@ namespace FUNCalendar.ViewModels
             };
 
             /* 概要カテゴリーの統計ページに遷移 */
-            BackPageCommand.Subscribe(_ =>
+            BackPageCommand.Subscribe(async _ =>
             {
                 var navigationitem = new HouseholdAccountsNavigationItem(CurrentBalanceType, CurrentSCategory, SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsStatisticsPageViewModel.InputKey, navigationitem }
                 };
-                _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsSCStatisticsPage", navigationparameter);
+                await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsSCStatisticsPage", navigationparameter);
             }).AddTo(disposable);
 
 
-            /* デバッグ用 アイテム追加ボタンが押された時の処理 */
-            ResistCommand.Subscribe(_ =>
+            /* アイテム追加ボタンが押された時の処理 */
+            ResistCommand.Subscribe(async _ =>
             {
-                DateTime temp = new DateTime(2017, 12, 16);
-                _householdaccounts.AddHouseholdAccountsItem("test1", 100, temp, DCategorys.朝食, SCategorys.食費, StorageTypes.財布, true);
-                _householdaccounts.AddHouseholdAccountsItem("test2", 300, DateTime.Today, DCategorys.消耗品, SCategorys.日用雑貨, StorageTypes.財布, true);
-                _householdaccounts.AddHouseholdAccountsItem("test3", 500, DateTime.Today, DCategorys.子供関連, SCategorys.日用雑貨, StorageTypes.財布, true);
-                _householdaccounts.AddHouseholdAccountsItem("test4", 500, DateTime.Today, DCategorys.受取利息, SCategorys.投資収入, StorageTypes.財布, false);
-                _householdaccounts.AddHouseholdAccountsItem("test4", 2000, temp, DCategorys.その他_収入, SCategorys.その他_収入, StorageTypes.財布, false);
-                _householdaccounts.SetDCategoryHistory(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentDCategory);
+                var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var navigationparameter = new NavigationParameters()
+                {
+                    {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
+                };
+                await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             }).AddTo(disposable);
+
+            /* アイテムを編集するときの処理 */
+            EditCommand.Subscribe(async (obj) =>
+            {
+                _householdaccounts.SetHouseholdAccountsItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
+                var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var navigationparameter = new NavigationParameters()
+                {
+                    {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
+                };
+                await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
+            });
+
+            /* アイテムを削除するときの処理 */
+            RemoveCommand.Subscribe(async (obj) =>
+            {
+                var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
+                if (result)
+                {
+                    await _storageService.DeleteItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
+                    _householdaccounts.SetDCategoryHistory(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentDCategory);
+                }
+            });
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)

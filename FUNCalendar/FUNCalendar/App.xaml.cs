@@ -36,13 +36,14 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<HouseholdAccountsBalancePage>();
             Container.RegisterTypeForNavigation<HouseholdAccountsHistoryPage>();
             Container.RegisterTypeForNavigation<HouseholdAccountsRegisterPage>();
+            Container.RegisterTypeForNavigation<HouseholdAccountsEditBalancePage>();
             Container.RegisterTypeForNavigation<ConfigurationPage>();
             /* 共有のインスタンスをDIコンテナに登録 */
             Container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IWishList,WishList>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IToDoList,ToDoList>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IHouseholdAccounts, HouseholdAccounts>(new ContainerControlledLifetimeManager());
-            
+
 
         }
     }
