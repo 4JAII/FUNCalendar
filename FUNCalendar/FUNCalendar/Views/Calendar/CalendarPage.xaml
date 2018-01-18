@@ -40,12 +40,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Image="Calendar_BackPrevMonth.png" Grid.Row="1" Grid.Column="1" Command="{Binding BackPrevMonth}" BorderWidth="0"
-                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White"/>
+        <Button Image="Calendar_BackPrevMonth.png" Grid.Row="0" Grid.Column="1" Command="{Binding BackPrevMonth}" BorderWidth="0"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White" Grid.RowSpan="3"/>
         <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarYear}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"/>
         <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"/>
-        <Button Image="Calendar_GoNextMonth.png" Grid.Row="1" Grid.Column="7" Command="{Binding GoNextMonth}" BorderWidth="0"
-                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White"/>
+        <Button Image="Calendar_GoNextMonth.png" Grid.Row="0" Grid.Column="7" Command="{Binding GoNextMonth}" BorderWidth="0"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White" Grid.RowSpan="3"/>
         
         <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="日" Grid.Row="2" Grid.Column="1"/>
         <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="月" Grid.Row="2" Grid.Column="2"/>
@@ -155,7 +155,7 @@
 
         <Image Source="Calendar_HasToDoList.png"
                VerticalOptions="Center"
-               HorizontalOptions="Center"
+               HorizontalOptions="End"
                WidthRequest="15"
                Aspect="AspectFit"
                Grid.Row="5"
@@ -167,7 +167,7 @@
                HorizontalOptions="Start"/>
         <Image Source="Calendar_HasWishList.png"
                VerticalOptions="Center"
-               HorizontalOptions="Center"
+               HorizontalOptions="End"
                WidthRequest="15"
                Aspect="AspectFit"
                Grid.Row="6"
@@ -179,7 +179,7 @@
                HorizontalOptions="Start"/>
         <Image Source="Calendar_HasHouseHoldAccountsList.png"
                VerticalOptions="Center"
-               HorizontalOptions="Center"
+               HorizontalOptions="End"
                WidthRequest="15"
                Aspect="AspectFit"
                Grid.Row="7"

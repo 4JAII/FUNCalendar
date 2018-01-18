@@ -48,7 +48,7 @@
                     <ListView ItemsSource="{Binding DisplayWishList}"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
-                              HeightRequest="200"
+                              HeightRequest="{Binding WishListHeight.Value}"
                               HasUnevenRows="True"
                               SeparatorVisibility="Default">
                         <ListView.ItemTemplate>
@@ -56,8 +56,8 @@
                                 <ViewCell>
                                     <!--
                                     <ViewCell.ContextActions>
-                                        <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference WishListPage}}" CommandParameter="{Binding .}"/>
-                                        <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference WishListPage}}" CommandParameter="{Binding .}"  />
+                                        <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"/>
+                                        <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
                                     </ViewCell.ContextActions>
                                     -->
                                     <Frame OutlineColor="Red">
@@ -90,12 +90,16 @@
                     <ListView ItemsSource="{Binding DisplayWishList}"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
-                              HeightRequest="200"
+                              HeightRequest="{Binding WishListHeight.Value}"
                               HasUnevenRows="True"
                               SeparatorVisibility="Default">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"/>
+                                        <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
+                                    </ViewCell.ContextActions>
                                     <Frame OutlineColor="Aqua">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -133,7 +137,7 @@
                     <ListView ItemsSource="{Binding DisplayWishList}"
                               HorizontalOptions="Center"
                               VerticalOptions="Center"
-                              HeightRequest="200"
+                              HeightRequest="{Binding WishListHeight.Value}"
                               HasUnevenRows="True"
                               SeparatorVisibility="Default">
                         <ListView.ItemTemplate>

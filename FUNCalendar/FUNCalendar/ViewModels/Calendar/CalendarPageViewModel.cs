@@ -115,6 +115,23 @@ namespace FUNCalendar.ViewModels
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
                 CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
             });
+
+            NavigationRegisterPageCommand.Subscribe(async () =>
+            {
+                var result = await _pageDialogService.DisplayActionSheetAsync("登録するアイテムの種類を選択", "キャンセル", "", "ToDo", "WishList", "家計簿");
+                switch (result)
+                {
+                    case "ToDo":
+                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage");
+                        break;
+                    case "WishList":
+                        await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage");
+                        break;
+                    case "家計簿":
+                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsListRegisterPage");
+                        break;
+                }
+            });
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)

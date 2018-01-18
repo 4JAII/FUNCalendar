@@ -132,6 +132,10 @@ namespace FUNCalendar.ViewModels
         public void OnNavigatedTo(NavigationParameters parameters)
         {
             /* 編集目的で遷移してきたならセット */
+            if (parameters["FromCalendar"] as string == "T")
+            {
+                Date.Value = Convert.ToDateTime(parameters["DateData"]);
+            }
             if (parameters["CanEdit"] as string != "T") return;
             VMWishItem vmWishItem = new VMWishItem(_wishList.DisplayWishItem);
             Regex re = new Regex(@"[^0-9]");
