@@ -46,7 +46,7 @@ namespace FUNCalendar.ViewModels
 
 
 
-        public WishListPageViewModel(IWishList wishList,IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListPageViewModel(IWishList wishList, IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._wishList = wishList;
             this._storageService = storageService;
@@ -96,7 +96,10 @@ namespace FUNCalendar.ViewModels
                 if (result)
                 {
                     var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
-                    await _storageService.DeleteItem(wishItem);
+                    bool needsDelete = false;
+                    if (wishItem.ToDoID != 0)
+                        needsDelete = await _pageDialogService.DisplayAlertAsync("確認", "関連のToDoも削除しますか？\n(いいえを選んだ場合そのToDoの連携機能が使えなくなります)", "はい", "いいえ");
+                    await _storageService.DeleteItem(wishItem, needsDelete);
                 }
             });
 

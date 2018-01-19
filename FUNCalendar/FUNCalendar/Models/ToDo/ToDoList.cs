@@ -23,8 +23,6 @@ namespace FUNCalendar.Models
             set { this.SetProperty(ref this.isAscending, value); }
         }
 
-        private static bool isInitialized = false;
-
         public ToDoList()
         {
             SortedToDoList = new ObservableCollection<ToDoItem>();
@@ -77,9 +75,8 @@ namespace FUNCalendar.Models
 
         public void UpdateList(List<ToDoItem> list)
         {
-            if (isInitialized) return;
+            this.allToDoList = null;
             this.allToDoList = list;
-            isInitialized = true;
         }
 
         /* アイテム追加 */

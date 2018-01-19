@@ -118,6 +118,7 @@ namespace FUNCalendar.ViewModels
                 DateTime temp = new DateTime(2017, 12, 16);
                 _householdaccounts.AddHouseholdAccountsItem("test1", 100, temp, DCategorys.朝食, SCategorys.食費, StorageTypes.財布, true);
                 _householdaccounts.SetBalance();
+                
             }).AddTo(disposable);
         }
 

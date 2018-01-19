@@ -16,13 +16,13 @@ namespace FUNCalendar.Services
 
         void AfterResolveError();
         Task SetConfig(bool isEnableRemoteStorage, string username, string password);
-        Task AddItem(WishItem item);
+        Task AddItem(WishItem item,bool needsRegister,int priority);
         Task AddItem(ToDoItem item);
         Task AddItem(HouseholdAccountsItem item);
-        Task DeleteItem(WishItem item);
-        Task DeleteItem(ToDoItem item);
+        Task DeleteItem(WishItem item,bool needsDelete);
+        Task DeleteItem(ToDoItem item,bool needsDelete);
         Task DeleteItem(HouseholdAccountsItem item);
-        Task EditItem(WishItem deleteItem, WishItem addItem);
+        Task EditItem(WishItem deleteItem, WishItem addItem,bool needsRegister,int priority);
         Task EditItem(ToDoItem deleteItem,ToDoItem addItem);
         Task EditItem(HouseholdAccountsItem deleteItem,HouseholdAccountsItem addItem);
         Task EditItem(HouseholdAccountsBalanceItem deleteItem,HouseholdAccountsBalanceItem addItem);

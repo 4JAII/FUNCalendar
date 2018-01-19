@@ -20,6 +20,7 @@ namespace FUNCalendar.Services
         void AddWishItem(WishItem wishItem);
         void UpdateList(List<WishItem> list);
         void SetDisplayWishItem(WishItem wishItem);
+        void SetDisplayWishItem(int wishID);
         void Remove(WishItem wishItem);
         void EditWishItem(WishItem deleteWishItem,WishItem addWishItem);
     }

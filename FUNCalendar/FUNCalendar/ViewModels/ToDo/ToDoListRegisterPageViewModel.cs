@@ -84,12 +84,14 @@ namespace FUNCalendar.ViewModels
                 {
                     var vmToDoItem = new VMToDoItem(ID, Description.Value, Date.Value, Priority.Value.ToString(), isCompleted, wishID);
                     var todoItem = VMToDoItem.ToToDoItem(vmToDoItem);
+
+
                     await _storageService.EditItem(_todoList.DisplayToDoItem, todoItem);
                 }
                 else
                 {
-                    var todoItem = new ToDoItem { Description = this.Description.Value, Date = Date.Value, Priority = this.Priority.Value, IsCompleted = false };
-                    await _storageService.AddItem(new ToDoItem(this.Description.Value, Date.Value, this.Priority.Value, false, /*ここにID*/-1));
+                    var todoItem = new ToDoItem { Description = this.Description.Value, Date = Date.Value, Priority = this.Priority.Value, IsCompleted = false, WishID = 0 };
+                    await _storageService.AddItem(todoItem);
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/ToDoListPage");
             });
