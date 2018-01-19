@@ -5,7 +5,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:local="clr-namespace:FUNCalendar.ViewModels"
              xmlns:b="clr-namespace:FUNCalendar.Behaviors"
-             x:Class="FUNCalendar.Views.HouseholdaccountsDCHistoryPage"
+             x:Class="FUNCalendar.Views.HouseholdAccountsDCHistoryPage"
              Title="{Binding DCategoryTitle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"

@@ -28,11 +28,11 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Text="アカウント連携 :" FontSize="Medium" Grid.Row="1" Grid.Column="1"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Label Text="アカウント連携 :" FontSize="Default" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
         <Switch IsToggled="{Binding IsEnableRemoteStorage.Value}" Grid.Row="1" Grid.Column="4" HorizontalOptions="CenterAndExpand"/>
-        <Label Text="ユーザー名 :" FontSize="Medium" Grid.Row="2" Grid.Column="1"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Label Text="ユーザー名 :" FontSize="Default" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
         <Entry Text="{Binding Username.Value}" IsEnabled="{Binding IsEnableRemoteStorage.Value}" FontSize="Large" Placeholder="ユーザー名" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3"/>
-        <Label Text="パスワード :" FontSize="Medium" Grid.Row="4" Grid.Column="1"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+        <Label Text="パスワード :" FontSize="Default" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
         <Entry Text="{Binding Password.Value}" IsEnabled="{Binding IsEnableRemoteStorage.Value}" FontSize="Large" Placeholder="パスワード" IsPassword="True" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"/>
         <Button Text="適用" Command="{Binding SaveConfigCommand}" IsEnabled="{Binding CanExecute.Value}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4"/>
     </Grid>

@@ -100,6 +100,98 @@ namespace FUNCalendar.Models
             return (int)response.StatusCode;
         }
 
+        public async Task<List<ToDoItem>> GetToDoAsync()
+        {
+            string requestPath = "v1/todo";
+            IRestResponse response;
+            List<ToDoItem> list;
+            response = await GetAsync(requestPath);
+            if (response.StatusCode != HttpStatusCode.OK)
+                return null;
+            list = JsonConvert.DeserializeObject<JsonToDoList>(response.Content).Value;
+            return list;
+        }
 
+        public async Task<Tuple<int, int>> PostToDoAsync(ToDoItem todoItem)
+        {
+            JsonToDoItem jsonToDoItem = new JsonToDoItem { VMValue = new VMToDoItem(todoItem)  };
+            string requestPath = "v1/todo";
+            IRestResponse response = await PostAsync<JsonToDoItem>(requestPath, jsonToDoItem);
+            JsonStatus status = JsonConvert.DeserializeObject<JsonStatus>(response.Content);
+            return Tuple.Create((int)response.StatusCode, status.LastAddedID);
+        }
+
+        public async Task<int> PutToDoAsync(ToDoItem todoItem)
+        {
+            JsonToDoItem jsonToDoItem = new JsonToDoItem { VMValue = new VMToDoItem(todoItem) };
+            string requestPath = "v1/todo/{id}";
+            IRestResponse response = await PutAsync<JsonToDoItem>(requestPath, todoItem.ID, jsonToDoItem);
+            return (int)response.StatusCode;
+        }
+
+
+        public async Task<int> DeleteToDoAsync(ToDoItem todoItem)
+        {
+            string requestPath = "v1/todo/{id}";
+            IRestResponse response = await DeleteAsync(requestPath, todoItem.ID);
+            return (int)response.StatusCode;
+        }
+
+        public async Task<List<HouseholdAccountsItem>> GetHouseholdAccountsAsync()
+        {
+            string requestPath = "v1/household_accounts";
+            IRestResponse response;
+            List<HouseholdAccountsItem> list;
+            response = await GetAsync(requestPath);
+            if (response.StatusCode != HttpStatusCode.OK)
+                return null;
+            list = JsonConvert.DeserializeObject<JsonHouseholdAccountsList>(response.Content).Value;
+            return list;
+        }
+
+        public async Task<Tuple<int, int>> PostHouseholdAccountsAsync(HouseholdAccountsItem householdAccountsItem)
+        {
+            JsonHouseholdAccountsItem jsonHouseholdAccountsItem = new JsonHouseholdAccountsItem{ VMValue = new VMHouseholdAccountsItem(householdAccountsItem) };
+            string requestPath = "v1/household_accounts";
+            IRestResponse response = await PostAsync<JsonHouseholdAccountsItem>(requestPath,jsonHouseholdAccountsItem);
+            JsonStatus status = JsonConvert.DeserializeObject<JsonStatus>(response.Content);
+            return Tuple.Create((int)response.StatusCode, status.LastAddedID);
+        }
+
+        public async Task<int> PutHouseholdAccountsAsync(HouseholdAccountsItem householdAccountsItem)
+        {
+            JsonHouseholdAccountsItem jsonHouseholdAccountsItem = new JsonHouseholdAccountsItem { VMValue = new VMHouseholdAccountsItem(householdAccountsItem) };
+            string requestPath = "v1/household_accounts/{id}";
+            IRestResponse response = await PutAsync<JsonHouseholdAccountsItem>(requestPath, householdAccountsItem.ID, jsonHouseholdAccountsItem);
+            return (int)response.StatusCode;
+        }
+
+
+        public async Task<int> DeleteHouseholdAccountsAsync(HouseholdAccountsItem householdAccountsItem)
+        {
+            string requestPath = "v1/household_accounts/{id}";
+            IRestResponse response = await DeleteAsync(requestPath, householdAccountsItem.ID);
+            return (int)response.StatusCode;
+        }
+
+        public async Task<List<HouseholdAccountsBalanceItem>> GetBalanceAsync()
+        {
+            string requestPath = "v1/balance";
+            IRestResponse response;
+            List<HouseholdAccountsBalanceItem> list;
+            response = await GetAsync(requestPath);
+            if (response.StatusCode != HttpStatusCode.OK)
+                return null;
+            list = JsonConvert.DeserializeObject<JsonBalanceList>(response.Content).Value;
+            return list;
+        }
+
+        public async Task<int> PutBalanceItemAsync(HouseholdAccountsBalanceItem householdAccountsBalanceItem)
+        {
+            JsonBalanceItem jsonBalanceItem= new JsonBalanceItem { VMValue = new VMHouseholdAccountsBalanceItem(householdAccountsBalanceItem) };
+            string requestPath = "v1/balance/{id}";
+            IRestResponse response = await PutAsync<JsonBalanceItem>(requestPath, householdAccountsBalanceItem.ID,jsonBalanceItem );
+            return (int)response.StatusCode;
+        }
     }
 }

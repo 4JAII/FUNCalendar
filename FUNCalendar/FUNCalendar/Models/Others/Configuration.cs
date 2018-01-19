@@ -48,7 +48,8 @@ namespace FUNCalendar.Models
         public static async Task<Configuration> InitializeAsync()
         {
             fileReadWriteService = new FileReadWriteService();
-            if (!await fileReadWriteService.ExistsAsync(configFileName))
+            bool isExist = await fileReadWriteService.ExistsAsync(configFileName);
+            if (!isExist)
             {
                 await fileReadWriteService.CreateFileAsync(configFileName);
                 var temp = new Configuration();
@@ -57,6 +58,7 @@ namespace FUNCalendar.Models
             }
             string configJson = await fileReadWriteService.ReadStringFileAsync(configFileName);
             Configuration configuration = JsonConvert.DeserializeObject<Configuration>(configJson);
+            if (configuration == null) configuration = new Configuration();
             return configuration;
         }
 

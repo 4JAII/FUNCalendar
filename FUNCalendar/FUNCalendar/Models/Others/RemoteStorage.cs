@@ -16,7 +16,7 @@ namespace FUNCalendar.Models
 
         public int LastAddedToDoItemID { get; private set; }
 
-        public int LastAddedHouseholdAccountsID { get; private set; }
+        public int LastAddedHouseholdAccountsItemID { get; private set; }
 
         private DatabaseGateway gateway;
 
@@ -89,6 +89,163 @@ namespace FUNCalendar.Models
             {
                 return await gateway.GetWishListAsync();
 
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task <bool> AddItem(ToDoItem item)
+        {
+            Tuple<int, int> result;
+            try
+            {
+                result = await gateway.PostToDoAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            if(result.Item1 != (int)HttpStatusCode.Created)
+            {
+                LastAddedToDoItemID = 0;
+                return false;
+            }
+            LastAddedToDoItemID = result.Item2;
+            return true;
+        }
+
+        public async Task<bool> DeleteItem(ToDoItem item)
+        {
+            int result;
+            try
+            {
+                result = await gateway.DeleteToDoAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            if(result != (int)HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+
+        public async Task<bool> EditItem(ToDoItem item)
+        {
+            int result;
+            try
+            {
+                result = await gateway.PutToDoAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            if(result != (int)HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+
+        public async Task<List<ToDoItem>> ReadToDo()
+        {
+            try
+            {
+                return await gateway.GetToDoAsync();
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        public async Task<bool> AddItem(HouseholdAccountsItem item)
+        {
+            Tuple<int,int> result;
+            try
+            {
+                result = await gateway.PostHouseholdAccountsAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            if(result.Item1 !=(int)HttpStatusCode.Created)
+            {
+                LastAddedHouseholdAccountsItemID = 0;
+                return false;
+            }
+            LastAddedHouseholdAccountsItemID = result.Item2;
+            return true;
+        }
+
+        public async Task<bool> DeleteItem(HouseholdAccountsItem item)
+        {
+            int result;
+            try
+            {
+                result = await gateway.DeleteHouseholdAccountsAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            if(result != (int)HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+
+        public async Task<bool> EditItem(HouseholdAccountsItem item)
+        {
+            int result;
+            try
+            {
+                result = await gateway.PutHouseholdAccountsAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            if(result != (int)HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+
+        public async Task<List<HouseholdAccountsItem>> ReadHouseholdAccounts()
+        {
+            try
+            {
+                return await gateway.GetHouseholdAccountsAsync();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> EditItem(HouseholdAccountsBalanceItem item)
+        {
+            int result;
+            try
+            {
+                result = await gateway.PutBalanceItemAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            if(result !=(int)HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+
+        public async Task<List<HouseholdAccountsBalanceItem>> ReadBalance()
+        {
+            try
+            {
+                return await gateway.GetBalanceAsync();
             }
             catch
             {

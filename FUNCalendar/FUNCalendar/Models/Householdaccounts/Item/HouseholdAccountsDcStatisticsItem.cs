@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
 {
-    public class HouseholdaccountDcStatisticsItem
+    public class HouseholdAccountsDcStatisticsItem
     {
         public BalanceTypes BalanceType { get; set; }
         public SCategorys Scategory { set; get; }
@@ -14,7 +14,7 @@ namespace FUNCalendar.Models
         public int Price { get; set; }
         public int Ratio { get; set; }
 
-        public HouseholdaccountDcStatisticsItem(BalanceTypes balancetype, SCategorys scategory,DCategorys dcategory, int price, int ratio){
+        public HouseholdAccountsDcStatisticsItem(BalanceTypes balancetype, SCategorys scategory,DCategorys dcategory, int price, int ratio){
             this.BalanceType = balancetype;
             this.Scategory = scategory;
             this.Dcategory = dcategory;

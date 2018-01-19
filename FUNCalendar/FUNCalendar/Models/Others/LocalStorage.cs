@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using PCLStorage;
 using Prism.Mvvm;
-using SQLite;
+using SQLitePCL;
 using FUNCalendar.Services;
-
+using SQLite;
 
 namespace FUNCalendar.Models
 {
@@ -23,8 +23,8 @@ namespace FUNCalendar.Models
         /* 最後に追加したIDを保持 */
         public int LastAddedWishItemID { get; private set; }
         public int LastAddedToDoItemID { get; private set; }
-        public int LastAddedHouseholdAccountsID { get; private set; }
-
+        public int LastAddedHouseholdAccountsItemID { get; private set; }
+        public int LastAddedBalanceItemID { get; private set; }
 
         private async Task CreateConnection()
         {
@@ -33,20 +33,19 @@ namespace FUNCalendar.Models
             SQLiteAsyncConnection connection;
             rootFolder = FileSystem.Current.LocalStorage;
             fileReadWriteService = new FileReadWriteService();
+
             var result = await fileReadWriteService.ExistsAsync(databaseFileName).ConfigureAwait(false);
             if (!result)
             {
                 await fileReadWriteService.CreateFileAsync(databaseFileName);
                 file = await fileReadWriteService.ReadFileAsync(databaseFileName);
-                connection = new SQLiteAsyncConnection(file.Path);
-                await connection.CreateTableAsync<WishItem>();
-              /*await connection.CreateTableAsync<ToDoItem>();   
-                await connection.CreateTableAsync<HouseHoldAccountsItem>();
-                */
-
             }
             file = await fileReadWriteService.ReadFileAsync(databaseFileName);
             connection = new SQLiteAsyncConnection(file.Path);
+            await connection.CreateTableAsync<WishItem>();
+            await connection.CreateTableAsync<ToDoItem>();
+            await connection.CreateTableAsync<HouseholdAccountsItem>();
+            await connection.CreateTableAsync<HouseholdAccountsBalanceItem>();
             asyncConnection = connection;
             isInitialized = true;
         }
@@ -67,7 +66,7 @@ namespace FUNCalendar.Models
             return true;
         }
 
-        /*
+
         public async Task<bool> AddItem(ToDoItem item)
         {
             try
@@ -80,11 +79,12 @@ namespace FUNCalendar.Models
                 return false;
             }
             LastAddedToDoItemID = item.ID;
+            return true;
         }
-        */
 
-        /*
-        public async Task<bool> AddItem(BalanceItem item)
+
+
+        public async Task<bool> AddItem(HouseholdAccountsBalanceItem item)
         {
             try
             {
@@ -95,11 +95,13 @@ namespace FUNCalendar.Models
             {
                 return false;
             }
+            LastAddedBalanceItemID = item.ID;
+            return true;
         }
-        */
 
-        /*
-        public async Task<bool> AddItem(HouseHoldAccountsItem item)
+
+
+        public async Task<bool> AddItem(HouseholdAccountsItem item)
         {
             try
             {
@@ -110,9 +112,10 @@ namespace FUNCalendar.Models
             {
                 return false;
             }
-            LastAddedHouseHoldAccountsItemID = item.ID;
+            LastAddedHouseholdAccountsItemID = item.ID;
+            return true;
         }
-        */
+
 
         public async Task<bool> DeleteItem(WishItem item)
         {
@@ -128,7 +131,7 @@ namespace FUNCalendar.Models
             return true;
         }
 
-        /*
+
         public async Task<bool> DeleteItem(ToDoItem item)
         {
             try
@@ -142,10 +145,10 @@ namespace FUNCalendar.Models
             }
             return true;
         }
-        */
 
-        /*
-        public async Task<bool> DeleteItem(HouseHoldAccounts item)
+
+
+        public async Task<bool> DeleteItem(HouseholdAccountsItem item)
         {
             try
             {
@@ -158,7 +161,7 @@ namespace FUNCalendar.Models
             }
             return true;
         }
-        */
+
 
         public async Task<bool> EditItem(WishItem item)
         {
@@ -174,10 +177,10 @@ namespace FUNCalendar.Models
             return true;
         }
 
-        /*
+
         public async Task<bool> EditItem(ToDoItem item)
         {
-           try
+            try
             {
                 await CreateConnection();
                 await asyncConnection.UpdateAsync(item);
@@ -188,12 +191,10 @@ namespace FUNCalendar.Models
             }
             return true;
         }
-        */
 
-        /*
-        public async Task<bool> EditItem(HouseHoldAccountsItem item)
+        public async Task<bool> EditItem(HouseholdAccountsBalanceItem item)
         {
-           try
+            try
             {
                 await CreateConnection();
                 await asyncConnection.UpdateAsync(item);
@@ -204,7 +205,21 @@ namespace FUNCalendar.Models
             }
             return true;
         }
-        */
+
+        public async Task<bool> EditItem(HouseholdAccountsItem item)
+        {
+            try
+            {
+                await CreateConnection();
+                await asyncConnection.UpdateAsync(item);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
 
         public async Task<List<WishItem>> ReadWishList()
         {
@@ -212,29 +227,29 @@ namespace FUNCalendar.Models
             return await asyncConnection.Table<WishItem>().ToListAsync();
         }
 
-        /*
-        public async Task<List<ToDoItem>> ReadFile()
+
+        public async Task<List<ToDoItem>> ReadToDo()
         {
             await CreateConnection();
             return await asyncConnection.Table<ToDoItem>().ToListAsync();
         }
-        */
 
-        /*
-        public async Task<List<BalanceItem>> ReadFile()
+
+
+        public async Task<List<HouseholdAccountsBalanceItem>> ReadBalance()
         {
             await CreateConnection();
-            return await asyncConnection.Table<BalanceItem>().ToListAsync();
+            return await asyncConnection.Table<HouseholdAccountsBalanceItem>().ToListAsync();
         }
-        */
 
-        /*
-        public async Task<List<HouseHoldAccountsItem>> ReadFile()
+
+
+        public async Task<List<HouseholdAccountsItem>> ReadHouseholdAccounts()
         {
             await CreateConnection();
-            return await asyncConnection.Table<HouseHoldAccountsItem>().ToListAsync();
+            return await asyncConnection.Table<HouseholdAccountsItem>().ToListAsync();
         }
-        */
+
 
     }
 }

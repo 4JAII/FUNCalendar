@@ -7,12 +7,12 @@ using Xamarin.Forms;
 
 namespace FUNCalendar.Models
 {
-    public class HouseholdaccountLegendItem
+    public class HouseholdAccountsLegendItem
     {
         public string ColorPath { get; set; }
         public string Label { get; set; }
 
-        public HouseholdaccountLegendItem(string color, string label)
+        public HouseholdAccountsLegendItem(string color, string label)
         {
             this.ColorPath = color;
             this.Label = label;

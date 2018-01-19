@@ -7,7 +7,7 @@ using FUNCalendar.Models;
 
 namespace FUNCalendar.ViewModels
 {
-    public class HouseholdaccountRangeItem
+    public class HouseholdAccountsRangeItem
     {
         public string RangeName { get; set; }
         public Range RangeData { get;  set; }

@@ -7,12 +7,12 @@ using FUNCalendar.Models;
 
 namespace FUNCalendar.ViewModels
 {
-    public class HouseholdaccountsStorageTypeItem
+    public class HouseholdAccountsStorageTypeItem
     {
         public string StorageTypeName { get; set; }
         public StorageTypes StorageTypeData { get; set; }
 
-        public HouseholdaccountsStorageTypeItem(string name, StorageTypes storagetype)
+        public HouseholdAccountsStorageTypeItem(string name, StorageTypes storagetype)
         {
             this.StorageTypeName = name;
             this.StorageTypeData = storagetype;

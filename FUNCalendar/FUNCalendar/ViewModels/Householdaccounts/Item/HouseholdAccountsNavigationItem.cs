@@ -8,7 +8,7 @@ using FUNCalendar.Models;
 
 namespace FUNCalendar.ViewModels
 {
-    public class HouseholdaccountNavigationItem
+    public class HouseholdAccountsNavigationItem
     {
 
         public BalanceTypes CurrentBalanceType { get; set; }
@@ -18,13 +18,13 @@ namespace FUNCalendar.ViewModels
         public Range CurrentRange { get; set; }
 
 
-        public HouseholdaccountNavigationItem(DateTime date, Range range)
+        public HouseholdAccountsNavigationItem(DateTime date, Range range)
         {
             this.CurrentRange = range;
             this.CurrentDate = date;
         }
 
-        public HouseholdaccountNavigationItem(BalanceTypes balancetype, SCategorys scategory, DateTime date, Range range)
+        public HouseholdAccountsNavigationItem(BalanceTypes balancetype, SCategorys scategory, DateTime date, Range range)
         {
             this.CurrentBalanceType = balancetype;
             this.CurrentSCategory = scategory;
@@ -32,7 +32,7 @@ namespace FUNCalendar.ViewModels
             this.CurrentRange = range;
         }
 
-        public HouseholdaccountNavigationItem(BalanceTypes balancetype, SCategorys scategory, DCategorys dcategory, DateTime date, Range range)
+        public HouseholdAccountsNavigationItem(BalanceTypes balancetype, SCategorys scategory, DCategorys dcategory, DateTime date, Range range)
         {
             this.CurrentBalanceType = balancetype;
             this.CurrentSCategory = scategory;

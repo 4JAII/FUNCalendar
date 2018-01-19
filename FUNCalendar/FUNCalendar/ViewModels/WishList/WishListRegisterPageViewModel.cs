@@ -45,7 +45,7 @@ namespace FUNCalendar.ViewModels
         /* 廃棄 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
-        public WishListRegisterPageViewModel(IWishList wishList,IStorageService storage, INavigationService navigationService, IPageDialogService pageDialogService)
+        public WishListRegisterPageViewModel(IWishList wishList, IStorageService storage, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._storageService = storage;
 
@@ -78,13 +78,22 @@ namespace FUNCalendar.ViewModels
                 {
                     var vmWishItem = new VMWishItem(ID, Name.Value, Price.Value, Date.Value, isBought, todoID);
                     var wishItem = VMWishItem.ToWishItem(vmWishItem);
-                    await _storageService.EditItem(_wishList.DisplayWishItem, wishItem);
+                    if (!await _pageDialogService.DisplayAlertAsync("確認", "もしToDo連携済みのものの連携を切る場合,連携したToDoは削除されます", "はい", "いいえ"))
+                        return;
+                    string priority = "0";
+                    if (NeedsAdd)
+                        priority = await _pageDialogService.DisplayActionSheetAsync("優先度を選んでください", null, null, "1", "2", "3", "4", "5");
+
+                    await _storageService.EditItem(_wishList.DisplayWishItem, wishItem, NeedsAdd, int.Parse(priority));
 
                 }
                 else
                 {
                     var wishItem = new WishItem { Name = this.Name.Value, Price = int.Parse(this.Price.Value), Date = Date.Value, IsBought = false };
-                    await _storageService.AddItem(new WishItem(this.Name.Value, int.Parse(this.Price.Value), Date.Value, false,/*ここにID*/-1));
+                    string priority = "0";
+                    if (NeedsAdd)
+                        priority = await _pageDialogService.DisplayActionSheetAsync("優先度を選んでください", null, null, "1", "2", "3", "4", "5");
+                    await _storageService.AddItem(wishItem, NeedsAdd, int.Parse(priority));
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
             });

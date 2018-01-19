@@ -6,7 +6,7 @@
              x:Class="FUNCalendar.Views.ToDoListRegisterPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="True"
-             Title="ToDoList画面登録">
+             Title="ToDo登録画面">
 
     <Grid>
         <Grid.RowDefinitions>

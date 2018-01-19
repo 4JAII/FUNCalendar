@@ -11,10 +11,10 @@ using OxyPlot.Series;
 
 namespace FUNCalendar.Models
 {
-    public class HouseHoldAccounts : BindableBase, IHouseHoldAccounts
+    public class HouseholdAccounts : BindableBase, IHouseholdAccounts
     {
-        private List<HouseHoldAccountsItem> allHouseHoldAccounts;
-        public HouseHoldAccountsItem SelectedItem { get; set; }
+        private List<HouseholdAccountsItem> allHouseHoldAccounts;
+        public HouseholdAccountsItem SelectedItem { get; set; }
         private static int idCount;
         public int IDCount { get { return idCount; } private set { idCount = value; } }
 
@@ -25,8 +25,8 @@ namespace FUNCalendar.Models
 
 
         /* グラフ */
-        public ObservableCollection<HouseholdaccountPieSliceItem> PieSlice { get; private set; }
-        public ObservableCollection<HouseholdaccountLegendItem> Legend { get; private set; }
+        public ObservableCollection<HouseholdAccountsPieSliceItem> PieSlice { get; private set; }
+        public ObservableCollection<HouseholdAccountsLegendItem> Legend { get; private set; }
 
         /* 全体の統計(メイン画面) */
         private string _totalIncome;
@@ -47,8 +47,8 @@ namespace FUNCalendar.Models
             get { return this._difference; }
             set { this.SetProperty(ref this._difference, value); }
         }
-        public ObservableCollection<HouseholdaccountScStatisticsItem> SIncomes { get; private set; }       //各概略カテゴリーの収入の合計値を格納
-        public ObservableCollection<HouseholdaccountScStatisticsItem> SOutgoings { get; private set; }         //各概略カテゴリーの支出の合計値を格納
+        public ObservableCollection<HouseholdAccountsScStatisticsItem> SIncomes { get; private set; }       //各概略カテゴリーの収入の合計値を格納
+        public ObservableCollection<HouseholdAccountsScStatisticsItem> SOutgoings { get; private set; }         //各概略カテゴリーの支出の合計値を格納
 
         /* 概略カテゴリーの統計画面用 */
         private string _sCategoryTotal;
@@ -57,14 +57,14 @@ namespace FUNCalendar.Models
             get { return this._sCategoryTotal; }
             set { this.SetProperty(ref this._sCategoryTotal, value); }
         }
-        public ObservableCollection<HouseholdaccountDcStatisticsItem> ScategoryItems { get; private set; }
+        public ObservableCollection<HouseholdAccountsDcStatisticsItem> ScategoryItems { get; private set; }
 
         /* 履歴画面用*/
-        public ObservableCollection<HouseHoldAccountsItem> DisplayHouseholdaccountList { get; private set; }
+        public ObservableCollection<HouseholdAccountsItem> DisplayHouseholdaccountList { get; private set; }
 
         /* 残高画面 */
-        public ObservableCollection<HouseholdaccountBalanceItem> Balances { get; private set; }
-        private List<HouseholdaccountBalanceItem> TempBalances { get; set; } = new List<HouseholdaccountBalanceItem>();
+        public ObservableCollection<HouseholdAccountsBalanceItem> Balances { get; private set; }
+        private List<HouseholdAccountsBalanceItem> TempBalances { get; set; } = new List<HouseholdAccountsBalanceItem>();
         private string _totalbalance;
         public string TotalBalance
         {
@@ -73,54 +73,54 @@ namespace FUNCalendar.Models
         }
 
         /* コンストラクタ */
-        public HouseHoldAccounts()
+        public HouseholdAccounts()
         {
-            allHouseHoldAccounts = new List<HouseHoldAccountsItem>();
-            SIncomes = new ObservableCollection<HouseholdaccountScStatisticsItem>();
-            SOutgoings = new ObservableCollection<HouseholdaccountScStatisticsItem>();
-            PieSlice = new ObservableCollection<HouseholdaccountPieSliceItem>();
-            Balances = new ObservableCollection<HouseholdaccountBalanceItem>()
+            allHouseHoldAccounts = new List<HouseholdAccountsItem>();
+            SIncomes = new ObservableCollection<HouseholdAccountsScStatisticsItem>();
+            SOutgoings = new ObservableCollection<HouseholdAccountsScStatisticsItem>();
+            PieSlice = new ObservableCollection<HouseholdAccountsPieSliceItem>();
+            Balances = new ObservableCollection<HouseholdAccountsBalanceItem>()
             {
-                new HouseholdaccountBalanceItem
+                new HouseholdAccountsBalanceItem
                 {
                     St = StorageTypes.財布,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
-                new HouseholdaccountBalanceItem
+                new HouseholdAccountsBalanceItem
                 {
                     St = StorageTypes.クレジットカード,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
-                new HouseholdaccountBalanceItem
+                new HouseholdAccountsBalanceItem
                 {
                     St = StorageTypes.貯金,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
-                new HouseholdaccountBalanceItem
+                new HouseholdAccountsBalanceItem
                 {
                     St = StorageTypes.銀行,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 },
-                new HouseholdaccountBalanceItem
+                new HouseholdAccountsBalanceItem
                 {
                     St = StorageTypes.その他,
                     Price = 0,
                     //Image = Imagesource.FromFile(".png")
                 }
             };
-            Legend = new ObservableCollection<HouseholdaccountLegendItem>();
-            ScategoryItems = new ObservableCollection<HouseholdaccountDcStatisticsItem>();
-            DisplayHouseholdaccountList = new ObservableCollection<HouseHoldAccountsItem>();
+            Legend = new ObservableCollection<HouseholdAccountsLegendItem>();
+            ScategoryItems = new ObservableCollection<HouseholdAccountsDcStatisticsItem>();
+            DisplayHouseholdaccountList = new ObservableCollection<HouseholdAccountsItem>();
         }
 
         /* アイテム追加 */
-        public void AddHouseHoldAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
+        public void AddHouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
-            HouseHoldAccountsItem item = new HouseHoldAccountsItem(IDCount, name, price, date, detailcategory, summarycategory, storagetype, isoutgoings);
+            HouseholdAccountsItem item = new HouseholdAccountsItem(IDCount, name, price, date, detailcategory, summarycategory, storagetype, isoutgoings);
             IDCount++;
             allHouseHoldAccounts.Add(item);
             if (isoutgoings)
@@ -132,7 +132,7 @@ namespace FUNCalendar.Models
         }
 
         /* アイテム追加 */
-        public void AddHouseHoldAccountsItem(HouseHoldAccountsItem item)
+        public void AddHouseholdAccountsItem(HouseholdAccountsItem item)
         {
             allHouseHoldAccounts.Add(item);
             var price = item.Price;
@@ -145,23 +145,23 @@ namespace FUNCalendar.Models
         }
 
         /* アイテム設定 */
-        public void SetHouseholdaccountsItem(HouseHoldAccountsItem item)
+        public void SetHouseholdAccountsItem(HouseholdAccountsItem item)
         {
             SelectedItem = item;
         }
 
         /* アイテムの編集 */
-        public void EditHouseholdaccountsItem(HouseHoldAccountsItem deleteItem, HouseHoldAccountsItem additem)
+        public void EditHouseholdAccountsItem(HouseholdAccountsItem deleteItem, HouseholdAccountsItem additem)
         {
             allHouseHoldAccounts.RemoveAll(item => item.ID == deleteItem.ID);
-            AddHouseHoldAccountsItem(additem);
+            AddHouseholdAccountsItem(additem);
             SetBalance();
         }
 
         /* 全体の統計を表示するためのメソッド(main page) */
         public void SetAllStatics(Range r, DateTime date)
         {
-            HouseholdaccountScStatisticsItem item;
+            HouseholdAccountsScStatisticsItem item;
             int price, ratio;
             SIncomes.Clear();
             SOutgoings.Clear();
@@ -175,7 +175,7 @@ namespace FUNCalendar.Models
                 price = CalucSCategory(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date);
                 ratio = CalucSCategoryRatio(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date, false);
 
-                item = new HouseholdaccountScStatisticsItem(BalanceTypes.incomes, (SCategorys)Enum.ToObject(typeof(SCategorys), i), price, ratio);
+                item = new HouseholdAccountsScStatisticsItem(BalanceTypes.incomes, (SCategorys)Enum.ToObject(typeof(SCategorys), i), price, ratio);
                 SIncomes.Add(item);
             }
 
@@ -183,7 +183,7 @@ namespace FUNCalendar.Models
             {
                 price = CalucSCategory(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date);
                 ratio = CalucSCategoryRatio(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date, true);
-                item = new HouseholdaccountScStatisticsItem(BalanceTypes.outgoings, (SCategorys)Enum.ToObject(typeof(SCategorys), i), price, ratio);
+                item = new HouseholdAccountsScStatisticsItem(BalanceTypes.outgoings, (SCategorys)Enum.ToObject(typeof(SCategorys), i), price, ratio);
                 SOutgoings.Add(item);
             }
         }
@@ -194,12 +194,12 @@ namespace FUNCalendar.Models
             int i, j;
 
             /* グラフ用 */
-            HouseholdaccountPieSliceItem pieitem;
+            HouseholdAccountsPieSliceItem pieitem;
             string pielabel, piecolor;
             int pievalue;
 
             /* グラフ凡例用 */
-            HouseholdaccountLegendItem legenditem;
+            HouseholdAccountsLegendItem legenditem;
             string legendcolor, legendlabel;
 
             Legend.Clear();
@@ -213,12 +213,12 @@ namespace FUNCalendar.Models
                         pielabel = Enum.GetName(typeof(SCategorys), i);
                         pievalue = CalucSCategory(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date);
                         piecolor = IntToColorPath(j);
-                        pieitem = new HouseholdaccountPieSliceItem(pielabel, pievalue, piecolor);
+                        pieitem = new HouseholdAccountsPieSliceItem(pielabel, pievalue, piecolor);
                         PieSlice.Add(pieitem);
 
                         legendcolor = IntToColorPath(j);
                         legendlabel = Enum.GetName(typeof(SCategorys), i);
-                        legenditem = new HouseholdaccountLegendItem(legendcolor, legendlabel);
+                        legenditem = new HouseholdAccountsLegendItem(legendcolor, legendlabel);
                         Legend.Add(legenditem);
                     }
 
@@ -229,12 +229,12 @@ namespace FUNCalendar.Models
                         pielabel = Enum.GetName(typeof(SCategorys), i);
                         pievalue = CalucSCategory(r, (SCategorys)Enum.ToObject(typeof(SCategorys), i), date);
                         piecolor = IntToColorPath(j);
-                        pieitem = new HouseholdaccountPieSliceItem(pielabel, pievalue, piecolor);
+                        pieitem = new HouseholdAccountsPieSliceItem(pielabel, pievalue, piecolor);
                         PieSlice.Add(pieitem);
 
                         legendcolor = IntToColorPath(j);
                         legendlabel = Enum.GetName(typeof(SCategorys), i);
-                        legenditem = new HouseholdaccountLegendItem(legendcolor, legendlabel);
+                        legenditem = new HouseholdAccountsLegendItem(legendcolor, legendlabel);
                         Legend.Add(legenditem);
                     }
                     break;
@@ -242,23 +242,23 @@ namespace FUNCalendar.Models
                     pielabel = "収入";
                     pievalue = CalucAllBalance(r, date, false);
                     piecolor = IntToColorPath(1);
-                    pieitem = new HouseholdaccountPieSliceItem(pielabel, pievalue, piecolor);
+                    pieitem = new HouseholdAccountsPieSliceItem(pielabel, pievalue, piecolor);
                     PieSlice.Add(pieitem);
 
                     pielabel = "支出";
                     pievalue = CalucAllBalance(r, date, true);
                     piecolor = IntToColorPath(2);
-                    pieitem = new HouseholdaccountPieSliceItem(pielabel, pievalue, piecolor);
+                    pieitem = new HouseholdAccountsPieSliceItem(pielabel, pievalue, piecolor);
                     PieSlice.Add(pieitem);
 
                     legendcolor = IntToColorPath(1);
                     legendlabel = "収入";
-                    legenditem = new HouseholdaccountLegendItem(legendcolor, legendlabel);
+                    legenditem = new HouseholdAccountsLegendItem(legendcolor, legendlabel);
                     Legend.Add(legenditem);
 
                     legendcolor = IntToColorPath(2);
                     legendlabel = "支出";
-                    legenditem = new HouseholdaccountLegendItem(legendcolor, legendlabel);
+                    legenditem = new HouseholdAccountsLegendItem(legendcolor, legendlabel);
                     Legend.Add(legenditem);
                     break;
             }
@@ -268,7 +268,7 @@ namespace FUNCalendar.Models
         /* 概要カテゴリーごとの統計を表示するためのメソッド */
         public void SetSCategoryStatics(Range r, BalanceTypes b, DateTime date, SCategorys sc)
         {
-            HouseholdaccountDcStatisticsItem item;
+            HouseholdAccountsDcStatisticsItem item;
             int price, ratio;
 
             ScategoryItems.Clear();
@@ -280,7 +280,7 @@ namespace FUNCalendar.Models
             {
                 price = CalucDCategory(r, (DCategorys)Enum.ToObject(typeof(DCategorys), i), date);
                 ratio = CalucDCategoryRatio(r, (DCategorys)Enum.ToObject(typeof(DCategorys), i), date);
-                item = new HouseholdaccountDcStatisticsItem(b, sc, (DCategorys)Enum.ToObject(typeof(DCategorys), i), price, ratio);
+                item = new HouseholdAccountsDcStatisticsItem(b, sc, (DCategorys)Enum.ToObject(typeof(DCategorys), i), price, ratio);
                 ScategoryItems.Add(item);
             }
 
@@ -292,12 +292,12 @@ namespace FUNCalendar.Models
             int i, j;
 
             /* グラフ用 */
-            HouseholdaccountPieSliceItem pieitem;
+            HouseholdAccountsPieSliceItem pieitem;
             string pielabel, piecolor;
             int pievalue;
 
             /* グラフ凡例用 */
-            HouseholdaccountLegendItem legenditem;
+            HouseholdAccountsLegendItem legenditem;
             string legendcolor, legendlabel;
 
             Legend.Clear();
@@ -310,12 +310,12 @@ namespace FUNCalendar.Models
                 pielabel = Enum.GetName(typeof(DCategorys), i);
                 pievalue = CalucDCategory(r, (DCategorys)Enum.ToObject(typeof(DCategorys), i), date);
                 piecolor = IntToColorPath(j);
-                pieitem = new HouseholdaccountPieSliceItem(pielabel, pievalue, piecolor);
+                pieitem = new HouseholdAccountsPieSliceItem(pielabel, pievalue, piecolor);
                 PieSlice.Add(pieitem);
 
                 legendcolor = IntToColorPath(j);
                 legendlabel = Enum.GetName(typeof(DCategorys), i);
-                legenditem = new HouseholdaccountLegendItem(legendcolor, legendlabel);
+                legenditem = new HouseholdAccountsLegendItem(legendcolor, legendlabel);
                 Legend.Add(legenditem);
             }
         }
@@ -323,13 +323,13 @@ namespace FUNCalendar.Models
         /* 全履歴を表示するためのメソッド */
         public void SetAllHistory(Range r, DateTime date)
         {
-            allHouseHoldAccounts.Sort(HouseHoldAccountsItem.CompareByDate);
+            allHouseHoldAccounts.Sort(HouseholdAccountsItem.CompareByDate);
 
             DisplayHouseholdaccountList.Clear();
             switch (r)
             {
                 case Range.Day:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date == date)
                             DisplayHouseholdaccountList.Add(n);
@@ -337,7 +337,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Month:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.Date.Month == date.Month)
                             DisplayHouseholdaccountList.Add(n);
@@ -346,7 +346,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Year:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year)
                             DisplayHouseholdaccountList.Add(n);
@@ -363,7 +363,7 @@ namespace FUNCalendar.Models
             switch (r)
             {
                 case Range.Day:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date == date && n.IsOutGoings == isOutgoings)
                             sum += n.Price;
@@ -371,7 +371,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Month:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.Date.Month == date.Month && n.IsOutGoings == isOutgoings)
                             sum += n.Price;
@@ -379,7 +379,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Year:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.IsOutGoings == isOutgoings)
                             sum += n.Price;
@@ -406,7 +406,7 @@ namespace FUNCalendar.Models
             switch (r)
             {
                 case Range.Day:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date == date && (int)n.DCategory > StartPoint && (int)n.DCategory < EndPoint)
                             sum += n.Price;
@@ -414,7 +414,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Month:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.Date.Month == date.Month && (int)n.DCategory > StartPoint && (int)n.DCategory < EndPoint)
                             sum += n.Price;
@@ -422,7 +422,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Year:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && (int)n.DCategory > StartPoint && (int)n.DCategory < EndPoint)
                             sum += n.Price;
@@ -463,7 +463,7 @@ namespace FUNCalendar.Models
             switch (r)
             {
                 case Range.Day:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date == date && n.DCategory == dc)
                             sum += n.Price;
@@ -471,7 +471,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Month:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.Date.Month == date.Month && n.DCategory == dc)
                             sum += n.Price;
@@ -479,7 +479,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Year:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.DCategory == dc)
                             sum += n.Price;
@@ -520,13 +520,13 @@ namespace FUNCalendar.Models
         /* 詳細カテゴリーごとの履歴を表示するためのメソッド */
         public void SetDCategoryHistory(Range r, DateTime date, DCategorys dc)
         {
-            allHouseHoldAccounts.Sort(HouseHoldAccountsItem.CompareByDate);
+            allHouseHoldAccounts.Sort(HouseholdAccountsItem.CompareByDate);
 
             DisplayHouseholdaccountList.Clear();
             switch (r)
             {
                 case Range.Day:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date == date && n.DCategory == dc)
                             DisplayHouseholdaccountList.Add(n);
@@ -534,7 +534,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Month:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.Date.Month == date.Month && n.DCategory == dc)
                             DisplayHouseholdaccountList.Add(n);
@@ -543,7 +543,7 @@ namespace FUNCalendar.Models
                     break;
 
                 case Range.Year:
-                    foreach (HouseHoldAccountsItem n in allHouseHoldAccounts)
+                    foreach (HouseholdAccountsItem n in allHouseHoldAccounts)
                     {
                         if (n.Date.Year == date.Year && n.DCategory == dc)
                             DisplayHouseholdaccountList.Add(n);
@@ -554,9 +554,9 @@ namespace FUNCalendar.Models
         }
 
         /* 残高を編集するメソッド */
-        public void EditHouseholdaccountBalance(StorageTypes st, int price)
+        public void EditHouseholdAccountsBalance(StorageTypes st, int price)
         {
-            foreach (HouseholdaccountBalanceItem n in Balances)
+            foreach (HouseholdAccountsBalanceItem n in Balances)
             {
                 if (n.St == st)
                     n.Price = price;
@@ -567,7 +567,7 @@ namespace FUNCalendar.Models
         public void IncrementBalancePrice(StorageTypes st, int price)
         {
             TempBalances.Clear();
-            foreach (HouseholdaccountBalanceItem n in Balances)
+            foreach (HouseholdAccountsBalanceItem n in Balances)
             {
                 if(n.St == st)
                 {
@@ -577,7 +577,7 @@ namespace FUNCalendar.Models
             }
 
             Balances.Clear();
-            foreach(HouseholdaccountBalanceItem n in TempBalances)
+            foreach(HouseholdAccountsBalanceItem n in TempBalances)
             {
                 Balances.Add(n);
             }
@@ -587,7 +587,7 @@ namespace FUNCalendar.Models
         public void SetBalance()
         {
             int sum = 0;
-            foreach (HouseholdaccountBalanceItem n in Balances)
+            foreach (HouseholdAccountsBalanceItem n in Balances)
                 sum += n.Price;
             TotalBalance = String.Format("{0}円",sum);
         }

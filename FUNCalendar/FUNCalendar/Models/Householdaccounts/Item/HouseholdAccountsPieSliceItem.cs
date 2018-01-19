@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
 {
-    public class HouseholdaccountPieSliceItem
+    public class HouseholdAccountsPieSliceItem
     {
         public string Label { get; set; }
         public int Price { get; set; }
         public string ColorPath { get; set; }
 
-        public HouseholdaccountPieSliceItem(string label, int price, string color)
+        public HouseholdAccountsPieSliceItem(string label, int price, string color)
         {
             this.Label = label;
             this.Price = price;

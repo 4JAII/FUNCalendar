@@ -4,7 +4,7 @@ using FUNCalendar.ViewModels;
 
 namespace FUNCalendar.Models
 {
-    public class HouseHoldAccountsItem
+    public class HouseholdAccountsItem
     {
         private int _id;                                // ID
         private string _name;                           //商品名
@@ -57,7 +57,7 @@ namespace FUNCalendar.Models
             set { this._isOutGoings = value; }
         }
 
-        public HouseHoldAccountsItem(int id, string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
+        public HouseholdAccountsItem(int id, string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
             ID = id;
             Name = name;
@@ -68,7 +68,7 @@ namespace FUNCalendar.Models
             StorageType = storagetype;
             IsOutGoings = isoutgoings;
         }
-        public HouseHoldAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
+        public HouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
             Name = name;
             Price = price;
@@ -79,22 +79,22 @@ namespace FUNCalendar.Models
             IsOutGoings = isoutgoings;
         }
 
-        public HouseHoldAccountsItem(){ }
+        public HouseholdAccountsItem(){ }
 
         /* Sort */
-        public static int CompareByID(HouseHoldAccountsItem a, HouseHoldAccountsItem b)
+        public static int CompareByID(HouseholdAccountsItem a, HouseholdAccountsItem b)
         {
             return a.ID.CompareTo(b.ID);
         }
-        public static int CompareByName(HouseHoldAccountsItem a, HouseHoldAccountsItem b)
+        public static int CompareByName(HouseholdAccountsItem a, HouseholdAccountsItem b)
         {
             return a.Name.CompareTo(b.Name);
         }
-        public static int CompareByPrice(HouseHoldAccountsItem a, HouseHoldAccountsItem b)
+        public static int CompareByPrice(HouseholdAccountsItem a, HouseholdAccountsItem b)
         {
             return a.Price.CompareTo(b.Price);
         }
-        public static int CompareByDate(HouseHoldAccountsItem a, HouseHoldAccountsItem b)
+        public static int CompareByDate(HouseholdAccountsItem a, HouseholdAccountsItem b)
         {
             return a.Date.CompareTo(b.Date);
         }

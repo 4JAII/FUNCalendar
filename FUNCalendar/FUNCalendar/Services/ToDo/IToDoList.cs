@@ -18,7 +18,7 @@ namespace FUNCalendar.Services
         void SortByDate();
         void SortByPriority();
         void AddToDoItem(ToDoItem todoItem);
-        void InitializeList(List<ToDoItem> list);
+        void UpdateList(List<ToDoItem> list);
         void SetDisplayToDoItem(ToDoItem todoItem);
         void Remove(ToDoItem todoItem);
         void EditToDoItem(ToDoItem deleteToDoItem, ToDoItem addToDoItem);

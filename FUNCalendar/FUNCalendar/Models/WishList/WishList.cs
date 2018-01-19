@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Prism.Mvvm;
+using System.Linq;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using FUNCalendar.Services;
@@ -47,6 +48,7 @@ namespace FUNCalendar.Models
         private void Sort()
         {
             int sign = IsAscending ? 1 : -1;
+            if (allWishList == null) return;
             if (allWishList.Count <= 0) return;
             allWishList.Sort((x, y) => sign * selectedSortMethod(x, y));
             UpdateSortedList();
@@ -75,8 +77,9 @@ namespace FUNCalendar.Models
             selectedSortMethod = WishItem.CompareByDate;
             Sort();
         }
-        public void InitializeList(List<WishItem> list)
+        public void UpdateList(List<WishItem> list)
         {
+            this.allWishList = null;
             this.allWishList = list;
         }
 
@@ -91,6 +94,11 @@ namespace FUNCalendar.Models
         public void SetDisplayWishItem(WishItem wishItem)
         {
             DisplayWishItem = wishItem;
+        }
+
+        public void SetDisplayWishItem(int wishID)
+        {
+            DisplayWishItem = allWishList.First(x => x.ID == wishID);
         }
 
         /* アイテム削除 */

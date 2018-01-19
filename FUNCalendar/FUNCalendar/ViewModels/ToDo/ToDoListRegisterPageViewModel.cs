@@ -24,7 +24,7 @@ namespace FUNCalendar.ViewModels
         private IToDoList _todoList;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
-        //private IStorageService _storageService;
+        private IStorageService _storageService;
 
         /* ToDoItem登録用 */
         public int ID { get; private set; } = -1;
@@ -50,9 +50,9 @@ namespace FUNCalendar.ViewModels
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
 
-        public ToDoListRegisterPageViewModel(IToDoList todoList, /*IStorageService storageService,*/ INavigationService navigationService, IPageDialogService pageDialogService)
+        public ToDoListRegisterPageViewModel(IToDoList todoList, IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            //this._storageService = storageService;
+            this._storageService = storageService;
 
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._todoList = todoList;
@@ -84,12 +84,14 @@ namespace FUNCalendar.ViewModels
                 {
                     var vmToDoItem = new VMToDoItem(ID, Description.Value, Date.Value, Priority.Value.ToString(), isCompleted, wishID);
                     var todoItem = VMToDoItem.ToToDoItem(vmToDoItem);
-                    //await _storageService.EditItem(_todoList.DisplayToDoItem, todoItem);
+
+
+                    await _storageService.EditItem(_todoList.DisplayToDoItem, todoItem);
                 }
                 else
                 {
-                    var todoItem = new ToDoItem { Description = this.Description.Value, Date = Date.Value, Priority = this.Priority.Value, IsCompleted = false };
-                    //await _StorageService.AddItem(new ToDoItem(this.Name.Value, Date.Value, int.Parse(this.Priority.Value), false, /*ここにID*/-1));
+                    var todoItem = new ToDoItem { Description = this.Description.Value, Date = Date.Value, Priority = this.Priority.Value, IsCompleted = false, WishID = 0 };
+                    await _storageService.AddItem(todoItem);
                 }
                 await _navigationService.NavigateAsync($"/RootPage/NavigationPage/ToDoListPage");
             });

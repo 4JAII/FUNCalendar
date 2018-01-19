@@ -5,8 +5,8 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:local="clr-namespace:FUNCalendar.ViewModels"
              xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
-             xmlns:b="clr-namespace:FUNCalendar.Behaviors"
-             x:Class="FUNCalendar.Views.HouseHoldAccountsStatisticsPage"
+             xmlns:b="clr-namespace:FUNCalendar.Behaviors;assembly=FUNCalendar"
+             x:Class="FUNCalendar.Views.HouseholdAccountsStatisticsPage"
              Title="家計簿">
 
     <ContentPage.ToolbarItems>

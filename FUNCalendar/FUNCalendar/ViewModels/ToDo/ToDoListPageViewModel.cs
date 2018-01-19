@@ -19,7 +19,7 @@ namespace FUNCalendar.ViewModels
         private IToDoList _todoList;
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
-        //private IStorageService _storageService;
+        private IStorageService _storageService;
 
         /* Picker用のソートアイテム */
         public ToDoListSortName[] SortNames { get; private set; }
@@ -46,10 +46,10 @@ namespace FUNCalendar.ViewModels
 
 
 
-        public ToDoListPageViewModel(IToDoList todoList, /*IStorageService storageService,*/ INavigationService navigationService, IPageDialogService pageDialogService)
+        public ToDoListPageViewModel(IToDoList todoList, IStorageService storageService,INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._todoList = todoList;
-            //this._storageService = storageService;
+            this._storageService = storageService;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             OrderChangeCommand = new ReactiveCommand();
@@ -85,8 +85,18 @@ namespace FUNCalendar.ViewModels
             /* 編集するものをセットして遷移 */
             EditToDoItemCommand.Subscribe(async (obj) =>
             {
-                _todoList.SetDisplayToDoItem(VMToDoItem.ToToDoItem(obj as VMToDoItem));
-                await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T");
+                VMToDoItem item = obj as VMToDoItem;
+                if (item.WishID != 0)
+                {
+                    _storageService.WishList.SetDisplayWishItem(item.WishID);
+                    await _pageDialogService.DisplayAlertAsync("確認", "WishListと連携しているアイテムなのでWishList編集画面に移動します", "OK");
+                    await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
+                }
+                else
+                {
+                    _todoList.SetDisplayToDoItem(VMToDoItem.ToToDoItem(item));
+                    await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T");
+                }
             });
 
             /* 確認して消す */
@@ -95,9 +105,11 @@ namespace FUNCalendar.ViewModels
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
-                    if (result) _todoList.Remove(VMToDoItem.ToToDoItem(obj as VMToDoItem));/* いらない? */
-                    //var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
-                    //await _storageService.DeleteItem(todoItem);
+                    var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
+                    bool needsDelete = false;
+                    if (todoItem.WishID != 0)
+                        needsDelete = await _pageDialogService.DisplayAlertAsync("確認", "関連のWishListも削除しますか？\n(いいえを選んだ場合そのWishListの連携機能が使えなくなります)", "はい", "いいえ");
+                    await _storageService.DeleteItem(todoItem, needsDelete);
                 }
             });
 

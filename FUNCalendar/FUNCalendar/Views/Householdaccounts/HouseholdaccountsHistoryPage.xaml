@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="FUNCalendar.Views.HouseholdaccountsHistoryPage">
+             x:Class="FUNCalendar.Views.HouseholdAccountsHistoryPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
