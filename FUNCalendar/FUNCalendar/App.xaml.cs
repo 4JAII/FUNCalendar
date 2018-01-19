@@ -28,11 +28,8 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<CalendarPage>();
             Container.RegisterTypeForNavigation<WishListPage>();
             Container.RegisterTypeForNavigation<ToDoListPage>();
-<<<<<<< .merge_file_a10900
             Container.RegisterTypeForNavigation<ToDoListRegisterPage>();
-=======
             Container.RegisterTypeForNavigation<CalendarDetailPage>();
->>>>>>> .merge_file_a09348
             Container.RegisterTypeForNavigation<WishListRegisterPage>();
             Container.RegisterTypeForNavigation<HouseholdAccountsStatisticsPage>();
             Container.RegisterTypeForNavigation<HouseholdAccountsSCStatisticsPage>();
@@ -42,17 +39,11 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<HouseholdAccountsRegisterPage>();
             Container.RegisterTypeForNavigation<ConfigurationPage>();
             /* 共有のインスタンスをDIコンテナに登録 */
-<<<<<<< .merge_file_a10900
             Container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IWishList,WishList>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IToDoList,ToDoList>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IHouseholdAccounts, HouseholdAccounts>(new ContainerControlledLifetimeManager());
-            
-
-=======
-            Container.RegisterType<IWishList, WishList>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ICalendar, Calendar>(new ContainerControlledLifetimeManager());
->>>>>>> .merge_file_a09348
         }
     }
 }

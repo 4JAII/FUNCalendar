@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "AiForms.Layouts": "1.0.3",
     "CommonServiceLocator": "1.3.0",
     "FubarCoder.RestSharp.Portable.Core": "4.0.8",
     "FubarCoder.RestSharp.Portable.HttpClient": "4.0.8",

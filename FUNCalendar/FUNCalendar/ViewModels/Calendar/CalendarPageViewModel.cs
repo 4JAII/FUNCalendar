@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using Reactive.Bindings;
 using FUNCalendar.Models;
+using FUNCalendar.Services;
 using System;
 using System.Reactive.Disposables;
 using System.Collections.Generic;
@@ -14,11 +15,13 @@ namespace FUNCalendar.ViewModels
     public class CalendarPageViewModel : BindableBase, INavigationAware, IDisposable
     {
         /* 全てのリストを初期化 */
-        private static ReactiveProperty<bool> canInitializeList= new ReactiveProperty<bool>();
-        private LocalStorage localStorage = new LocalStorage();
+        private static ReactiveProperty<bool> canInitialize = new ReactiveProperty<bool>();
+        private IStorageService _storageService;
 
-        private ICalendar _calendar;
         private IWishList _wishList;
+        private IToDoList _todoList;
+        private IHouseholdAccounts _householdAccounts;
+        private ICalendar _calendar;
         private IPageDialogService _pageDialogService;
         private INavigationService _navigationService;
 
@@ -65,19 +68,22 @@ namespace FUNCalendar.ViewModels
         /* 購読解除用 */
         private CompositeDisposable Disposable { get; } = new CompositeDisposable();
 
-        public CalendarPageViewModel(ICalendar calendar, IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
+        public CalendarPageViewModel(IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts, IStorageService storageService, ICalendar calendar, INavigationService navigationService, IPageDialogService pageDialogService)
         {
+            this._storageService = storageService;
             this._wishList = wishList;
-
-            canInitializeList.Subscribe(async _ =>
+            this._todoList = todoList;
+            this._householdAccounts = householdAccounts;
+            canInitialize.Subscribe(async _ =>
             {
-                _wishList.InitializeList(await localStorage.ReadFile());
+                await _storageService.InitializeAsync(this._wishList, this._todoList, this._householdAccounts);
+                await _storageService.ReadFile();
+
             });
 
-            /* 以下、変更箇所 */
             this._calendar = calendar;
             _calendar.SetHasList(_wishList);
-            
+
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
             NavigationRegisterPageCommand = new AsyncReactiveCommand();
@@ -141,7 +147,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            canInitializeList.Value = true;
+            canInitialize.Value = true;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

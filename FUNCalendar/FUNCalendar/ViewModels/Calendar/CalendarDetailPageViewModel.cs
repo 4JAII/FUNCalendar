@@ -17,6 +17,7 @@ using Prism.Navigation;
 using System.Text.RegularExpressions;
 using System.Reactive.Disposables;
 using System.Collections.ObjectModel;
+using FUNCalendar.Services;
 
 namespace FUNCalendar.ViewModels
 {
