@@ -17,6 +17,10 @@ namespace FUNCalendar.Models
         public ObservableCollection<WishItem> SortedWishList { get; private set; }
         public WishItem DisplayWishItem { get; set; }
 
+        /* Calendar用 */
+        public ObservableCollection<WishItem> WishListForCalendar { get; private set; }
+        public bool DateWithWishList { get; private set; }
+
         /* 昇順か？*/
         private bool isAscending = true;
         public bool IsAscending
@@ -29,6 +33,7 @@ namespace FUNCalendar.Models
         public WishList()
         {
             SortedWishList = new ObservableCollection<WishItem>();
+            WishListForCalendar = new ObservableCollection<WishItem>();
             allWishList = new List<WishItem>();
             selectedSortMethod = WishItem.CompareByID;
         }
@@ -115,6 +120,31 @@ namespace FUNCalendar.Models
             allWishList.RemoveAll(item => item.ID == deleteWishItem.ID);
             AddWishItem(addWishItem);
             Sort();
+        }
+
+        /* Calendar用に特定の日付のデータを取り出す */
+        public void SetWishListForCalendar(DateTime date)
+        {
+            WishListForCalendar.Clear();
+            foreach(WishItem x in allWishList)
+            {
+                if(x.Date == date)
+                {
+                    WishListForCalendar.Add(x);
+                }
+            }
+        }
+
+        /* WishListForCalendarをClear */
+        public void ClearWishListForCalendar()
+        {
+            WishListForCalendar.Clear();
+        }
+
+        /* 指定した日にWishListがあるかどうか */
+        public void SetDateWithWishList(DateTime date)
+        {
+            DateWithWishList = allWishList.Where(x => x.Date == date).Any();
         }
     }
 }

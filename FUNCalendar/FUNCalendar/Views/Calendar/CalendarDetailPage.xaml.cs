@@ -2,9 +2,9 @@
 
 namespace FUNCalendar.Views
 {
-    public partial class CalendarPage : ContentPage
+    public partial class CalendarDetailPage : ContentPage
     {
-        public CalendarPage()
+        public CalendarDetailPage()
         {
             InitializeComponent();
         }

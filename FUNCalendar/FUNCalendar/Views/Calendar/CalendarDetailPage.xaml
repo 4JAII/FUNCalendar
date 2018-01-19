@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FUNCalendar.Views.CalendarDetailPage"
+             x:Name="CalendarDetailPage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="CalendarDetailPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"
+                     Command="{Binding NavigationRegisterPageCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <DatePicker Date="{Binding DateData.Value}" Grid.Row="1" Grid.Column="1"
+                    HorizontalOptions="Center" VerticalOptions="Center"/>
+
+        <ScrollView Grid.Row="2" Grid.Column="1">
+            <ScrollView.Content>
+                <StackLayout Spacing="5">
+                    
+                    <Button Text="ToDo" Command="{Binding ToDoListOpenCloseCommand}" BackgroundColor="#F69229"
+                            HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <!--
+                    <ListView ItemsSource="{Binding DisplayToDoList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="100"
+                              SeparatorVisibility="Default">
+                    -->
+                    <ListView ItemsSource="{Binding DisplayWishList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="{Binding WishListHeight.Value}"
+                              HasUnevenRows="True"
+                              SeparatorVisibility="Default">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <!--
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"/>
+                                        <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
+                                    </ViewCell.ContextActions>
+                                    -->
+                                    <Frame OutlineColor="Red">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Date}" Grid.Column="5" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding IsBought}" Grid.Column="7" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                    <Button Text="WishList" Command="{Binding WishListOpenCloseCommand}" BackgroundColor="#B1D781"
+                            HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <ListView ItemsSource="{Binding DisplayWishList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="{Binding WishListHeight.Value}"
+                              HasUnevenRows="True"
+                              SeparatorVisibility="Default">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"/>
+                                        <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
+                                    </ViewCell.ContextActions>
+                                    <Frame OutlineColor="Aqua">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Date}" Grid.Column="5" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding IsBought}" Grid.Column="7" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <Button Text="家計簿" Command="{Binding HouseHoldAccountsListOpenCloseCommand}" BackgroundColor="#1FAB9E"
+                            HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                    <!--
+                    <ListView ItemsSource="{Binding DisplayHouseHoldAccountsList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="100"
+                              SeparatorVisibility="Default">
+                    -->
+                    <ListView ItemsSource="{Binding DisplayWishList}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              HeightRequest="{Binding WishListHeight.Value}"
+                              HasUnevenRows="True"
+                              SeparatorVisibility="Default">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame OutlineColor="Orange">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="100*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Date}" Grid.Column="5" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding IsBought}" Grid.Column="7" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                </StackLayout>
+            </ScrollView.Content>
+        </ScrollView>
+
+        <Button Text="戻る" Grid.Row="3" Grid.Column="1"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center" Command="{Binding BackCommand}"/>
+        
+    </Grid>
+</ContentPage>

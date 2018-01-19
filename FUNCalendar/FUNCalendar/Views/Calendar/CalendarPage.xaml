@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:AiForms="clr-namespace:AiForms.Layouts;assembly=AiForms.Layouts"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FUNCalendar.Views.CalendarPage"
+             x:Name="CalendarPage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="CalendarPage">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon= "icon_add.png"
+                     Text="Add"
+                     Command="{Binding NavigationRegisterPageCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid HorizontalOptions ="CenterAndExpand" VerticalOptions="CenterAndExpand"
+          HeightRequest="600" WidthRequest="1000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Image="Calendar_BackPrevMonth.png" Grid.Row="0" Grid.Column="1" Command="{Binding BackPrevMonth}" BorderWidth="0"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White" Grid.RowSpan="3"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarYear}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"/>
+        <Button Image="Calendar_GoNextMonth.png" Grid.Row="0" Grid.Column="7" Command="{Binding GoNextMonth}" BorderWidth="0"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White" Grid.RowSpan="3"/>
+        
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="日" Grid.Row="2" Grid.Column="1"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="月" Grid.Row="2" Grid.Column="2"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="火" Grid.Row="2" Grid.Column="3"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="水" Grid.Row="2" Grid.Column="4"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="木" Grid.Row="2" Grid.Column="5"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="金" Grid.Row="2" Grid.Column="6"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="土" Grid.Row="2" Grid.Column="7"/>
+
+        <AiForms:RepeatableWrapLayout ItemsSource="{Binding DisplayCalendar}"
+                                      ItemTapCommand="{Binding TapCommand}"
+                                      Spacing="3"
+                                      UniformColumns="7"
+                                      IsSquare="False"
+                                      Grid.Row="3"
+                                      Grid.Column="1"
+                                      Grid.ColumnSpan="7"
+                                      VerticalOptions="FillAndExpand"
+                                      HorizontalOptions="FillAndExpand">
+            <AiForms:RepeatableWrapLayout.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout BackgroundColor="{Binding BackgroundColor}">
+                        <Label VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Micro"
+                               FontAttributes="Bold"
+                               HeightRequest="18"
+                               Text="{Binding StrDate}"/>
+
+                        <Grid HeightRequest="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <BoxView BackgroundColor="{Binding BackgroundColor}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill"
+                                     Grid.Column="0"/>
+                            <Image Source="{Binding HasToDoList}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   WidthRequest="8"
+                                   Aspect="AspectFit"
+                                   Grid.Column="0"/>
+                            <BoxView BackgroundColor="{Binding BackgroundColor}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill"
+                                     Grid.Column="1"/>
+                            <Image Source="{Binding HasWishList}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   WidthRequest="8"
+                                   Aspect="AspectFit"
+                                   Grid.Column="1"/>
+                            <BoxView BackgroundColor="{Binding BackgroundColor}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill"
+                                     Grid.Column="2"/>
+                            <Image Source="{Binding HasHouseHoldAccountsList}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   WidthRequest="8"
+                                   Aspect="AspectFit"
+                                   Grid.Column="2"/>
+                        </Grid>
+                        
+                        <!--
+                        <Label VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               Text="+○円 -○円"
+                               FontSize="10"
+                               HeightRequest="10"/>
+                        -->
+                    </StackLayout>
+                </DataTemplate>
+            </AiForms:RepeatableWrapLayout.ItemTemplate>
+        </AiForms:RepeatableWrapLayout>
+
+        <Label VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               FontSize="Medium"
+               Text="{Binding CurrentYear}"
+               Grid.Row="4"
+               Grid.Column="2"
+               Grid.ColumnSpan="3"/>
+        <Label VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               FontSize="Medium"
+               Text="{Binding CurrentMonth}"
+               Grid.Row="4"
+               Grid.Column="3"
+               Grid.ColumnSpan="3"/>
+        <Label VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               FontSize="Medium"
+               Text="{Binding CurrentDate}"
+               Grid.Row="4"
+               Grid.Column="4"
+               Grid.ColumnSpan="3"/>
+
+        <Image Source="Calendar_HasToDoList.png"
+               VerticalOptions="Center"
+               HorizontalOptions="End"
+               WidthRequest="15"
+               Aspect="AspectFit"
+               Grid.Row="5"
+               Grid.Column="1"/>
+        <Label Text="ToDo"
+               Grid.Row="5"
+               Grid.Column="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"/>
+        <Image Source="Calendar_HasWishList.png"
+               VerticalOptions="Center"
+               HorizontalOptions="End"
+               WidthRequest="15"
+               Aspect="AspectFit"
+               Grid.Row="6"
+               Grid.Column="1"/>
+        <Label Text="WishList"
+               Grid.Row="6"
+               Grid.Column="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"/>
+        <Image Source="Calendar_HasHouseHoldAccountsList.png"
+               VerticalOptions="Center"
+               HorizontalOptions="End"
+               WidthRequest="15"
+               Aspect="AspectFit"
+               Grid.Row="7"
+               Grid.Column="1"/>
+        <Label Text="家計簿"
+               Grid.Row="7"
+               Grid.Column="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"/>
+
+        <Label Text="{Binding CalendarMonth}"
+               Grid.Row="5"
+               Grid.Column="5"
+               Grid.ColumnSpan="3"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+        <Label Text="支出：○○○○○円"
+               Grid.Row="6"
+               Grid.Column="5"
+               Grid.ColumnSpan="3"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+        <Label Text="収入：○○○○○円"
+               Grid.Row="7"
+               Grid.Column="5"
+               Grid.ColumnSpan="3"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+    </Grid>
+</ContentPage>
