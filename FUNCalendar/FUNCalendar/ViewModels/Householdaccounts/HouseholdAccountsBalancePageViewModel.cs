@@ -132,16 +132,13 @@ namespace FUNCalendar.ViewModels
             EditCommand.Subscribe(async (obj) =>
             {
                 _householdaccounts.SetHouseholdAccountsBalanceItem(VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem(obj as VMHouseholdAccountsBalanceItem));
-
-                // var vmbalanceitem = (obj as VMHouseholdAccountsBalanceItem);
-                //var storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), vmbalanceitem.StorageType);
                 
                 var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsEditBalancePageViewModel.EditKey, navigationitem }
                 };
-                await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsEditBalancePage"/*, navigationparameter*/);
+                await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsEditBalancePage", navigationparameter);
 
             }).AddTo(disposable);
         }

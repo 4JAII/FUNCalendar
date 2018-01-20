@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
 namespace FUNCalendar.Models
 {
+    //[Table("HouseholdAccountsBalanceItem")]
     public class HouseholdAccountsBalanceItem
     {
+        //[PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public  StorageTypes Storagetype { get; set; }
         public int Price { get; set; }

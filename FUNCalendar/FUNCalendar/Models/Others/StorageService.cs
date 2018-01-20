@@ -175,17 +175,16 @@ namespace FUNCalendar.Models
             /* バランスアイテムの更新処理 */
         }
 
-        /* 希望
-         public async Task EditItem(StorageTypes storagetype, int price)
+         public async Task EditItem(HouseholdAccountsBalanceItem item, int price)
          {
             if (!isInitialized)
             {
                 HasError = true;
                 return;
             }
-            HasError = !await storage.EditItem(addItem);
-            HouseholdAccounts.EditHouseholdAccountsBalance(storagetype, price);
-         }*/
+            HasError = !await storage.EditItem(item);
+            //HouseholdAccounts.EditHouseholdAccountsBalance(item, price);
+         }
 
         public async Task ReadFile()
         {
@@ -197,8 +196,7 @@ namespace FUNCalendar.Models
 
             WishList.UpdateList(await storage.ReadWishList());
             ToDoList.UpdateList(await storage.ReadToDo());
-            /* householdaccountsのlist,balanceの更新処理*/
-             // HouseholdAccounts.Update(await storage.ReadHouseholdAccounts,await storage.ReadBalance);
+            HouseholdAccounts.UpdateList(await storage.ReadHouseholdAccounts());
         }
 
         public void CompleteToDo(ToDoItem todoItem, bool hasId, bool needsResister)

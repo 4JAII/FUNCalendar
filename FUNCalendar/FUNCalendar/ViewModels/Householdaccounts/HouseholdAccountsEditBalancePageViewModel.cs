@@ -42,6 +42,7 @@ namespace FUNCalendar.ViewModels
             get { return this._currentstoragetype; }
             set { this.SetProperty(ref this._currentstoragetype, value); }
         }
+        public VMHouseholdAccountsBalanceItem CurrentBalanceItem { get; private set; }
 
         public int ID { get; private set; }
         [Required (ErrorMessage ="金額を入力してください")]
@@ -59,6 +60,7 @@ namespace FUNCalendar.ViewModels
             this._householdAccounts = householdAccounts;
             this._storageService = storageService;
             this._navigationService = navigationService;
+            this._pageDialogService = pageDialogService;
 
             /* 属性を有効化 */
             Price.SetValidateAttribute(() => this.Price);
@@ -81,15 +83,16 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
-                /*
-                var vmbalanceitem = new VMHouseholdAccountsBalanceItem(ID, (StorageTypes)Enum.Parse(typeof(StorageTypes), CurrentStoragetype), Price.Value);
-                var balanceitem = VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem(vmbalanceitem);
-                //await _storageService.EditItem()*/
 
-                _householdAccounts.EditHouseholdAccountsBalance((StorageTypes)Enum.Parse(typeof(StorageTypes), CurrentStoragetype), int.Parse(Price.Value));
+
+                var DeleteBItem = VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem(CurrentBalanceItem);
+                var AddBItem = new HouseholdAccountsBalanceItem() { ID = DeleteBItem.ID, Storagetype = DeleteBItem.Storagetype, Price = int.Parse(Price.Value) };
+                //_householdAccounts.EditHouseholdAccountsBalanceItem(item, int.Parse(Price.Value), false, true);
+                _householdAccounts.EditHouseholdAccountsBalanceItem(DeleteBItem,AddBItem);
 
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsBalancePage", navigationparameter);
             });
+
             CancelCommand = new AsyncReactiveCommand();
             CancelCommand.Subscribe(async () =>
             {
@@ -115,12 +118,12 @@ namespace FUNCalendar.ViewModels
                 NavigatedItem = (HouseholdAccountsNavigationItem)parameters[EditKey];
                 this.CurrentDate = NavigatedItem.CurrentDate;
                 this.CurrentRange = NavigatedItem.CurrentRange;
-                //this.CurrentStoragetype = Enum.GetName(typeof(StorageTypes), NavigatedItem.CurrentStoragetype);
 
-                VMHouseholdAccountsBalanceItem vmitem = new VMHouseholdAccountsBalanceItem(_householdAccounts.SelectedBalanceItem);
+                CurrentBalanceItem = new VMHouseholdAccountsBalanceItem(_householdAccounts.SelectedBalanceItem);
                 Regex re = new Regex("[^0-9]");
-                ID = vmitem.ID;
-                Price.Value = re.Replace(vmitem.Price, "");
+                ID = CurrentBalanceItem.ID;
+                Price.Value = re.Replace(CurrentBalanceItem.Price, "");
+                CurrentStoragetype = CurrentBalanceItem.StorageType;
             }
 
         }

@@ -34,12 +34,15 @@ namespace FUNCalendar.ViewModels
         public static readonly string InputKey = "InputKey";
         public static readonly string EditKey = "EditKey";
 
-        /* 遷移されたときの格納用変数 */
+        /* 遷移されたときのデータ格納用変数 */
         public HouseholdAccountsNavigationItem NavigatedItem { get; set; }
 
         /* 現在選択されている各データを保持 */
         public DateTime CurrentDate { get; private set; }
         public Range CurrentRange { get; private set; }
+
+        /* 残高のデータ */
+        public ReadOnlyReactiveCollection<VMHouseholdAccountsBalanceItem> Balances { get; private set; }
         
         /* 収支変更用コマンド */
         public ReactiveCommand IncomeCommand { get; private set; }
@@ -84,6 +87,9 @@ namespace FUNCalendar.ViewModels
             this._storageService = storageService;
             this._navigationservice = navigationService;
             this._pageDialogService = pageDialogService;
+
+            /* Balanceitemの保持 */
+            this.Balances = _householdaccount.Balances.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsBalanceItem(x)).AddTo(disposable);
 
             /* 属性を有効化 */
             Name.SetValidateAttribute(() => this.Name);
@@ -179,6 +185,7 @@ namespace FUNCalendar.ViewModels
                 ErrorColor.Value = x ? Color.SkyBlue : Color.Gray;
             });
 
+
             /* 登録ボタンが押された時の処理 */
             RegisterHouseholdaccountsCommand = CanRegister.ToAsyncReactiveCommand();
             RegisterHouseholdaccountsCommand.Subscribe(async () =>
@@ -188,6 +195,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsStatisticsPageViewModel.InputKey, navigationitem }
                 };
+                /* アイテム編集 */
                 if (ID != -1)
                 {
                     var scategory = Enum.GetName(typeof(SCategorys), CurrentScategory.Value.ScategoryData);
@@ -196,8 +204,17 @@ namespace FUNCalendar.ViewModels
                     var isoutgoing = IsOutgoing.Value ? "支出": "収入";
                     var vmitem = new VMHouseholdAccountsItem(ID, Name.Value, Price.Value, Date.Value, scategory, dcategory, storagetype, isoutgoing);
                     var item = VMHouseholdAccountsItem.ToHouseholdaccountsItem(vmitem);
+
+                    /* editbalaceitem */
+                    //_householdaccount.IncrementBalancePrice(_householdaccount.SelectedBalanceItem.Storagetype, _householdaccount.SelectedBalanceItem.Price);
+
+                    //var differenceprice = 
+
                     await _storageService.EditItem(_householdaccount.SelectedItem, item);
+                    /* 追加 */
+                    //await _storageService.EditItem
                 }
+                /* アイテム追加 */
                 else
                 {
                     var name = this.Name.Value;
@@ -209,8 +226,29 @@ namespace FUNCalendar.ViewModels
                     var isoutgoing = IsOutgoing.Value;
                     var item = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
                     await _storageService.AddItem(item);
+
+                    /*
+                    VMHouseholdAccountsBalanceItem vmBItem = null;
+                    HouseholdAccountsBalanceItem Bitem = null;
+                    foreach(VMHouseholdAccountsBalanceItem x in Balances)
+                    {
+                        if((StorageTypes)Enum.Parse(typeof(StorageTypes),x.StorageType) == storagetype)
+                        {
+                            vmBItem = x;
+                            break;
+                        }
+                    }
+
+                    Bitem = VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem()
+
+                    _householdaccount.EditHouseholdAccountsBalanceItem()
+
+                    //_householdaccount.IncrementBalancePrice(item, price):
+
+                    _householdaccount.SetBalance();
+                    */
                 }
-                 await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
+                await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
             });
 
             /* キャンセルボタンが押された時の処理 */

@@ -1,9 +1,12 @@
 ﻿using System;
 using Prism.Mvvm;
 using FUNCalendar.ViewModels;
+using SQLite;
+
 
 namespace FUNCalendar.Models
 {
+    [Table("HouseholdAccountsItem")]
     public class HouseholdAccountsItem
     {
         private int _id;                                // ID
@@ -15,11 +18,13 @@ namespace FUNCalendar.Models
         private StorageTypes _storagetype;              //お金の所在地
         private bool _isOutGoings = true;               //収入か支出か
 
+        [PrimaryKey, AutoIncrement]
         public int ID
         {
             get { return this._id; }
             set { this._id = value; }
         }
+        [MaxLength(32)]
         public string Name
         {
             get { return this._name; }
@@ -70,6 +75,7 @@ namespace FUNCalendar.Models
         }
         public HouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
+            ID = 0;
             Name = name;
             Price = price;
             Date = date;
