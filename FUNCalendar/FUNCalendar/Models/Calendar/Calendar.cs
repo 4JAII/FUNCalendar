@@ -16,7 +16,7 @@ namespace FUNCalendar.Models
         private int i, j;
         private List<Date> tempList = new List<Date>();
 
-        public ObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ObservableCollection<Date>();
+        public ExtendObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ExtendObservableCollection<Date>();
         public Date DisplayDate { get; set; }
 
         /* プロパティ */
@@ -102,14 +102,7 @@ namespace FUNCalendar.Models
             {
                 aMonthDateData[i].DateData = new DateTime(currentYear + j, currentMonth + 1 - j * 12, i - (int)firstDayOfTheWeek - monthDateMaxValue[currentMonth - 1] + 1);
             }
-
-            tempList.Clear();
-            tempList = new List<Date>(aMonthDateData);
-            ListedAMonthDateData.Clear();
-            foreach(Date x in tempList)
-            {
-                ListedAMonthDateData.Add(x);
-            }
+            ListedAMonthDateData.Replace(aMonthDateData);
         }
 
         /* 一つ前の月へ */

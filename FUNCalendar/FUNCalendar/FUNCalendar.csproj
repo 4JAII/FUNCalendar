@@ -49,6 +49,7 @@
     <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsStatisticItem.cs" />
     <Compile Include="Models\Others\Configuration.cs" />
     <Compile Include="Models\Others\DatabaseGateway.cs" />
+    <Compile Include="Models\Others\ExtendObservableCollection.cs" />
     <Compile Include="Models\Others\FileReadWriteService.cs" />
     <Compile Include="Models\Others\JsonObject\JsonBalanceItem.cs" />
     <Compile Include="Models\Others\JsonObject\JsonHouseholdAccountsItem.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Models\WishList\WishList.cs" />
     <Compile Include="Services\Calendar\ICalendar.cs" />
     <Compile Include="Services\Householdaccounts\IHouseHoldAccounts.cs" />
+    <Compile Include="Services\Others\ILoadingMessage.cs" />
     <Compile Include="Services\Others\IStorage.cs" />
     <Compile Include="Services\Others\IStorageService.cs" />
     <Compile Include="Services\ToDo\IToDoList.cs" />

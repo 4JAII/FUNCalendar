@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using Reactive.Bindings.Extensions;
 using Prism.Services;
 using System.Collections.ObjectModel;
+using Xamarin.Forms;
+using System.Reactive.Threading;
+using System.Reactive;
+using System.Reactive.Linq;
 
 namespace FUNCalendar.ViewModels
 {
@@ -17,6 +21,7 @@ namespace FUNCalendar.ViewModels
         /* 全てのリストを初期化 */
         private static ReactiveProperty<bool> canInitialize = new ReactiveProperty<bool>();
         private IStorageService _storageService;
+        private ILoadingMessage _loadingMessage;
 
         private IWishList _wishList;
         private IToDoList _todoList;
@@ -57,6 +62,8 @@ namespace FUNCalendar.ViewModels
             set { this.SetProperty(ref this.calendarMonth, value); }
         }
 
+        public ReactiveProperty<bool> IsEndRefreshing { get; private set; } = new ReactiveProperty<bool>();
+
         public ReactiveCommand TapCommand { get; private set; }
         public ReactiveCommand BackPrevMonth { get; private set; }
         public ReactiveCommand GoNextMonth { get; private set; }
@@ -68,9 +75,10 @@ namespace FUNCalendar.ViewModels
         /* 購読解除用 */
         private CompositeDisposable Disposable { get; } = new CompositeDisposable();
 
-        public CalendarPageViewModel(IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts, IStorageService storageService, ICalendar calendar, INavigationService navigationService, IPageDialogService pageDialogService)
+        public CalendarPageViewModel(ILoadingMessage loadingMessage, IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts, IStorageService storageService, ICalendar calendar, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._storageService = storageService;
+            this._loadingMessage = loadingMessage;
             this._wishList = wishList;
             this._todoList = todoList;
             this._householdAccounts = householdAccounts;
@@ -99,6 +107,12 @@ namespace FUNCalendar.ViewModels
             CurrentDate = string.Format("{0}日", DateTime.Now.ToString("%d"));
 
             DisplayCalendar = _calendar.ListedAMonthDateData.ToReadOnlyReactiveCollection(x => new VMDate(x)).AddTo(Disposable);
+            IsEndRefreshing.Value = true;
+            DisplayCalendar.ObserveAddChanged().Buffer(42).Subscribe(_ =>
+            {
+                IsEndRefreshing.Value = true;
+                _loadingMessage.Hide();
+            });
 
             TapCommand.Subscribe(async (obj) =>
             {
@@ -108,6 +122,9 @@ namespace FUNCalendar.ViewModels
 
             BackPrevMonth.Subscribe(() =>
             {
+                if (!IsEndRefreshing.Value) return;
+                IsEndRefreshing.Value = false;
+                _loadingMessage.Show("読み込み中");
                 _calendar.BackPrevMonth();
                 _calendar.SetHasList(_wishList);
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
@@ -116,6 +133,9 @@ namespace FUNCalendar.ViewModels
 
             GoNextMonth.Subscribe(() =>
             {
+                if (!IsEndRefreshing.Value) return;
+                IsEndRefreshing.Value = false;
+                _loadingMessage.Show("読み込み中");
                 _calendar.GoNextMonth();
                 _calendar.SetHasList(_wishList);
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());

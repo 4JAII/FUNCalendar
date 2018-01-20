@@ -11,7 +11,7 @@ namespace FUNCalendar.Services
     public interface ICalendar
     {
         Date[] AMonthDateData { get; set; }
-        ObservableCollection<Date> ListedAMonthDateData { get; }
+        ExtendObservableCollection<Date> ListedAMonthDateData { get; }
         Date DisplayDate { get; set; }
         int CurrentMonth { get; set; }
         int CurrentYear { get; set; }
