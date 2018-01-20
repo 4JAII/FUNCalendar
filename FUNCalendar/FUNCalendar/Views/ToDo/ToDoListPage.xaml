@@ -86,6 +86,8 @@
                             <!-- 長押しのやつ -->
                             <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditToDoItemCommand, Source={x:Reference ToDoListPage}}" CommandParameter="{Binding .}"/>
                             <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteToDoItemCommand, Source={x:Reference ToDoListPage}}" CommandParameter="{Binding .}"  />
+                            <MenuItem Text="完了" IsDestructive="True" Command="{Binding Path=BindingContext.CompleteCommand, Source={x:Reference ToDoListPage}}" CommandParameter="{Binding .}"  />
+
                         </ViewCell.ContextActions>
                         <Grid>
                             <Grid.RowDefinitions>
