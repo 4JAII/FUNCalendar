@@ -129,9 +129,9 @@ namespace FUNCalendar.Models
         /* リスト更新 */
         public void UpdateList(List<HouseholdAccountsItem> list)
         {
-            if (IsInitialized) return;
+            //if (IsInitialized) return;
             this.allHouseHoldAccounts = list;
-            IsInitialized = true;
+            //IsInitialized = true;
         }
 
         /* アイテム追加 
@@ -447,6 +447,7 @@ namespace FUNCalendar.Models
         public int CalucAllBalance(Range r, DateTime date, bool isOutgoings)
         {
             int sum = 0;
+            if (allHouseHoldAccounts == null) return 0;
             switch (r)
             {
                 case Range.Day:
@@ -487,7 +488,7 @@ namespace FUNCalendar.Models
         public int CalucSCategory(Range r, SCategorys sc, DateTime date)
         {
             int sum = 0;
-
+            if (allHouseHoldAccounts == null) return 0;
             ScToDcRange(sc);
 
             switch (r)

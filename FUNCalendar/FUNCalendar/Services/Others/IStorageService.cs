@@ -25,7 +25,7 @@ namespace FUNCalendar.Services
         Task EditItem(WishItem deleteItem, WishItem addItem);
         Task EditItem(ToDoItem deleteItem,ToDoItem addItem);
         Task EditItem(HouseholdAccountsItem deleteItem,HouseholdAccountsItem addItem);
-        Task EditItem(HouseholdAccountsBalanceItem Item, int Price);
+        //Task EditItem(HouseholdAccountsBalanceItem Item, int Price);
         Task ReadFile();
     }
 }

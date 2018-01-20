@@ -5,21 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using FUNCalendar.Models;
 using System.Text.RegularExpressions;
-
+using Newtonsoft.Json;
 
 namespace FUNCalendar.ViewModels
 {
+    [JsonObject("household_accounts_item")]
     public class VMHouseholdAccountsItem
     {
+        [JsonProperty("id")]
         public int ID { get; private set; }
+        [JsonProperty("name")]
         public string Name { get; private set; }
+        [JsonProperty("price")]
         public string Price { get; private set; }
+        [JsonProperty("date")]
         public string Date { get; private set; }
+        [JsonProperty("summary_category")]
         public string SCategory { get; private set; }
+        [JsonProperty("detail_category")]
         public string DCategory { get; private set; }
+        [JsonProperty("storage_type")]
         public string Storagetype { get; private set; }
+        [JsonIgnore]
         public string CategoryData { get; private set; }
+        [JsonProperty("is_out_goings")]
         public string IsOutGoings { get; private set; }
+
+        public VMHouseholdAccountsItem() { }
 
         /* コンストラクタ(HouseHoldAccountsItem To VMHouseHoldAccountsItem) */
         public VMHouseholdAccountsItem(HouseholdAccountsItem item)

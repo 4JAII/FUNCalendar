@@ -33,17 +33,19 @@ namespace FUNCalendar.Models
             SQLiteAsyncConnection connection;
             rootFolder = FileSystem.Current.LocalStorage;
             fileReadWriteService = new FileReadWriteService();
+
             var result = await fileReadWriteService.ExistsAsync(databaseFileName).ConfigureAwait(false);
             if (!result)
             {
                 await fileReadWriteService.CreateFileAsync(databaseFileName);
+                file = await fileReadWriteService.ReadFileAsync(databaseFileName);
             }
             file = await fileReadWriteService.ReadFileAsync(databaseFileName);
             connection = new SQLiteAsyncConnection(file.Path);
             await connection.CreateTableAsync<WishItem>();
             await connection.CreateTableAsync<ToDoItem>();
             await connection.CreateTableAsync<HouseholdAccountsItem>();
-
+            await connection.CreateTableAsync<HouseholdAccountsBalanceItem>();
             asyncConnection = connection;
             isInitialized = true;
         }
@@ -189,7 +191,7 @@ namespace FUNCalendar.Models
             }
             return true;
         }
-
+        /*
         public async Task<bool> EditItem(HouseholdAccountsBalanceItem item)
         {
             try
@@ -203,7 +205,7 @@ namespace FUNCalendar.Models
             }
             return true;
         }
-
+        */
         public async Task<bool> EditItem(HouseholdAccountsItem item)
         {
             try
@@ -222,30 +224,37 @@ namespace FUNCalendar.Models
         public async Task<List<WishItem>> ReadWishList()
         {
             await CreateConnection();
-            return await asyncConnection.Table<WishItem>().ToListAsync();
+            var temp = await asyncConnection.Table<WishItem>().ToListAsync();
+            if (temp == null) temp = new List<WishItem>();
+            return temp;
         }
 
 
         public async Task<List<ToDoItem>> ReadToDo()
         {
             await CreateConnection();
-            return await asyncConnection.Table<ToDoItem>().ToListAsync();
+            var temp = await asyncConnection.Table<ToDoItem>().ToListAsync();
+            if (temp == null) temp = new List<ToDoItem>();
+            return temp;
         }
 
-
-
+        /*
         public async Task<List<HouseholdAccountsBalanceItem>> ReadBalance()
         {
             await CreateConnection();
-            return await asyncConnection.Table<HouseholdAccountsBalanceItem>().ToListAsync();
+            var temp = await asyncConnection.Table<HouseholdAccountsBalanceItem>().ToListAsync();
+            if (temp == null) temp = new List<HouseholdAccountsBalanceItem>();
+            return temp;
         }
-
+        */
 
 
         public async Task<List<HouseholdAccountsItem>> ReadHouseholdAccounts()
         {
             await CreateConnection();
-            return await asyncConnection.Table<HouseholdAccountsItem>().ToListAsync();
+            var temp = await asyncConnection.Table<HouseholdAccountsItem>().ToListAsync();
+            if (temp == null) temp = new List<HouseholdAccountsItem>();
+            return temp;
         }
 
 

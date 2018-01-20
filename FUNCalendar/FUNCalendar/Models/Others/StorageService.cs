@@ -163,7 +163,7 @@ namespace FUNCalendar.Models
             HasError = !await storage.EditItem(addItem);
             HouseholdAccounts.EditHouseholdAccountsItem(deleteItem, addItem);
         }
-
+        /*
         public async Task EditItem(HouseholdAccountsBalanceItem deleteItem,HouseholdAccountsBalanceItem addItem)
         {
             if (!isInitialized)
@@ -172,9 +172,9 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.EditItem(addItem);
-            /* バランスアイテムの更新処理 */
+           
         }
-
+        
          public async Task EditItem(HouseholdAccountsBalanceItem item, int price)
          {
             if (!isInitialized)
@@ -183,8 +183,9 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.EditItem(item);
-            //HouseholdAccounts.EditHouseholdAccountsBalance(item, price);
+            HouseholdAccounts.EditHouseholdAccountsBalance(item, price);
          }
+         */
 
         public async Task ReadFile()
         {

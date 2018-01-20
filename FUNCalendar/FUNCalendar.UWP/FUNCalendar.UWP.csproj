@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LoadingMessageUWP.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -108,6 +109,11 @@
     <None Include="FUNCalendar.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Calendar_BackPrevMonth.png" />
+    <Content Include="Calendar_GoNextMonth.png" />
+    <Content Include="Calendar_HasHouseHoldAccountsList.png" />
+    <Content Include="Calendar_HasToDoList.png" />
+    <Content Include="Calendar_HasWishList.png" />
     <Content Include="icon_wishList.png" />
     <Content Include="icon_add.png" />
     <Content Include="icon_calendar.png" />

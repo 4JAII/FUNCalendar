@@ -71,7 +71,7 @@ namespace FUNCalendar.Models
             List<WishItem> list;
             response = await GetAsync(requestPath);
             if (response.StatusCode != HttpStatusCode.OK)
-                return null;
+                return new List<WishItem>();
             list = JsonConvert.DeserializeObject<JsonWishList>(response.Content).Value;
             return list;
         }
@@ -107,7 +107,7 @@ namespace FUNCalendar.Models
             List<ToDoItem> list;
             response = await GetAsync(requestPath);
             if (response.StatusCode != HttpStatusCode.OK)
-                return null;
+                return new List<ToDoItem>();
             list = JsonConvert.DeserializeObject<JsonToDoList>(response.Content).Value;
             return list;
         }
@@ -144,7 +144,7 @@ namespace FUNCalendar.Models
             List<HouseholdAccountsItem> list;
             response = await GetAsync(requestPath);
             if (response.StatusCode != HttpStatusCode.OK)
-                return null;
+                return new List<HouseholdAccountsItem>();
             list = JsonConvert.DeserializeObject<JsonHouseholdAccountsList>(response.Content).Value;
             return list;
         }
@@ -173,7 +173,7 @@ namespace FUNCalendar.Models
             IRestResponse response = await DeleteAsync(requestPath, householdAccountsItem.ID);
             return (int)response.StatusCode;
         }
-
+        /*
         public async Task<List<HouseholdAccountsBalanceItem>> GetBalanceAsync()
         {
             string requestPath = "v1/balance";
@@ -193,5 +193,6 @@ namespace FUNCalendar.Models
             IRestResponse response = await PutAsync<JsonBalanceItem>(requestPath, householdAccountsBalanceItem.ID,jsonBalanceItem );
             return (int)response.StatusCode;
         }
+        */
     }
 }

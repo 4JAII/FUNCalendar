@@ -18,7 +18,7 @@ namespace FUNCalendar.Models
         private StorageTypes _storagetype;              //お金の所在地
         private bool _isOutGoings = true;               //収入か支出か
 
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement,]
         public int ID
         {
             get { return this._id; }
@@ -62,6 +62,8 @@ namespace FUNCalendar.Models
             set { this._isOutGoings = value; }
         }
 
+        public HouseholdAccountsItem() { }
+
         public HouseholdAccountsItem(int id, string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
             ID = id;
@@ -75,7 +77,7 @@ namespace FUNCalendar.Models
         }
         public HouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
         {
-            ID = 0;
+            //ID = 0;
             Name = name;
             Price = price;
             Date = date;
@@ -85,7 +87,7 @@ namespace FUNCalendar.Models
             IsOutGoings = isoutgoings;
         }
 
-        public HouseholdAccountsItem(){ }
+       
 
         /* Sort */
         public static int CompareByID(HouseholdAccountsItem a, HouseholdAccountsItem b)
