@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:FUNCalendar.ViewModels"
              xmlns:b="clr-namespace:FUNCalendar.Behaviors"
              x:Class="FUNCalendar.Views.HouseholdAccountsDCHistoryPage"
+             x:Name="HouseholdAccountsDCHistoryPage"
              Title="{Binding DCategoryTitle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
@@ -62,6 +63,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference HouseholdAccountsDCHistoryPage}}" CommandParameter="{Binding}"/>
+                            <MenuItem Text="削除" Command="{Binding Path=BindingContext.RemoveCommand, Source={x:Reference HouseholdAccountsDCHistoryPage}}" CommandParameter="{Binding}"/>
+                        </ViewCell.ContextActions>
+
                         <StackLayout>
                             <Frame BackgroundColor="White"
                                OutlineColor="Navy"

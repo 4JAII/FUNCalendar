@@ -71,20 +71,18 @@ namespace FUNCalendar.ViewModels
         public Command<VMHouseholdAccountsScStatisticsItem> ItemSelectedCommand { get; }
 
         /* 残高画面移行用 */
-        public ReactiveCommand BalanceCommand { get; private set; }
+        public AsyncReactiveCommand BalanceCommand { get; private set; }
 
         /* 履歴画面移行用 */
-        public ReactiveCommand HistoryCommand { get; private set; }
+        public AsyncReactiveCommand HistoryCommand { get; private set; }
 
         /* 編集用 */
-        public ReactiveCommand EditCommand { get; private set; } = new ReactiveCommand();
+        public AsyncReactiveCommand EditCommand { get; private set; }
 
 
 
         public HouseholdAccountsStatisticsPageViewModel(IHouseholdAccounts ihouseholdaccounts, INavigationService navigationService)
         {
-            /* デバッグ用 アイテム追加コマンド */
-            this.ResistCommand = new AsyncReactiveCommand();
 
             this._householdaccounts = ihouseholdaccounts;
             this._inavigationservice = navigationService;
@@ -111,8 +109,10 @@ namespace FUNCalendar.ViewModels
             SelectedDate = new ReactiveProperty<DateTime>();
             SelectedDate.Value = DateTime.Today;
             SelectedRange = new ReactiveProperty<HouseholdAccountsRangeItem>();
-            BalanceCommand = new ReactiveCommand();
-            HistoryCommand = new ReactiveCommand();
+            BalanceCommand = new AsyncReactiveCommand();
+            HistoryCommand = new AsyncReactiveCommand();
+            ResistCommand = new AsyncReactiveCommand();
+            EditCommand = new AsyncReactiveCommand();
             DisplaySlices = new List<PieSlice>();
 
             /* ピッカー用のアイテムの作成 */
@@ -237,25 +237,25 @@ namespace FUNCalendar.ViewModels
             });
 
             /* 残高ボタンが押されたときの処理 */
-            BalanceCommand.Subscribe(_ =>
+            BalanceCommand.Subscribe(async _ =>
             {
                 var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
-                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsBalancePage", navigationparameter);
+                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsBalancePage", navigationparameter);
             }).AddTo(disposable);
 
             /* 履歴ボタンが押されたときの処理 */
-            HistoryCommand.Subscribe(_ =>
+            HistoryCommand.Subscribe(async _ =>
             {
                 var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsBalancePageViewModel.InputKey, navigationitem }
                 };
-                _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsHistoryPage", navigationparameter);
+                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsHistoryPage", navigationparameter);
             }).AddTo(disposable);
 
         }

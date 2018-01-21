@@ -92,7 +92,7 @@ namespace FUNCalendar.Models
             }
             catch
             {
-                return null;
+                return new List<WishItem>();
             }
         }
 
@@ -156,7 +156,7 @@ namespace FUNCalendar.Models
             }
             catch
             {
-                return null;
+                return new List<ToDoItem>();
             }
 
         }
@@ -221,10 +221,10 @@ namespace FUNCalendar.Models
             }
             catch
             {
-                return null;
+                return new List<HouseholdAccountsItem>();
             }
         }
-
+        /*
         public async Task<bool> EditItem(HouseholdAccountsBalanceItem item)
         {
             int result;
@@ -240,7 +240,7 @@ namespace FUNCalendar.Models
                 return false;
             return true;
         }
-
+        
         public async Task<List<HouseholdAccountsBalanceItem>> ReadBalance()
         {
             try
@@ -252,5 +252,6 @@ namespace FUNCalendar.Models
                 return null;
             }
         }
+        */
     }
 }

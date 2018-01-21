@@ -78,6 +78,7 @@
     <Compile Include="Models\Others\JsonObject\JsonBalanceList.cs" />
     <Compile Include="ViewModels\Calendar\CalendarDetailPageViewModel.cs" />
     <Compile Include="ViewModels\Calendar\VMDate.cs" />
+    <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsEditBalancePageViewModel.cs" />
     <Compile Include="ViewModels\Others\ConfigurationPageViewModel.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsBalancePageViewModel.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsDCHistoryPageViewModel.cs" />
@@ -108,6 +109,8 @@
     </Compile>
     <Compile Include="Views\Calendar\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
+    <Compile Include="Views\Householdaccounts\HouseholdAccountsEditBalancePage.xaml.cs">
+      <DependentUpon>HouseholdAccountsEditBalancePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Others\ConfigurationPage.xaml.cs">
       <DependentUpon>ConfigurationPage.xaml</DependentUpon>
@@ -321,6 +324,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Calendar\CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsEditBalancePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

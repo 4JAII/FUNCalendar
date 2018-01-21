@@ -7,6 +7,7 @@
              xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
              xmlns:b="clr-namespace:FUNCalendar.Behaviors"
              x:Class="FUNCalendar.Views.HouseholdAccountsSCStatisticsPage"
+             x:Name="HouseholdAccountsSCStatisticsPage"
              Title="{Binding SCategoryTitle}">
 
     <ContentPage.ToolbarItems>

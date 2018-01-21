@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUNCalendar", "FUNCalendar\FUNCalendar\FUNCalendar.csproj", "{71A1EA7A-3FC5-47E0-A9EE-C149A5EDC05B}"
 EndProject
@@ -228,6 +228,8 @@ Global
 		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.AppStore|x86.Build.0 = Release|x86
 		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.AppStore|x86.Deploy.0 = Release|x86
 		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.Debug|Any CPU.Build.0 = Debug|x86
+		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.Debug|ARM.ActiveCfg = Debug|ARM
 		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.Debug|ARM.Build.0 = Debug|ARM
 		{3B7E05EE-335A-412E-83AD-0E5503647EE3}.Debug|ARM.Deploy.0 = Debug|ARM

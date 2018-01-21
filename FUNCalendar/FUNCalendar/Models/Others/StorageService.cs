@@ -179,6 +179,7 @@ namespace FUNCalendar.Models
             HasError = !await storage.DeleteItem(item);
             if (HasError) return;
             //HouseholdAccounts.Remove(item);
+            HouseholdAccounts.RemoveHouseholdAccountsItem(item);
         }
 
         public async Task EditItem(WishItem deleteItem, WishItem addItem, bool needsRegister = false, int priority = 0)
@@ -240,7 +241,8 @@ namespace FUNCalendar.Models
             HouseholdAccounts.EditHouseholdAccountsItem(deleteItem, addItem);
         }
 
-        public async Task EditItem(HouseholdAccountsBalanceItem deleteItem, HouseholdAccountsBalanceItem addItem)
+        /*
+        public async Task EditItem(HouseholdAccountsBalanceItem deleteItem,HouseholdAccountsBalanceItem addItem)
         {
             if (!isInitialized)
             {
@@ -248,9 +250,21 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.EditItem(addItem);
-            if (HasError) return;
-            /* バランスアイテムの更新処理 */
+
+           
         }
+        
+         public async Task EditItem(HouseholdAccountsBalanceItem item, int price)
+         {
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.EditItem(item);
+            HouseholdAccounts.EditHouseholdAccountsBalance(item, price);
+         }
+         */
 
         public async Task ReadFile()
         {
@@ -263,8 +277,7 @@ namespace FUNCalendar.Models
 
             WishList.UpdateList(await storage.ReadWishList());
             ToDoList.UpdateList(await storage.ReadToDo());
-            /* householdaccountsのlist,balanceの更新処理*/
-            // HouseholdAccounts.Update(await storage.ReadHouseholdAccounts,await storage.ReadBalance);
+            HouseholdAccounts.UpdateList(await storage.ReadHouseholdAccounts());
         }
 
         public async Task CompleteToDo(ToDoItem newTodoItem, bool hasId, bool needsRegister, SCategorys Scategory, DCategorys Dcategory, StorageTypes Storagetype)

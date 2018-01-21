@@ -12,7 +12,6 @@ namespace FUNCalendar.UWP.Dependency
 {
     class LoadingMessageUWP : ILoadingMessage
     {
-        public bool IsShow { get; private set; }
 
         public void Hide()
         {

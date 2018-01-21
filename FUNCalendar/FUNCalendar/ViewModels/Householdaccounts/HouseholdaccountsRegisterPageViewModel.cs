@@ -17,12 +17,14 @@ using Prism.Navigation;
 using Prism.Services;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using FUNCalendar.Services;
 
 namespace FUNCalendar.ViewModels
 {
     public class HouseholdAccountsRegisterPageViewModel : BindableBase,INavigationAware,IDisposable
     {
         private IHouseholdAccounts _householdaccount;
+        private IStorageService _storageService;
         private INavigationService _navigationservice;
         private IPageDialogService _pageDialogService;
 
@@ -30,13 +32,17 @@ namespace FUNCalendar.ViewModels
 
         /* 正しい遷移か確認するためのkey */
         public static readonly string InputKey = "InputKey";
+        public static readonly string EditKey = "EditKey";
 
-        /* 遷移されたときの格納用変数 */
+        /* 遷移されたときのデータ格納用変数 */
         public HouseholdAccountsNavigationItem NavigatedItem { get; set; }
 
         /* 現在選択されている各データを保持 */
         public DateTime CurrentDate { get; private set; }
         public Range CurrentRange { get; private set; }
+
+        /* 残高のデータ */
+        public ReadOnlyReactiveCollection<VMHouseholdAccountsBalanceItem> Balances { get; private set; }
         
         /* 収支変更用コマンド */
         public ReactiveCommand IncomeCommand { get; private set; }
@@ -72,19 +78,18 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
-        /* データベース用 */
-        //private LocalStorage localStorage; 
-
         
         
         /* コンストラクタ */
-        public HouseholdAccountsRegisterPageViewModel(IHouseholdAccounts householdaccount, INavigationService navigationService, IPageDialogService pageDialogService)
+        public HouseholdAccountsRegisterPageViewModel(IHouseholdAccounts householdaccount,IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            //localStorage = new LocalStorage();
-
             this._householdaccount = householdaccount;
+            this._storageService = storageService;
             this._navigationservice = navigationService;
             this._pageDialogService = pageDialogService;
+
+            /* Balanceitemの保持 */
+            this.Balances = _householdaccount.Balances.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsBalanceItem(x)).AddTo(disposable);
 
             /* 属性を有効化 */
             Name.SetValidateAttribute(() => this.Name);
@@ -101,6 +106,7 @@ namespace FUNCalendar.ViewModels
             StorageNames = new List<HouseholdAccountsStorageTypeItem>();
             CurrentStorageType = new ReactiveProperty<HouseholdAccountsStorageTypeItem>();
 
+            /* Storagetypeリストを作成 */
             StorageNames.Clear();
             for (int i = (int)StorageTypes.start_of_Stype + 1; i < (int)StorageTypes.end_of_Stype; i++)
             {
@@ -109,8 +115,11 @@ namespace FUNCalendar.ViewModels
                 var item = new HouseholdAccountsStorageTypeItem(stname, stdata);
                 StorageNames.Add(item);
             }
+
+            /* 現在のStoragetypeを先頭に設定 */
             CurrentStorageType.Value = StorageNames[0];
 
+            /* 収入・支出のScategoryリストを作成*/
             for (int i = (int)SCategorys.start_of_支出 + 1; i < (int)SCategorys.end_of_支出; i++)
             {
                 var scname = Enum.GetName(typeof(SCategorys), i);
@@ -126,17 +135,30 @@ namespace FUNCalendar.ViewModels
                 IncomeScategoryNames.Add(item);
             }
 
+            /* 現在のScategoryリストを支出のScategoryリストに設定 */
             ScategoryNames = new ReactiveCollection<HouseholdAccountsSCategoryItem>();
             foreach(HouseholdAccountsSCategoryItem x in OutgoingScategoryNames)
             {
                 ScategoryNames.Add(x);
             }
 
+            /* 現在のScategoryを先頭に設定 */
             CurrentScategory.Value = ScategoryNames[0];
 
+            /* Scategoryが変更されたときの処理 */
+            CurrentScategory.Subscribe(_ =>
+            {
+                if (_ != null)
+                {
+                    UpdateDcategory(_.ScategoryData);
+                }
+            }).AddTo(disposable);
+
+            /* 収支を支出に設定 */
             IsOutgoing = new ReactiveProperty<bool>();
             IsOutgoing.Value = true;
 
+            /* 収入ボタンが押されたときの処理 */
             IncomeCommand = new ReactiveCommand();
             IncomeCommand.Subscribe(_ =>
             {
@@ -144,6 +166,7 @@ namespace FUNCalendar.ViewModels
                 UpdateScategory(false);
             }).AddTo(disposable);
 
+            /* 支出ボタンが押されたときの処理 */
             OutgoingCommand = new ReactiveCommand();
             OutgoingCommand.Subscribe(_ =>
             {
@@ -162,6 +185,7 @@ namespace FUNCalendar.ViewModels
                 ErrorColor.Value = x ? Color.SkyBlue : Color.Gray;
             });
 
+
             /* 登録ボタンが押された時の処理 */
             RegisterHouseholdaccountsCommand = CanRegister.ToAsyncReactiveCommand();
             RegisterHouseholdaccountsCommand.Subscribe(async () =>
@@ -171,6 +195,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsStatisticsPageViewModel.InputKey, navigationitem }
                 };
+                /* アイテム編集 */
                 if (ID != -1)
                 {
                     var scategory = Enum.GetName(typeof(SCategorys), CurrentScategory.Value.ScategoryData);
@@ -179,9 +204,17 @@ namespace FUNCalendar.ViewModels
                     var isoutgoing = IsOutgoing.Value ? "支出": "収入";
                     var vmitem = new VMHouseholdAccountsItem(ID, Name.Value, Price.Value, Date.Value, scategory, dcategory, storagetype, isoutgoing);
                     var item = VMHouseholdAccountsItem.ToHouseholdaccountsItem(vmitem);
-                    // await localStorage.EditItem(item);
 
+                    /* editbalaceitem */
+                    //_householdaccount.IncrementBalancePrice(_householdaccount.SelectedBalanceItem.Storagetype, _householdaccount.SelectedBalanceItem.Price);
+
+                    //var differenceprice = 
+
+                    await _storageService.EditItem(_householdaccount.SelectedItem, item);
+                    /* 追加 */
+                    //await _storageService.EditItem
                 }
+                /* アイテム追加 */
                 else
                 {
                     var name = this.Name.Value;
@@ -192,11 +225,30 @@ namespace FUNCalendar.ViewModels
                     var storagetype = CurrentStorageType.Value.StorageTypeData;
                     var isoutgoing = IsOutgoing.Value;
                     var item = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
-                    //await localStorage.AddItem(new HouseholdaccontsItem(this.Name.Value, int.Parse(this.Price.Value), this.Date.Value, this.Dcategory.Value, this.Scategory.Value, this.Storagetype.Value, this.IsOutgoing.Value, -1));
-                    item.ID = -1;/* localStorage.LastAddedHouseholdaccountsItemID ;*/
-                    _householdaccount.AddHouseholdAccountsItem(item);
+                    await _storageService.AddItem(item);
+
+                    /*
+                    VMHouseholdAccountsBalanceItem vmBItem = null;
+                    HouseholdAccountsBalanceItem Bitem = null;
+                    foreach(VMHouseholdAccountsBalanceItem x in Balances)
+                    {
+                        if((StorageTypes)Enum.Parse(typeof(StorageTypes),x.StorageType) == storagetype)
+                        {
+                            vmBItem = x;
+                            break;
+                        }
+                    }
+
+                    Bitem = VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem()
+
+                    _householdaccount.EditHouseholdAccountsBalanceItem()
+
+                    //_householdaccount.IncrementBalancePrice(item, price):
+
+                    _householdaccount.SetBalance();
+                    */
                 }
-                 await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
+                await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
             });
 
             /* キャンセルボタンが押された時の処理 */
@@ -212,6 +264,7 @@ namespace FUNCalendar.ViewModels
                 if (result) await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage", navigationparameter);
             });
         }
+
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
             disposable.Dispose();
@@ -219,27 +272,65 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
+            /* アイテム追加ボタンで遷移してきた時の処理 */
             if (parameters.ContainsKey(InputKey))
             {
                 NavigatedItem = (HouseholdAccountsNavigationItem)parameters[InputKey];
                 this.CurrentDate = NavigatedItem.CurrentDate;
                 this.CurrentRange = NavigatedItem.CurrentRange;
 
-                /* 指定された日付に設定 */
                 Date.Value = CurrentDate;
-                CurrentScategory.Subscribe(_ =>
+            }
+
+            /* 編集ボタンで遷移してきた時の処理 */
+            else if (parameters.ContainsKey(EditKey))
+            {
+                NavigatedItem = (HouseholdAccountsNavigationItem)parameters[EditKey];
+                this.CurrentDate = NavigatedItem.CurrentDate;
+                this.CurrentRange = NavigatedItem.CurrentRange;
+                Date.Value = CurrentDate;
+
+                VMHouseholdAccountsItem vmitem = new VMHouseholdAccountsItem(_householdaccount.SelectedItem);
+                HouseholdAccountsItem item = _householdaccount.SelectedItem;
+                Regex re = new Regex(@"[^0-9]");
+                ID = vmitem.ID;
+                Name.Value = vmitem.Name;
+                Price.Value = re.Replace(vmitem.Price, "");
+                Date.Value = _householdaccount.SelectedItem.Date;
+                IsOutgoing.Value = _householdaccount.SelectedItem.IsOutGoings;
+                UpdateScategory(IsOutgoing.Value);
+                foreach (HouseholdAccountsSCategoryItem x in ScategoryNames)
                 {
-                    if(_ != null)
+                    if (x.ScategoryData == item.SCategory)
                     {
-                        UpdateDcategory(_.ScategoryData);
+                        CurrentScategory.Value = x;
+                        break;
                     }
-                }).AddTo(disposable);
+                }
+                foreach (HouseholdAccountsDcategoryItem x in DcategoryNames)
+                {
+                    if (x.DcategoryData == item.DCategory)
+                    {
+                        CurrentDcategory.Value = x;
+                        break;
+                    }
+                }
+                foreach (HouseholdAccountsStorageTypeItem x in StorageNames)
+                {
+                    if (x.StorageTypeData == item.StorageType)
+                    {
+                        CurrentStorageType.Value = x;
+                        break;
+                    }
+                }
             }
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
         }
+
+        /* 収支が変更されたときにScategoryを変更する */
         private void UpdateScategory(bool isoutgoing)
         {
             if (isoutgoing)
@@ -262,6 +353,7 @@ namespace FUNCalendar.ViewModels
             }
         }
 
+        /* 収支・Scategoryが変更されたときDcategoryを変更する */
         private void UpdateDcategory(SCategorys sc)
         {
             var startpoint = _householdaccount.ScToDcStart(sc);
@@ -278,6 +370,7 @@ namespace FUNCalendar.ViewModels
             }
             CurrentDcategory.Value = DcategoryNames[0];
         }
+
         /* 購読解除 */
         public void Dispose()
         {

@@ -21,12 +21,12 @@ namespace FUNCalendar.Services
         Task<bool> DeleteItem(HouseholdAccountsItem item);
         Task<bool> EditItem(WishItem item);
         Task<bool> EditItem(ToDoItem item);
-        Task<bool> EditItem(HouseholdAccountsBalanceItem item);
+       // Task<bool> EditItem(HouseholdAccountsBalanceItem item);
         Task<bool> EditItem(HouseholdAccountsItem item);
         Task<List<WishItem>> ReadWishList();
         Task<List<ToDoItem>> ReadToDo();
         Task<List<HouseholdAccountsItem>> ReadHouseholdAccounts();
-        Task<List<HouseholdAccountsBalanceItem>> ReadBalance();
+       // Task<List<HouseholdAccountsBalanceItem>> ReadBalance();
         
 
     }

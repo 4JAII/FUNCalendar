@@ -37,6 +37,7 @@ namespace FUNCalendar
             Container.RegisterTypeForNavigation<HouseholdAccountsBalancePage>();
             Container.RegisterTypeForNavigation<HouseholdAccountsHistoryPage>();
             Container.RegisterTypeForNavigation<HouseholdAccountsRegisterPage>();
+            Container.RegisterTypeForNavigation<HouseholdAccountsEditBalancePage>();
             Container.RegisterTypeForNavigation<ConfigurationPage>();
             /* 共有のインスタンスをDIコンテナに登録 */
             Container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
