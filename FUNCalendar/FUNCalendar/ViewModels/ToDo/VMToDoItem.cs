@@ -59,7 +59,7 @@ namespace FUNCalendar.ViewModels
             var description = vmToDoItem.Description;
             var date = DateTime.Parse(vmToDoItem.Date);
             var priority = int.Parse(re.Replace(vmToDoItem.Priority, ""));/* 属性により不正な値は除去されている前提 */
-            var isCompleted = string.Equals(vmToDoItem, "完了");
+            var isCompleted = string.Equals(vmToDoItem.IsCompleted, "完了");
             var wishID = vmToDoItem.WishID;
             return new ToDoItem { ID = id, Description = description, Date = date, Priority = priority, IsCompleted = isCompleted, WishID = wishID };
         }

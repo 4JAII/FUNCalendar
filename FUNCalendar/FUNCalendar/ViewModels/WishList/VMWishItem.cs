@@ -59,7 +59,7 @@ namespace FUNCalendar.ViewModels
             var name = vmWishItem.Name;
             var price = int.Parse(re.Replace(vmWishItem.Price, ""));/* 属性により不正な値は除去されている前提 */
             var date = DateTime.Parse(vmWishItem.Date);
-            var isBought = string.Equals(vmWishItem, "購入済み");
+            var isBought = string.Equals(vmWishItem.IsBought, "購入済み");
             var todoID = vmWishItem.ToDoID;
             return new WishItem { ID = id, Name = name, Price = price, Date = date, IsBought = isBought, ToDoID = todoID };
         }

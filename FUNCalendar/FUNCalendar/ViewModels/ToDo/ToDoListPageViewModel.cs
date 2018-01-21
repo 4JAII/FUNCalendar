@@ -180,6 +180,7 @@ namespace FUNCalendar.ViewModels
                             var Dcategory = (DCategorys)Enum.Parse(typeof(DCategorys), dcategory);
                             var Storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), storagetype);
                             await _storageService.CompleteToDo(todoitem, true, result, Scategory, Dcategory, Storagetype);
+                            
                         }
                         else
                         {

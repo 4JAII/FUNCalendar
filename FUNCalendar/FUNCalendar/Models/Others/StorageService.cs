@@ -204,7 +204,7 @@ namespace FUNCalendar.Models
                 }
                 else
                 {
-                    todoItem = new ToDoItem { ID = addItem.ToDoID, Description = description, Date = addItem.Date, Priority = priority, IsCompleted = false, WishID = addItem.ID };
+                    todoItem = new ToDoItem { ID = addItem.ToDoID, Description = description, Date = addItem.Date, Priority = priority, IsCompleted = addItem.IsBought, WishID = addItem.ID };
                     await EditItem(ToDoList.SortedToDoList.First(x => x.ID == deleteItem.ToDoID), todoItem);
                 }
             }
