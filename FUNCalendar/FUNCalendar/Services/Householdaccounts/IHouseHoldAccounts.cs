@@ -13,39 +13,54 @@ namespace FUNCalendar.Models
 {
     public interface IHouseholdAccounts : INotifyPropertyChanged
     {
-        string TotalIncome { get; }
-        string TotalOutgoing { get; }
-        string Difference { get; }
-        string TotalBalance { get; }
-        string SCategoryTotal { get; }
-        HouseholdAccountsItem SelectedItem { get; }
-        HouseholdAccountsBalanceItem SelectedBalanceItem { get; }
-        ObservableCollection<HouseholdAccountsScStatisticsItem> SIncomes { get; }
-        ObservableCollection<HouseholdAccountsScStatisticsItem> SOutgoings { get; }
-        ObservableCollection<HouseholdAccountsPieSliceItem> PieSlice { get; }
-        ObservableCollection<HouseholdAccountsBalanceItem> Balances { get; }
-        ObservableCollection<HouseholdAccountsLegendItem> Legend { get; }
-        ObservableCollection<HouseholdAccountsDcStatisticsItem> ScategoryItems { get; }
-        ObservableCollection<HouseholdAccountsItem> DisplayHouseholdaccountList { get; }
+        /* 全体の統計画面用 */
+        string TotalIncome { get; }     //収入の合計
+        string TotalOutgoing { get; }   //支出の合計
+        string Difference { get; }      //差分値
+        ObservableCollection<HouseholdAccountsScStatisticsItem> SIncomes { get; }       //収入の統計データ
+        ObservableCollection<HouseholdAccountsScStatisticsItem> SOutgoings { get; }     //支出の統計データ
+        void SetAllStatics(Range r, DateTime date);                         //全体の統計を表示するためのメソッド
+        void SetAllStaticsPie(Range r, BalanceTypes b, DateTime date);      //全体の統計のグラフを表示するためのメソッド
 
-        void UpdateList(List<HouseholdAccountsItem> list);
-        //void UpdateBalanceList(List<HouseholdAccountsBalanceItem> list);
-        void SetAllStatics(Range r, DateTime date);
-        void SetAllStaticsPie(Range r, BalanceTypes b, DateTime date);
-        void SetAllHistory(Range r, DateTime date);
-        void SetSCategoryStatics(Range r, BalanceTypes b, DateTime date, SCategorys sc);
-        void SetSCategoryStatisticsPie(Range r, DateTime date, SCategorys sc);
-        void SetDCategoryHistory(Range r, DateTime date, DCategorys dc);
-        //void AddHouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings);
-        void AddHouseholdAccountsItem(HouseholdAccountsItem item);
-        void SetHouseholdAccountsItem(HouseholdAccountsItem item);
-        void SetHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem item); 
-        void EditHouseholdAccountsItem(HouseholdAccountsItem deleteItem, HouseholdAccountsItem additem);
-        void RemoveHouseholdAccountsItem(HouseholdAccountsItem deleteitem);
-        void SetBalance();
-        void EditHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem deleteitem, HouseholdAccountsBalanceItem additem);
-        void EditHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem item, int price, bool isoutgoing, bool isincrement);
-        int ScToDcStart(SCategorys sc);
-        int ScToDcEnd(SCategorys sc);
+        /* 概要カテゴリーの統計画面用 */
+        string SCategoryTotal { get; }  //指定された概要カテゴリーの合計
+        ObservableCollection<HouseholdAccountsDcStatisticsItem> ScategoryItems { get; } //指定された概要カテゴリーの統計データ
+        void SetSCategoryStatics(Range r, BalanceTypes b, DateTime date, SCategorys sc);    //指定された概要カテゴリーの統計を表示するためのメソッド
+        void SetSCategoryStatisticsPie(Range r, DateTime date, SCategorys sc);              //指定された概要カテゴリーの統計のグラフを表示するためのメソッド
+
+        /* 共通・統計画面 */
+        ObservableCollection<HouseholdAccountsPieSliceItem> PieSlice { get; }       //グラフのデータ
+        ObservableCollection<HouseholdAccountsLegendItem> Legend { get; }           //グラフの凡例
+
+
+        /* 残高画面用 */
+        string TotalBalance { get; }    //残高の合計
+        ObservableCollection<HouseholdAccountsBalanceItem> Balances { get; }    //ストレージごとの残高のデータ
+        void SetBalance();          //残高を表示するためのメソッド
+
+        /* 履歴画面用 */
+        ObservableCollection<HouseholdAccountsItem> DisplayHouseholdaccountList { get; }        //表示する履歴のリスト       カレンダーでも使えます。
+        void SetAllHistory(Range r, DateTime date);                                             //全履歴を表示するためのメソッド
+        void SetDCategoryHistory(Range r, DateTime date, DCategorys dc);                        //指定された詳細カテゴリーの履歴を表示するためのメソッド
+        void SetHistoryForCalendar(DateTime date);                                              //指定された日にちの履歴を表示するためのメソッド
+
+
+        /* アイテム追加・編集・削除用 */
+        HouseholdAccountsItem SelectedItem { get; }                                                             //削除するアイテム
+        HouseholdAccountsBalanceItem SelectedBalanceItem { get; }                                               //削除する残高アイテム
+        void AddHouseholdAccountsItem(HouseholdAccountsItem item);                                              //アイテムの追加を行うメソッド
+        void SetHouseholdAccountsItem(HouseholdAccountsItem item);                                              //削除するアイテムを設定するメソッド
+        void SetHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem item);                                //削除する残高アイテムを設定するメソッド
+        void EditHouseholdAccountsItem(HouseholdAccountsItem deleteItem, HouseholdAccountsItem additem);        //アイテムの編集を行うメソッド
+        void RemoveHouseholdAccountsItem(HouseholdAccountsItem deleteitem);                                     //アイテムの削除を行うメソッド
+
+        /* その他 */
+        int ScToDcStart(SCategorys sc);     //ScategoryからDcategoryの範囲を求めるメソッド
+        int ScToDcEnd(SCategorys sc);       //同上
+
+
+        void UpdateList(List<HouseholdAccountsItem> list);          //リストのアップデート
+        
     }
 }
+

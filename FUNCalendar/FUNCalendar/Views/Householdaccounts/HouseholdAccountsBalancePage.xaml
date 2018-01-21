@@ -66,6 +66,7 @@
                                     <ColumnDefinition Width="200*"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand" HeightRequest="30" Grid.Row="0" Grid.Column="1"/>
                                 <Label Text="{Binding StorageType}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3"/>
                                 <Label Text="{Binding Price}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Row="0" Grid.Column="5"/>
                             </Grid>

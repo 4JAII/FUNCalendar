@@ -6,7 +6,7 @@
              x:Class="FUNCalendar.Views.HouseholdAccountsEditBalancePage"
              Title="{Binding BalanceTitle}">
     <StackLayout>
-        <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="値段を入力"/>
+        <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="金額を入力"/>
         <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterHouseholdAccountsBalanceCommand}" />
         <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}"  />
 

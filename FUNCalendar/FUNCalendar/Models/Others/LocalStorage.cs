@@ -24,7 +24,7 @@ namespace FUNCalendar.Models
         public int LastAddedWishItemID { get; private set; }
         public int LastAddedToDoItemID { get; private set; }
         public int LastAddedHouseholdAccountsItemID { get; private set; }
-        public int LastAddedBalanceItemID { get; private set; }
+        //public int LastAddedBalanceItemID { get; private set; }
 
         private async Task CreateConnection()
         {
@@ -45,7 +45,6 @@ namespace FUNCalendar.Models
             await connection.CreateTableAsync<WishItem>();
             await connection.CreateTableAsync<ToDoItem>();
             await connection.CreateTableAsync<HouseholdAccountsItem>();
-            await connection.CreateTableAsync<HouseholdAccountsBalanceItem>();
             asyncConnection = connection;
             isInitialized = true;
         }
@@ -83,7 +82,7 @@ namespace FUNCalendar.Models
         }
 
 
-
+        /*
         public async Task<bool> AddItem(HouseholdAccountsBalanceItem item)
         {
             try
@@ -98,7 +97,7 @@ namespace FUNCalendar.Models
             LastAddedBalanceItemID = item.ID;
             return true;
         }
-
+        */
 
 
         public async Task<bool> AddItem(HouseholdAccountsItem item)

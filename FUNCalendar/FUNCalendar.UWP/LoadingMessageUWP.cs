@@ -22,5 +22,7 @@ namespace FUNCalendar.UWP.Dependency
         {
 
         }
+
+        public bool IsShow { get; }
     }
 }

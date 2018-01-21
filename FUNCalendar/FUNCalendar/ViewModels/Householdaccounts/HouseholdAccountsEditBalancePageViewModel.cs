@@ -21,7 +21,7 @@ using FUNCalendar.Services;
 
 namespace FUNCalendar.ViewModels
 {
-    public class HouseholdAccountsEditBalancePageViewModel : BindableBase,INavigationAware, IDisposable
+    public class HouseholdAccountsEditBalancePageViewModel : BindableBase, INavigationAware, IDisposable
     {
         private IHouseholdAccounts _householdAccounts;
         private IStorageService _storageService;
@@ -36,17 +36,18 @@ namespace FUNCalendar.ViewModels
 
         public DateTime CurrentDate { get; private set; }
         public Range CurrentRange { get; private set; }
-        private string _currentstoragetype;
-        public string CurrentStoragetype
+        private StorageTypes _currentstoragetype;
+        public StorageTypes CurrentStoragetype
         {
             get { return this._currentstoragetype; }
             set { this.SetProperty(ref this._currentstoragetype, value); }
         }
         public VMHouseholdAccountsBalanceItem CurrentBalanceItem { get; private set; }
+        public int PreviousPrice { get; set; }
 
         public int ID { get; private set; }
-        [Required (ErrorMessage ="金額を入力してください")]
-        [RegularExpression("[0-9]+")]
+        [Required(ErrorMessage = "金額を入力してください")]
+        [RegularExpression("-?[0-9]+")]
         public ReactiveProperty<string> Price { get; private set; } = new ReactiveProperty<string>();
 
         public ReactiveProperty<bool> CanRegister { get; private set; }
@@ -67,10 +68,10 @@ namespace FUNCalendar.ViewModels
 
 
 
-            CanRegister =new[] {
+            CanRegister = new[] {
                 this.Price.ObserveHasErrors
             }.CombineLatestValuesAreAllFalse().ToReactiveProperty<bool>();
-            CanRegister.Subscribe(x => 
+            CanRegister.Subscribe(x =>
             {
                 ErrorColor.Value = x ? Color.SkyBlue : Color.Gray;
             });
@@ -85,10 +86,32 @@ namespace FUNCalendar.ViewModels
                 };
 
 
-                var DeleteBItem = VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem(CurrentBalanceItem);
-                var AddBItem = new HouseholdAccountsBalanceItem() { ID = DeleteBItem.ID, Storagetype = DeleteBItem.Storagetype, Price = int.Parse(Price.Value) };
-                //_householdAccounts.EditHouseholdAccountsBalanceItem(item, int.Parse(Price.Value), false, true);
-                _householdAccounts.EditHouseholdAccountsBalanceItem(DeleteBItem,AddBItem);
+                var EnteredPrice = int.Parse(Price.Value);
+                var difference = EnteredPrice - PreviousPrice;
+
+                var name = string.Format("残高・{0}の金額の調整", CurrentStoragetype);
+                var date = DateTime.Today;
+
+                /* マイナスだった場合 */
+                if ((difference) < 0)
+                {
+                    var price = -difference;
+                    var scategory = SCategorys.その他_支出;
+                    var dcategory = DCategorys.その他_支出;
+                    var isoutgoing = true;
+                    var item = new HouseholdAccountsItem(name, price, date, dcategory, scategory, CurrentStoragetype, isoutgoing);
+                    await _storageService.AddItem(item);
+                }
+                /* プラスだった場合 */
+                else if (difference > 0)
+                {
+                    var price = difference;
+                    var scategory = SCategorys.その他_収入;
+                    var dcategory = DCategorys.その他_収入;
+                    var isoutgoing = false;
+                    var item = new HouseholdAccountsItem(name, price, date, dcategory, scategory, CurrentStoragetype, isoutgoing);
+                    await _storageService.AddItem(item);
+                }
 
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsBalancePage", navigationparameter);
             });
@@ -118,12 +141,10 @@ namespace FUNCalendar.ViewModels
                 NavigatedItem = (HouseholdAccountsNavigationItem)parameters[EditKey];
                 this.CurrentDate = NavigatedItem.CurrentDate;
                 this.CurrentRange = NavigatedItem.CurrentRange;
-
-                CurrentBalanceItem = new VMHouseholdAccountsBalanceItem(_householdAccounts.SelectedBalanceItem);
-                Regex re = new Regex("[^0-9]");
-                ID = CurrentBalanceItem.ID;
-                Price.Value = re.Replace(CurrentBalanceItem.Price, "");
-                CurrentStoragetype = CurrentBalanceItem.StorageType;
+                this.CurrentStoragetype = NavigatedItem.CurrentStoragetype;
+                Regex re = new Regex("円");
+                Price.Value = re.Replace(NavigatedItem.Price, "");
+                PreviousPrice = int.Parse(re.Replace(NavigatedItem.Price,""));
             }
 
         }

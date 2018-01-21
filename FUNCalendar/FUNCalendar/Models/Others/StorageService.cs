@@ -335,8 +335,5 @@ namespace FUNCalendar.Models
 
             }
         }
-
-
-
     }
 }

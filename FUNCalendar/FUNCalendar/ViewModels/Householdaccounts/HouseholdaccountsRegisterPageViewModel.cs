@@ -205,14 +205,7 @@ namespace FUNCalendar.ViewModels
                     var vmitem = new VMHouseholdAccountsItem(ID, Name.Value, Price.Value, Date.Value, scategory, dcategory, storagetype, isoutgoing);
                     var item = VMHouseholdAccountsItem.ToHouseholdaccountsItem(vmitem);
 
-                    /* editbalaceitem */
-                    //_householdaccount.IncrementBalancePrice(_householdaccount.SelectedBalanceItem.Storagetype, _householdaccount.SelectedBalanceItem.Price);
-
-                    //var differenceprice = 
-
                     await _storageService.EditItem(_householdaccount.SelectedItem, item);
-                    /* 追加 */
-                    //await _storageService.EditItem
                 }
                 /* アイテム追加 */
                 else
@@ -226,27 +219,6 @@ namespace FUNCalendar.ViewModels
                     var isoutgoing = IsOutgoing.Value;
                     var item = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
                     await _storageService.AddItem(item);
-
-                    /*
-                    VMHouseholdAccountsBalanceItem vmBItem = null;
-                    HouseholdAccountsBalanceItem Bitem = null;
-                    foreach(VMHouseholdAccountsBalanceItem x in Balances)
-                    {
-                        if((StorageTypes)Enum.Parse(typeof(StorageTypes),x.StorageType) == storagetype)
-                        {
-                            vmBItem = x;
-                            break;
-                        }
-                    }
-
-                    Bitem = VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem()
-
-                    _householdaccount.EditHouseholdAccountsBalanceItem()
-
-                    //_householdaccount.IncrementBalancePrice(item, price):
-
-                    _householdaccount.SetBalance();
-                    */
                 }
                 await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
             });

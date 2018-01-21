@@ -131,13 +131,16 @@ namespace FUNCalendar.ViewModels
             /* アイテム編集ボタンが押されたときの処理 */
             EditCommand.Subscribe(async (obj) =>
             {
-                _householdaccounts.SetHouseholdAccountsBalanceItem(VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem(obj as VMHouseholdAccountsBalanceItem));
-                
-                var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var storagetype = (obj as VMHouseholdAccountsBalanceItem).StorageType;
+                var price = (obj as VMHouseholdAccountsBalanceItem).Price;
+
+                var Storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), storagetype);
+                var navigationitem = new HouseholdAccountsNavigationItem(Storagetype, price, SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsEditBalancePageViewModel.EditKey, navigationitem }
                 };
+
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsEditBalancePage", navigationparameter);
 
             }).AddTo(disposable);

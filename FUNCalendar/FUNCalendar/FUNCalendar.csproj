@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="Views\Calendar\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Householdaccounts\HouseholdAccountsEditBalancePage.xaml.cs">
       <DependentUpon>HouseholdAccountsEditBalancePage.xaml</DependentUpon>
     </Compile>
@@ -324,6 +325,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Calendar\CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsEditBalancePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>

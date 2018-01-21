@@ -133,11 +133,11 @@ namespace FUNCalendar.ViewModels
                 /* 完了済みの場合 */
                 if (todoitem.IsCompleted)
                 {
-                    await _pageDialogService.DisplayAlertAsync("注意", "このアイテムは既に完了済みです。", "確認", null);
+                    await _pageDialogService.DisplayAlertAsync("注意", "このアイテムは既に完了済みです。", "確認");
                 }
                 else
                 {
-                    if ((obj as VMToDoItem).WishID != -1)/* wishIDを持っているか */
+                    if ((obj as VMToDoItem).WishID != 0)/* wishIDを持っているか */
                     {
                         var result = await _pageDialogService.DisplayAlertAsync("確認", "このアイテムを家計簿に登録しますか？", "はい", "いいえ");
                         if (result)
@@ -184,6 +184,7 @@ namespace FUNCalendar.ViewModels
                         }
                         else
                         {
+                            /* とりあえず代入 */
                             var Scategory = SCategorys.start_of_支出;
                             var Dcategory = DCategorys.start_of_その他_支出;
                             var Storagetype = StorageTypes.start_of_Stype;
@@ -192,6 +193,7 @@ namespace FUNCalendar.ViewModels
                     }
                     else
                     {
+                        /* とりあえず代入 */
                         var Scategory = SCategorys.start_of_支出;
                         var Dcategory = DCategorys.start_of_その他_支出;
                         var Storagetype = StorageTypes.start_of_Stype;
