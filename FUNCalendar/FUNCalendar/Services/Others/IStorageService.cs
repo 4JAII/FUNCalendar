@@ -13,7 +13,6 @@ namespace FUNCalendar.Services
         IWishList WishList { get; }
         bool HasError { get; }
         Task InitializeAsync(IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts);
-
         void AfterResolveError();
         Task SetConfig(bool isEnableRemoteStorage, string username, string password);
         Task AddItem(WishItem item,bool needsRegister,int priority);

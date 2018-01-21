@@ -133,7 +133,7 @@ namespace FUNCalendar.ViewModels
                 /* 完了済みの場合 */
                 if (todoitem.IsCompleted)
                 {
-                    await _pageDialogService.DisplayAlertAsync("注意", "このアイテムは既に完了済みです。", "確認", null);
+                    await _pageDialogService.DisplayAlertAsync("注意", "このアイテムは既に完了済みです。", "確認");
                 }
                 else
                 {

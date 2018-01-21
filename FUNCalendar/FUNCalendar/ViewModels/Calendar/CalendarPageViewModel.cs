@@ -82,6 +82,7 @@ namespace FUNCalendar.ViewModels
             this._wishList = wishList;
             this._todoList = todoList;
             this._householdAccounts = householdAccounts;
+            
             canInitialize.Subscribe(async _ =>
             {
                 await _storageService.InitializeAsync(this._wishList, this._todoList, this._householdAccounts);

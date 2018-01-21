@@ -33,19 +33,24 @@ namespace FUNCalendar.Models
             SQLiteAsyncConnection connection;
             rootFolder = FileSystem.Current.LocalStorage;
             fileReadWriteService = new FileReadWriteService();
-
-            var result = await fileReadWriteService.ExistsAsync(databaseFileName).ConfigureAwait(false);
-            if (!result)
+            try
             {
-                await fileReadWriteService.CreateFileAsync(databaseFileName);
-                file = await fileReadWriteService.ReadFileAsync(databaseFileName);
+                var result = await fileReadWriteService.ExistsAsync(databaseFileName);
+                if (!result)
+                {
+                    await fileReadWriteService.CreateFileAsync(databaseFileName);
+                    file = await fileReadWriteService.ReadFileAsync(databaseFileName);
+                }
+            }
+            catch
+            {
+
             }
             file = await fileReadWriteService.ReadFileAsync(databaseFileName);
             connection = new SQLiteAsyncConnection(file.Path);
             await connection.CreateTableAsync<WishItem>();
             await connection.CreateTableAsync<ToDoItem>();
             await connection.CreateTableAsync<HouseholdAccountsItem>();
-            await connection.CreateTableAsync<HouseholdAccountsBalanceItem>();
             asyncConnection = connection;
             isInitialized = true;
         }
