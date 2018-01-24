@@ -79,6 +79,7 @@ namespace FUNCalendar.ViewModels
         {
             this._storageService = storageService;
             this._loadingMessage = loadingMessage;
+            this._calendar = calendar;
             this._wishList = wishList;
             this._todoList = todoList;
             this._householdAccounts = householdAccounts;
@@ -87,11 +88,8 @@ namespace FUNCalendar.ViewModels
             {
                 await _storageService.InitializeAsync(this._wishList, this._todoList, this._householdAccounts);
                 await _storageService.ReadFile();
-
+                _calendar.SetLists(_wishList, _todoList, _householdAccounts);
             });
-
-            this._calendar = calendar;
-            _calendar.SetHasList(_wishList);
 
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
@@ -127,7 +125,6 @@ namespace FUNCalendar.ViewModels
                 IsEndRefreshing.Value = false;
                 _loadingMessage.Show("読み込み中");
                 _calendar.BackPrevMonth();
-                _calendar.SetHasList(_wishList);
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
                 CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
             });
@@ -138,7 +135,6 @@ namespace FUNCalendar.ViewModels
                 IsEndRefreshing.Value = false;
                 _loadingMessage.Show("読み込み中");
                 _calendar.GoNextMonth();
-                _calendar.SetHasList(_wishList);
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
                 CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
             });
@@ -146,16 +142,18 @@ namespace FUNCalendar.ViewModels
             NavigationRegisterPageCommand.Subscribe(async () =>
             {
                 var result = await _pageDialogService.DisplayActionSheetAsync("登録するアイテムの種類を選択", "キャンセル", "", "ToDo", "WishList", "家計簿");
+                var navigationParameters = new NavigationParameters();
+                navigationParameters.Add("BackPage", "/NavigationPage/CalendarPage");
                 switch (result)
                 {
                     case "ToDo":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage");
+                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters);
                         break;
                     case "WishList":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage");
+                        await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsListRegisterPage");
+                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsListRegisterPage", navigationParameters);
                         break;
                 }
             });

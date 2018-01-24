@@ -78,8 +78,9 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
-        
-        
+        /* ページ遷移用 */
+        private string backPage;
+
         /* コンストラクタ */
         public HouseholdAccountsRegisterPageViewModel(IHouseholdAccounts householdaccount,IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
@@ -248,7 +249,7 @@ namespace FUNCalendar.ViewModels
                     _householdaccount.SetBalance();
                     */
                 }
-                await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
+                await _navigationservice.NavigateAsync(backPage,navigationparameter);
             });
 
             /* キャンセルボタンが押された時の処理 */
@@ -261,7 +262,7 @@ namespace FUNCalendar.ViewModels
                     {HouseholdAccountsStatisticsPageViewModel.InputKey, navigationitem }
                 };
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");
-                if (result) await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage", navigationparameter);
+                if (result) await _navigationservice.NavigateAsync(backPage, navigationparameter);
             });
         }
 
@@ -272,6 +273,8 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
+            backPage = parameters["BackPage"] as string;
+
             /* アイテム追加ボタンで遷移してきた時の処理 */
             if (parameters.ContainsKey(InputKey))
             {

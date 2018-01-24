@@ -56,6 +56,9 @@ namespace FUNCalendar.ViewModels
             NavigationRegisterPageCommand = new AsyncReactiveCommand();
             SelectedSortName = new ReactiveProperty<WishListSortName>();
 
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add("BackPage", "/NavigationPage/WishListPage");
+
             /* WishItemをVMWishItemに変換しつつReactiveCollection化 */
             DisplayWishList = _wishList.SortedWishList.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(disposable);
             SortNames = new[]{ /* Pickerのアイテムセット */
@@ -86,7 +89,7 @@ namespace FUNCalendar.ViewModels
             EditWishItemCommand.Subscribe(async (obj) =>
             {
                 _wishList.SetDisplayWishItem(VMWishItem.ToWishItem(obj as VMWishItem));
-                await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
+                await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T", navigationParameters);
             });
 
             /* 確認して消す */
@@ -104,7 +107,7 @@ namespace FUNCalendar.ViewModels
             });
 
             /*画面遷移設定*/
-            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage"));
+            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters));
             /* 選ばれた並べ替え方法が変わったとき */
             SelectedSortName.Subscribe(_ => { if (_ != null) SelectedSortName.Value.Sort(); }).AddTo(disposable);
             /* 昇順降順が変わった時 */
