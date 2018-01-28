@@ -49,7 +49,7 @@
     <Compile Include="Models\Householdaccounts\Item\HouseholdAccountsStatisticItem.cs" />
     <Compile Include="Models\Others\Configuration.cs" />
     <Compile Include="Models\Others\DatabaseGateway.cs" />
-    <Compile Include="Models\Others\ExtendObservableCollection.cs" />
+    <Compile Include="Models\Others\ExtendedObservableCollection.cs" />
     <Compile Include="Models\Others\FileReadWriteService.cs" />
     <Compile Include="Models\Others\JsonObject\JsonBalanceItem.cs" />
     <Compile Include="Models\Others\JsonObject\JsonHouseholdAccountsItem.cs" />

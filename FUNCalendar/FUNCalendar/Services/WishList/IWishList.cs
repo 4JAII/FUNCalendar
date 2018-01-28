@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,9 @@ using FUNCalendar.Models;
 
 namespace FUNCalendar.Services
 {
-    public interface IWishList
+    public interface IWishList:INotifyPropertyChanged
     {
-        ObservableCollection<WishItem> SortedWishList { get; }
+        ExtendedObservableCollection<WishItem> SortedWishList { get; }
         WishItem DisplayWishItem { get; set; }
         ObservableCollection<WishItem> WishListForCalendar { get; }
         bool DateWithWishList { get; }
@@ -19,6 +20,7 @@ namespace FUNCalendar.Services
         void SortByName();
         void SortByPrice();
         void SortByDate();
+        void Reverse();
         void AddWishItem(WishItem wishItem);
         void UpdateList(List<WishItem> list);
         void SetDisplayWishItem(WishItem wishItem);

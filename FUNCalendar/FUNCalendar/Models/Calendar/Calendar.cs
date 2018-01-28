@@ -16,7 +16,7 @@ namespace FUNCalendar.Models
         private int i, j;
         private List<Date> tempList = new List<Date>();
 
-        public ExtendObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ExtendObservableCollection<Date>();
+        public ExtendedObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ExtendedObservableCollection<Date>();
         public Date DisplayDate { get; set; }
 
         /* プロパティ */

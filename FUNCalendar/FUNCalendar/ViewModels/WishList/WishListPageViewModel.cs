@@ -11,6 +11,7 @@ using Prism.Navigation;
 using Microsoft.Practices.Unity;
 using Prism.Services;
 using Xamarin.Forms;
+using System.Reactive.Linq;
 
 namespace FUNCalendar.ViewModels
 {
@@ -28,12 +29,7 @@ namespace FUNCalendar.ViewModels
         /* 選ばれたのはこのソートでした */
         public ReactiveProperty<WishListSortName> SelectedSortName { get; private set; }
         /* 昇順降順関係 */
-        private string order = "昇順";
-        public string Order
-        {
-            get { return this.order; }
-            set { this.SetProperty(ref this.order, value); }
-        }
+        public ReactiveProperty<string> Order { get; private set; }
         public ReactiveCommand OrderChangeCommand { get; private set; }
         /* 画面遷移用 */
         public AsyncReactiveCommand NavigationRegisterPageCommand { get; private set; }
@@ -52,6 +48,7 @@ namespace FUNCalendar.ViewModels
             this._storageService = storageService;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
+            Order = _wishList.ObserveProperty(x => x.IsAscending).Select(x => x ? "昇順" : "降順").ToReactiveProperty().AddTo(disposable);
             OrderChangeCommand = new ReactiveCommand();
             NavigationRegisterPageCommand = new AsyncReactiveCommand();
             SelectedSortName = new ReactiveProperty<WishListSortName>();
@@ -110,9 +107,7 @@ namespace FUNCalendar.ViewModels
             /* 昇順降順が変わった時 */
             OrderChangeCommand.Subscribe(() =>
             {
-                _wishList.IsAscending = !_wishList.IsAscending;/* MVVM違反？*/
-                Order = _wishList.IsAscending ? "昇順" : "降順";
-                SelectedSortName.Value.Sort();
+                _wishList.Reverse();
             }).AddTo(disposable);
         }
 

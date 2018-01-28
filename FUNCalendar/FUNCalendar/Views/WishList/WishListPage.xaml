@@ -34,7 +34,7 @@
                 WidthRequest="200"
                 Grid.Row="0"
                 Grid.Column="1"/>
-        <Button Text="{Binding Order}"
+        <Button Text="{Binding Order.Value}"
                 Command="{Binding OrderChangeCommand}"
                 Grid.Row="0"
                 Grid.Column="2"/>

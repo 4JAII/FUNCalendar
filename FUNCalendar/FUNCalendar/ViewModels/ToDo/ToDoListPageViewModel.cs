@@ -11,6 +11,7 @@ using Prism.Navigation;
 using Microsoft.Practices.Unity;
 using Prism.Services;
 using Xamarin.Forms;
+using System.Reactive.Linq;
 
 namespace FUNCalendar.ViewModels
 {
@@ -28,31 +29,27 @@ namespace FUNCalendar.ViewModels
         /* 選ばれたのはこのソートでした */
         public ReactiveProperty<ToDoListSortName> SelectedSortName { get; private set; }
         /* 昇順降順関係 */
-        private string order = "昇順";
-        public string Order
-        {
-            get { return this.order; }
-            set { this.SetProperty(ref this.order, value); }
-        }
+        public ReactiveProperty<string> Order { get; private set; }
         public ReactiveCommand OrderChangeCommand { get; private set; }
         /* 画面遷移用 */
         public AsyncReactiveCommand NavigationRegisterPageCommand { get; private set; }
         /* 削除用 */
-        public AsyncReactiveCommand<object> DeleteToDoItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> DeleteToDoItemCommand { get; private set; } = new ReactiveCommand();
         /* 編集用 */
-        public AsyncReactiveCommand<object> EditToDoItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> EditToDoItemCommand { get; private set; } = new ReactiveCommand();
         /* 購読解除用 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
         /* 完了コマンド */
-        public AsyncReactiveCommand CompleteCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand CompleteCommand { get; private set; } = new ReactiveCommand();
 
-        public ToDoListPageViewModel(IToDoList todoList, IStorageService storageService,INavigationService navigationService, IPageDialogService pageDialogService)
+        public ToDoListPageViewModel(IToDoList todoList, IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
         {
             this._todoList = todoList;
             this._storageService = storageService;
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
+            Order = _todoList.ObserveProperty(x => x.IsAscending).Select(x => x ? "昇順" : "降順").ToReactiveProperty().AddTo(disposable);
             OrderChangeCommand = new ReactiveCommand();
             NavigationRegisterPageCommand = new AsyncReactiveCommand();
             SelectedSortName = new ReactiveProperty<ToDoListSortName>();
@@ -119,11 +116,10 @@ namespace FUNCalendar.ViewModels
             /* 選ばれた並べ替え方法が変わったとき */
             SelectedSortName.Subscribe(_ => { if (_ != null) SelectedSortName.Value.Sort(); }).AddTo(disposable);
             /* 昇順降順が変わった時 */
+            Order.Subscribe(_ => { });
             OrderChangeCommand.Subscribe(() =>
             {
-                _todoList.IsAscending = !_todoList.IsAscending;/* MVVM違反？*/
-                Order = _todoList.IsAscending ? "昇順" : "降順";
-                SelectedSortName.Value.Sort();
+                _todoList.Reverse();
             }).AddTo(disposable);
 
             /* 完了ボタンが押されたときの処理 */
@@ -175,12 +171,13 @@ namespace FUNCalendar.ViewModels
                                     break;
                             }
                             storagetype = await _pageDialogService.DisplayActionSheetAsync("出金元の設定", null, null, "財布", "貯金", "銀行", "クレジットカード", "その他");
-
+                            if (scategory == null || storagetype == null)
+                                return;
                             var Scategory = (SCategorys)Enum.Parse(typeof(SCategorys), scategory);
                             var Dcategory = (DCategorys)Enum.Parse(typeof(DCategorys), dcategory);
                             var Storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), storagetype);
                             await _storageService.CompleteToDo(todoitem, true, result, Scategory, Dcategory, Storagetype);
-                            
+
                         }
                         else
                         {
@@ -208,7 +205,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            _todoList.IsAscending = true;/* MVVM違反？*/
+
 
         }
 

@@ -12,7 +12,7 @@ namespace FUNCalendar.Models
     {
         private List<ToDoItem> allToDoList;
         private Func<ToDoItem, ToDoItem, int> selectedSortMethod;
-        public ObservableCollection<ToDoItem> SortedToDoList { get; private set; }
+        public ExtendedObservableCollection<ToDoItem> SortedToDoList { get; private set; }
         public ToDoItem DisplayToDoItem { get; set; }
 
         /* 昇順か？*/
@@ -20,12 +20,12 @@ namespace FUNCalendar.Models
         public bool IsAscending
         {
             get { return this.isAscending; }
-            set { this.SetProperty(ref this.isAscending, value); }
+            private set { this.SetProperty(ref this.isAscending, value); }
         }
 
         public ToDoList()
         {
-            SortedToDoList = new ObservableCollection<ToDoItem>();
+            SortedToDoList = new ExtendedObservableCollection<ToDoItem>();
             allToDoList = new List<ToDoItem>();
             selectedSortMethod = ToDoItem.CompareByID;
         }
@@ -33,11 +33,7 @@ namespace FUNCalendar.Models
         /* リスト更新 */
         private void UpdateSortedList()
         {
-            SortedToDoList.Clear();
-            foreach (var p in allToDoList)
-            {
-                SortedToDoList.Add(p);
-            }
+            SortedToDoList.Replace(allToDoList);
         }
 
         /* 各種ソート */
@@ -71,6 +67,13 @@ namespace FUNCalendar.Models
         {
             selectedSortMethod = ToDoItem.CompareByPriority;
             Sort();
+        }
+
+        public void Reverse()
+        {
+            IsAscending = !IsAscending;
+            allToDoList.Reverse();
+            UpdateSortedList();
         }
 
         public void UpdateList(List<ToDoItem> list)

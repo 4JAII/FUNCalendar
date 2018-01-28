@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FUNCalendar.Models
 {
-    public class ExtendObservableCollection<T> : ObservableCollection<T>
+    public class ExtendedObservableCollection<T> : ObservableCollection<T>
     {
         public void Replace(IEnumerable<T> collection)
         {
