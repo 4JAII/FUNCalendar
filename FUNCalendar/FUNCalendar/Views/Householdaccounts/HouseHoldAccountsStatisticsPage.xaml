@@ -10,9 +10,15 @@
              Title="家計簿">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon= "icon_add.png"
-                     Text="Add"
-                     Command="{Binding ResistCommand}"/>
+        <ToolbarItem Text="Add"
+                     Command="{Binding ResistCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource"
+                            iOS=""
+                            Android="icon_add.png"
+                            WinPhone="icon_add.png"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,14 +27,13 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <ScrollView BackgroundColor="AliceBlue"
-                    Grid.Row="1"
+        <ScrollView Grid.Row="1"
                     Grid.Column="1"
                     Grid.ColumnSpan="3">
             <Grid>
@@ -81,9 +86,8 @@
                 </Grid>
 
                 <oxy:PlotView Model = "{Binding DisplayPlotModel}"
-                              BackgroundColor="AliceBlue"
-                      Grid.Row="2"
-                      Grid.Column="1"/>
+                              Grid.Row="2"
+                              Grid.Column="1"/>
 
                 <ListView ItemsSource="{Binding DisplayLegend}"
                   HorizontalOptions="Center"
@@ -109,6 +113,7 @@
 
                 </ListView>
 
+
                 <Grid Grid.Row="3"
                   Grid.Column="1"
                   Grid.ColumnSpan="2">
@@ -127,10 +132,9 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Text="支出" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
-                    <Label Text="{Binding DisplayTotalOutgoing.Value}" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="4"/>
+                    <Label Text="支出" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
+                    <Label Text="{Binding DisplayTotalOutgoing.Value}" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="4"/>
                     <ListView ItemsSource="{Binding DisplayTotalOutgoingCollection}"
-                          SeparatorVisibility="None"
                           Grid.Row="1"
                           Grid.Column="1"
                           Grid.ColumnSpan="4">
@@ -153,17 +157,17 @@
                                             <ColumnDefinition Width="3*"/>
                                             <ColumnDefinition Width="3*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding Scategory}" Grid.Row="0" HorizontalOptions="Start" Grid.Column="0" Grid.ColumnSpan="2"/>
-                                        <Label Text="{Binding Ratio}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start"/>
-                                        <Label Text="{Binding Price}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"/>
+                                        <Label Text="{Binding Scategory}" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                        <Label Text="{Binding Ratio}" HorizontalOptions="StartAndExpand" Grid.Row="1" Grid.Column="1" />
+                                        <Label Text="{Binding Price}" HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <Label Text="収入" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
-                    <Label Text="{Binding DisplayTotalIncome.Value}" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="2" Grid.Column="4"/>
+                    <Label Text="収入" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
+                    <Label Text="{Binding DisplayTotalIncome.Value}" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="2" Grid.Column="4"/>
                     <ListView ItemsSource="{Binding DisplayTotalIncomeCollection}"
                           SeparatorVisibility="None"
                           Grid.Row="3"
@@ -189,16 +193,16 @@
                                             <ColumnDefinition Width="3*"/>
                                             <ColumnDefinition Width="3*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding Scategory}" Grid.Row="0" HorizontalOptions="Start" Grid.Column="0" Grid.ColumnSpan="2"/>
-                                        <Label Text="{Binding Ratio}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start"/>
-                                        <Label Text="{Binding Price}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"/>
+                                        <Label Text="{Binding Scategory}"  HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                        <Label Text="{Binding Ratio}" HorizontalOptions="StartAndExpand" Grid.Row="1" Grid.Column="1"/>
+                                        <Label Text="{Binding Price}" HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Label Text="差分" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="4" Grid.Column="0"/>
-                    <Label Text="{Binding DisplayDifference.Value}" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Grid.Row="4" Grid.Column="4"/>
+                    <Label Text="差分" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="4" Grid.Column="0"/>
+                    <Label Text="{Binding DisplayDifference.Value}" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="4" Grid.Column="4"/>
                 </Grid>
             </Grid>
         </ScrollView>

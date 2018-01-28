@@ -19,11 +19,11 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="1"
@@ -77,7 +77,7 @@
 
                             <StackLayout>
                                 <Frame BackgroundColor="White"
-                               OutlineColor="Navy"
+                               OutlineColor="{Binding FrameColor}"
                                Padding="0"
                                VerticalOptions="CenterAndExpand"
                                HorizontalOptions="CenterAndExpand"
@@ -93,6 +93,7 @@
                                             <ColumnDefinition Width="100*"/>
                                             <ColumnDefinition Width="100*"/>
                                             <ColumnDefinition Width="200*"/>
+                                            <ColumnDefinition/>
                                             <ColumnDefinition Width="50*"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
@@ -100,6 +101,7 @@
                                         <Label Text="{Binding Price}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Row="0" Grid.Column="4"/>
                                         <Label Text="{Binding Date}" Grid.Row="1" Grid.Column="1"/>
                                         <Label Text="{Binding CategoryData}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+                                        <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand" HeightRequest="30" Grid.Row="0" Grid.RowSpan="2" Grid.Column="6"/>
                                     </Grid>
                                 </Frame>
                             </StackLayout>

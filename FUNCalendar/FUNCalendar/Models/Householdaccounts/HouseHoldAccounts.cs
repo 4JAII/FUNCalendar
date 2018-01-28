@@ -88,11 +88,12 @@ namespace FUNCalendar.Models
             DisplayHouseholdaccountList = new ObservableCollection<HouseholdAccountsItem>();
             BalanceIcons = new string[]
             {
-                "icon_calendar.png",
-                "icon_todo.png",
-                "icon_wishList.png",
-                "icon_houseHoldAccounts.png" ,
-                "icon_config.png"
+                "icon_wallet.png",
+                "icon_savings.png",
+                "icon_bank.png",
+                "icon_credit.png" ,
+                "icon_train.png",
+                "icon_other.png"
             };
         }
 

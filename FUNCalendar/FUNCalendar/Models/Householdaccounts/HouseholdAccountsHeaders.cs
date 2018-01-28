@@ -133,6 +133,7 @@ namespace FUNCalendar.Models
         貯金,
         銀行,
         クレジットカード,
+        SUICA,
         その他,
         end_of_Stype
     }

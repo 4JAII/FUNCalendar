@@ -114,6 +114,12 @@
     <Content Include="Calendar_HasHouseHoldAccountsList.png" />
     <Content Include="Calendar_HasToDoList.png" />
     <Content Include="Calendar_HasWishList.png" />
+    <Content Include="icon_bank.png" />
+    <Content Include="icon_credit.png" />
+    <Content Include="icon_other.png" />
+    <Content Include="icon_savings.png" />
+    <Content Include="icon_train.png" />
+    <Content Include="icon_wallet.png" />
     <Content Include="icon_wishList.png" />
     <Content Include="icon_add.png" />
     <Content Include="icon_calendar.png" />
