@@ -38,14 +38,14 @@ namespace FUNCalendar.ViewModels
         /* 画面遷移用 */
         public AsyncReactiveCommand NavigationRegisterPageCommand { get; private set; }
         /* 削除用 */
-        public AsyncReactiveCommand<object> DeleteToDoItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> DeleteToDoItemCommand { get; private set; } = new ReactiveCommand();
         /* 編集用 */
-        public AsyncReactiveCommand<object> EditToDoItemCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand<object> EditToDoItemCommand { get; private set; } = new ReactiveCommand();
         /* 購読解除用 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
         /* 完了コマンド */
-        public AsyncReactiveCommand CompleteCommand { get; private set; } = new AsyncReactiveCommand();
+        public ReactiveCommand CompleteCommand { get; private set; } = new ReactiveCommand();
 
         public ToDoListPageViewModel(IToDoList todoList, IStorageService storageService,INavigationService navigationService, IPageDialogService pageDialogService)
         {
@@ -137,7 +137,7 @@ namespace FUNCalendar.ViewModels
                 }
                 else
                 {
-                    if ((obj as VMToDoItem).WishID != -1)/* wishIDを持っているか */
+                    if ((obj as VMToDoItem).WishID != 0)/* wishIDを持っているか */
                     {
                         var result = await _pageDialogService.DisplayAlertAsync("確認", "このアイテムを家計簿に登録しますか？", "はい", "いいえ");
                         if (result)
