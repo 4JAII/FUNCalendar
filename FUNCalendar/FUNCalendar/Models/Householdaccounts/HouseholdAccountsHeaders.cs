@@ -65,7 +65,7 @@ namespace FUNCalendar.Models
         漫画,
         書籍,
         ゲーム,
-        そのた_娯楽費,
+        その他_娯楽費,
         end_of_娯楽費,
 
         start_of_医療費,
@@ -133,6 +133,7 @@ namespace FUNCalendar.Models
         貯金,
         銀行,
         クレジットカード,
+        SUICA,
         その他,
         end_of_Stype
     }

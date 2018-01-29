@@ -75,6 +75,10 @@ namespace FUNCalendar.ViewModels
         public AsyncReactiveCommand RegisterHouseholdaccountsCommand { get; private set; }
         public AsyncReactiveCommand CancelCommand { get; private set; }
 
+        /* 支出・収入の色 */
+        public ReactiveProperty<Color> IncomeColor { get; private set; } = new ReactiveProperty<Color>();
+        public ReactiveProperty<Color> OutgoingColor { get; private set; } = new ReactiveProperty<Color>();
+
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
@@ -87,6 +91,9 @@ namespace FUNCalendar.ViewModels
             this._storageService = storageService;
             this._navigationservice = navigationService;
             this._pageDialogService = pageDialogService;
+
+            IncomeColor.Value = Color.White;
+            OutgoingColor.Value = Color.SkyBlue;
 
             /* Balanceitemの保持 */
             this.Balances = _householdaccount.Balances.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsBalanceItem(x)).AddTo(disposable);
@@ -164,6 +171,8 @@ namespace FUNCalendar.ViewModels
             {
                 IsOutgoing.Value = false;
                 UpdateScategory(false);
+                IncomeColor.Value = Color.SkyBlue;
+                OutgoingColor.Value = Color.White;
             }).AddTo(disposable);
 
             /* 支出ボタンが押されたときの処理 */
@@ -172,6 +181,8 @@ namespace FUNCalendar.ViewModels
             {
                 IsOutgoing.Value = true;
                 UpdateScategory(true);
+                IncomeColor.Value = Color.White;
+                OutgoingColor.Value = Color.SkyBlue;
             }).AddTo(disposable);
 
             /* 登録できるかどうか */
@@ -182,9 +193,8 @@ namespace FUNCalendar.ViewModels
             }.CombineLatestValuesAreAllFalse().ToReactiveProperty<bool>();
             CanRegister.Subscribe(x =>
             {
-                ErrorColor.Value = x ? Color.SkyBlue : Color.Gray;
+                ErrorColor.Value = x ? Color.SkyBlue : Color.DarkGray;
             });
-
 
             /* 登録ボタンが押された時の処理 */
             RegisterHouseholdaccountsCommand = CanRegister.ToAsyncReactiveCommand();
@@ -205,14 +215,7 @@ namespace FUNCalendar.ViewModels
                     var vmitem = new VMHouseholdAccountsItem(ID, Name.Value, Price.Value, Date.Value, scategory, dcategory, storagetype, isoutgoing);
                     var item = VMHouseholdAccountsItem.ToHouseholdaccountsItem(vmitem);
 
-                    /* editbalaceitem */
-                    //_householdaccount.IncrementBalancePrice(_householdaccount.SelectedBalanceItem.Storagetype, _householdaccount.SelectedBalanceItem.Price);
-
-                    //var differenceprice = 
-
                     await _storageService.EditItem(_householdaccount.SelectedItem, item);
-                    /* 追加 */
-                    //await _storageService.EditItem
                 }
                 /* アイテム追加 */
                 else
@@ -226,27 +229,6 @@ namespace FUNCalendar.ViewModels
                     var isoutgoing = IsOutgoing.Value;
                     var item = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
                     await _storageService.AddItem(item);
-
-                    /*
-                    VMHouseholdAccountsBalanceItem vmBItem = null;
-                    HouseholdAccountsBalanceItem Bitem = null;
-                    foreach(VMHouseholdAccountsBalanceItem x in Balances)
-                    {
-                        if((StorageTypes)Enum.Parse(typeof(StorageTypes),x.StorageType) == storagetype)
-                        {
-                            vmBItem = x;
-                            break;
-                        }
-                    }
-
-                    Bitem = VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem()
-
-                    _householdaccount.EditHouseholdAccountsBalanceItem()
-
-                    //_householdaccount.IncrementBalancePrice(item, price):
-
-                    _householdaccount.SetBalance();
-                    */
                 }
                 await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage",navigationparameter);
             });

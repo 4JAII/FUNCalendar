@@ -7,23 +7,21 @@ using SQLite;
 
 namespace FUNCalendar.Models
 {
-    //[Table("HouseholdAccountsBalanceItem")]
     public class HouseholdAccountsBalanceItem
     {
-        //[PrimaryKey, AutoIncrement]
         public int ID { get; set; }
-        public  StorageTypes Storagetype { get; set; }
+        public StorageTypes Storagetype { get; set; }
         public int Price { get; set; }
-        //public Imagesource Image { get; set; }
+        public string Image { get; set; }
 
         public HouseholdAccountsBalanceItem() { }
 
-        public HouseholdAccountsBalanceItem(int id, StorageTypes storagetype, int price /* stirng image */)
+        public HouseholdAccountsBalanceItem(StorageTypes storagetype, int price, string image)
         {
-            this.ID = id;
+            ID = 0;
             this.Storagetype = storagetype;
             this.Price = price;
-            //ImageSource = image;
+            this.Image = image;
         }
 
     }

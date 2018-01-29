@@ -4,12 +4,60 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.HouseholdAccountsEditBalancePage"
-             Title="{Binding BalanceTitle}">
-    <StackLayout>
-        <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="値段を入力"/>
-        <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterHouseholdAccountsBalanceCommand}" />
-        <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}"  />
+             Title="{Binding Title}">
 
-    </StackLayout>
-
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0"
+              Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackLayout Orientation="Horizontal"
+                Grid.Row="0"
+                Grid.Column="0">
+                <Image Source="{Binding Image}"
+                       VerticalOptions="CenterAndExpand" 
+                       HeightRequest="50"/>
+                <Label Text="{Binding StoragetypeName}"
+                       FontSize="Large"
+                       VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+            <Entry Text="{Binding Price.Value}"
+               FontSize="Large" 
+               Placeholder="金額を入力"
+               Margin="0,10,0,10"
+               Grid.Row="1"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"/>
+            <Button Text="変更"
+                BackgroundColor="{Binding ErrorColor.Value}"
+                IsEnabled="{Binding CanRegister.Value}"
+                Command="{Binding RegisterHouseholdAccountsBalanceCommand}"
+                Margin="0,10,0,10"
+                Grid.Row="2"
+                Grid.Column="0"/>
+            <Button Text="キャンセル"
+                BackgroundColor="DarkGray"
+                Command="{Binding CancelCommand}"
+                Margin="0,10,0,10"
+                Grid.Row="2"
+                Grid.Column="1"/>
+        </Grid>
+    </Grid>
 </ContentPage>

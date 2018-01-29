@@ -71,6 +71,7 @@ namespace FUNCalendar.Models
             get { return this._totalbalance; }
             set { this.SetProperty(ref this._totalbalance, value); }
         }
+        private string[] BalanceIcons;
 
         private static bool IsInitialized = false;
 
@@ -81,50 +82,22 @@ namespace FUNCalendar.Models
             SIncomes = new ObservableCollection<HouseholdAccountsScStatisticsItem>();
             SOutgoings = new ObservableCollection<HouseholdAccountsScStatisticsItem>();
             PieSlice = new ObservableCollection<HouseholdAccountsPieSliceItem>();
-            Balances = new ObservableCollection<HouseholdAccountsBalanceItem>()
-            {
-                new HouseholdAccountsBalanceItem
-                {
-                    ID = 0,
-                    Storagetype = StorageTypes.財布,
-                    Price = 0,
-                    //Image = Imagesource.FromFile(".png")
-                },
-                new HouseholdAccountsBalanceItem
-                {
-                    ID = 1,
-                    Storagetype = StorageTypes.クレジットカード,
-                    Price = 0,
-                    //Image = Imagesource.FromFile(".png")
-                },
-                new HouseholdAccountsBalanceItem
-                {
-                    ID = 2,
-                    Storagetype = StorageTypes.貯金,
-                    Price = 0,
-                    //Image = Imagesource.FromFile(".png")
-                },
-                new HouseholdAccountsBalanceItem
-                {
-                    ID = 3,
-                    Storagetype = StorageTypes.銀行,
-                    Price = 0,
-                    //Image = Imagesource.FromFile(".png")
-                },
-                new HouseholdAccountsBalanceItem
-                {
-                    ID = 4,
-                    Storagetype = StorageTypes.その他,
-                    Price = 0,
-                    //Image = Imagesource.FromFile(".png")
-                }
-            };
+            Balances = new ObservableCollection<HouseholdAccountsBalanceItem>();
             Legend = new ObservableCollection<HouseholdAccountsLegendItem>();
             ScategoryItems = new ObservableCollection<HouseholdAccountsDcStatisticsItem>();
             DisplayHouseholdaccountList = new ObservableCollection<HouseholdAccountsItem>();
+            BalanceIcons = new string[]
+            {
+                "icon_wallet.png",
+                "icon_savings.png",
+                "icon_bank.png",
+                "icon_credit.png" ,
+                "icon_train.png",
+                "icon_other.png"
+            };
         }
 
-        
+
 
         /* リスト更新 */
         public void UpdateList(List<HouseholdAccountsItem> list)
@@ -159,7 +132,6 @@ namespace FUNCalendar.Models
         {
             //IncrementBalancePrice(deleteitem, deleteitem.Price);
             allHouseHoldAccounts.RemoveAll(item => item.ID == deleteitem.ID);
-            SetBalance();
         }
 
         /* 編集するHouseholdAccountsItemを設定 */
@@ -179,59 +151,6 @@ namespace FUNCalendar.Models
         {
             allHouseHoldAccounts.RemoveAll(item => item.ID == deleteItem.ID);
             AddHouseholdAccountsItem(additem);
-            SetBalance();
-        }
-
-        /* 残高の追加 */
-        public void AddHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem additem)
-        {
-            Balances.Add(additem);
-        }
-
-        /* 残高の編集 */
-        public void EditHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem deleteitem, HouseholdAccountsBalanceItem additem)
-        {
-            Balances.Remove(deleteitem);
-            AddHouseholdAccountsBalanceItem(additem);
-            SetBalance();
-        }
-
-        /* 残高を編集するメソッド */
-        public void EditHouseholdAccountsBalanceItem(HouseholdAccountsBalanceItem item, int price, bool isoutgoing, bool isincrement)
-        {
-            if (isoutgoing)
-            {
-                price = -price;
-            }
-
-            if (isincrement)
-            { 
-                foreach (HouseholdAccountsBalanceItem n in Balances)
-                {
-                    if (n.Storagetype == item.Storagetype)
-                        n.Price += price;
-                }
-            }
-            else
-            {
-                foreach (HouseholdAccountsBalanceItem n in Balances)
-                {
-                    if (n.Storagetype == item.Storagetype)
-                        n.Price = price;
-                }
-            }
-        }
-
-        /* 残高の増減を行うメソッド */
-        public void IncrementBalancePrice(HouseholdAccountsBalanceItem item, int price)
-        {
-            foreach(HouseholdAccountsBalanceItem n in Balances)
-            {
-                if (n.Storagetype == item.Storagetype)
-                {
-                    n.Price += price;
-                }
-            }
         }
 
 
@@ -432,15 +351,40 @@ namespace FUNCalendar.Models
             }
         }
 
-        /* 残高を表示するためのメソッド(実質合計残高を求めるだけ) */
+        /* 残高を表示するためのメソッド */
         public void SetBalance()
         {
+            int i, j;
+            Balances.Clear();
+
+            for (i = (int)StorageTypes.start_of_Stype + 1, j = 0; i < (int)StorageTypes.end_of_Stype; i++, j++)
+            {
+                var storagetype = (StorageTypes)Enum.ToObject(typeof(StorageTypes), i);
+                var price = CalucStorageTypesTotal(storagetype);
+                var image = BalanceIcons[j];
+                var item = new HouseholdAccountsBalanceItem(storagetype, price, image);
+                Balances.Add(item);
+            }
+
+            /* 合計を算出 */
             int sum = 0;
-            foreach (HouseholdAccountsBalanceItem n in Balances)
-                sum += n.Price;
-            TotalBalance = String.Format("{0}円", sum);
+            foreach (HouseholdAccountsBalanceItem x in Balances)
+            {
+                sum += x.Price;
+            }
+            TotalBalance = string.Format("{0}円", sum);
         }
 
+        /* 指定された日にちの履歴を表示するためのメソッド */
+        public void SetHistoryForCalendar(DateTime date)
+        {
+            allHouseHoldAccounts.Sort(HouseholdAccountsItem.CompareByDate);
+            foreach (HouseholdAccountsItem x in allHouseHoldAccounts)
+            {
+                if (x.Date == date)
+                    DisplayHouseholdaccountList.Add(x);
+            }
+        }
 
 
         /* 全体の支出・収入の合計を計算 */
@@ -640,6 +584,28 @@ namespace FUNCalendar.Models
             }
 
         }
+
+        /* お金の所在地ごとの合計を計算 */
+        public int CalucStorageTypesTotal(StorageTypes storage)
+        {
+            int sum = 0;
+            foreach (HouseholdAccountsItem x in allHouseHoldAccounts)
+            {
+                if (x.StorageType == storage)
+                {
+                    if (x.IsOutGoings)
+                    {
+                        sum -= x.Price;
+                    }
+                    else
+                    {
+                        sum += x.Price;
+                    }
+                }
+            }
+            return sum;
+        }
+
 
 
         /* ScategoryからDCategoryの範囲を求めるメソッド */

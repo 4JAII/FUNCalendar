@@ -19,28 +19,31 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="1"
                     Grid.Column="1"
                     Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="35"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <Label Text="総残高" Grid.Row="0"
+            <Label Text="総残高" 
+                   FontSize="Small"
+                   Grid.Row="0"
                    Grid.Column="0"/>
             <Label Text="{Binding DisplayTotalBalance.Value}"
+                   FontSize="Small"
                    Grid.Row="0"
                    Grid.Column="1"/>
             <ListView ItemsSource="{Binding DisplayBalances}"
@@ -53,7 +56,7 @@
                             <ViewCell.ContextActions>
                                 <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference HouseholdAccountsBalancePage}}" CommandParameter="{Binding}"/>
                             </ViewCell.ContextActions>
-                            <Grid>
+                            <Grid Margin="10,10,10,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
@@ -66,8 +69,9 @@
                                     <ColumnDefinition Width="200*"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding StorageType}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3"/>
-                                <Label Text="{Binding Price}" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Row="0" Grid.Column="5"/>
+                                <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand" HeightRequest="30" Grid.Row="0" Grid.Column="1"/>
+                                <Label Text="{Binding StorageType}" FontSize="Small" VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3"/>
+                                <Label Text="{Binding Price}" FontSize="Small" VerticalOptions="FillAndExpand" HorizontalOptions="EndAndExpand" Grid.Row="0" Grid.Column="5"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
