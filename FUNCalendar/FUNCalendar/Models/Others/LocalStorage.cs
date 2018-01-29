@@ -24,7 +24,6 @@ namespace FUNCalendar.Models
         public int LastAddedWishItemID { get; private set; }
         public int LastAddedToDoItemID { get; private set; }
         public int LastAddedHouseholdAccountsItemID { get; private set; }
-        //public int LastAddedBalanceItemID { get; private set; }
 
         private async Task CreateConnection()
         {
@@ -33,12 +32,18 @@ namespace FUNCalendar.Models
             SQLiteAsyncConnection connection;
             rootFolder = FileSystem.Current.LocalStorage;
             fileReadWriteService = new FileReadWriteService();
-
-            var result = await fileReadWriteService.ExistsAsync(databaseFileName).ConfigureAwait(false);
-            if (!result)
+            try
             {
-                await fileReadWriteService.CreateFileAsync(databaseFileName);
-                file = await fileReadWriteService.ReadFileAsync(databaseFileName);
+                var result = await fileReadWriteService.ExistsAsync(databaseFileName);
+                if (!result)
+                {
+                    await fileReadWriteService.CreateFileAsync(databaseFileName);
+                    file = await fileReadWriteService.ReadFileAsync(databaseFileName);
+                }
+            }
+            catch
+            {
+
             }
             file = await fileReadWriteService.ReadFileAsync(databaseFileName);
             connection = new SQLiteAsyncConnection(file.Path);
@@ -81,23 +86,6 @@ namespace FUNCalendar.Models
             return true;
         }
 
-
-        /*
-        public async Task<bool> AddItem(HouseholdAccountsBalanceItem item)
-        {
-            try
-            {
-                await CreateConnection();
-                await asyncConnection.InsertAsync(item);
-            }
-            catch
-            {
-                return false;
-            }
-            LastAddedBalanceItemID = item.ID;
-            return true;
-        }
-        */
 
 
         public async Task<bool> AddItem(HouseholdAccountsItem item)
@@ -191,22 +179,6 @@ namespace FUNCalendar.Models
             return true;
         }
 
-        /*
-        public async Task<bool> EditItem(HouseholdAccountsBalanceItem item)
-        {
-            try
-            {
-                await CreateConnection();
-                await asyncConnection.UpdateAsync(item);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
-
-        */
         public async Task<bool> EditItem(HouseholdAccountsItem item)
         {
             try
@@ -240,16 +212,6 @@ namespace FUNCalendar.Models
         }
 
 
-        /*
-        public async Task<List<HouseholdAccountsBalanceItem>> ReadBalance()
-        {
-            await CreateConnection();
-            var temp = await asyncConnection.Table<HouseholdAccountsBalanceItem>().ToListAsync();
-            if (temp == null) temp = new List<HouseholdAccountsBalanceItem>();
-            return temp;
-        }
-
-        */
         public async Task<List<HouseholdAccountsItem>> ReadHouseholdAccounts()
         {
             await CreateConnection();

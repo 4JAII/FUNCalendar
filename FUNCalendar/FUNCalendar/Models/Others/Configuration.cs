@@ -51,10 +51,17 @@ namespace FUNCalendar.Models
             bool isExist = await fileReadWriteService.ExistsAsync(configFileName);
             if (!isExist)
             {
-                await fileReadWriteService.CreateFileAsync(configFileName);
-                var temp = new Configuration();
-                string config = JsonConvert.SerializeObject(temp);
-                await fileReadWriteService.WriteStringFileAsync(configFileName, config);
+                try
+                {
+                    await fileReadWriteService.CreateFileAsync(configFileName);
+                    var temp = new Configuration();
+                    string config = JsonConvert.SerializeObject(temp);
+                    await fileReadWriteService.WriteStringFileAsync(configFileName, config);
+                }
+                catch
+                {
+
+                }
             }
             string configJson = await fileReadWriteService.ReadStringFileAsync(configFileName);
             Configuration configuration = JsonConvert.DeserializeObject<Configuration>(configJson);

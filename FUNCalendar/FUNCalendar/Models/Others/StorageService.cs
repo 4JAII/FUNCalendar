@@ -241,30 +241,6 @@ namespace FUNCalendar.Models
             HouseholdAccounts.EditHouseholdAccountsItem(deleteItem, addItem);
         }
 
-        /*
-        public async Task EditItem(HouseholdAccountsBalanceItem deleteItem,HouseholdAccountsBalanceItem addItem)
-        {
-            if (!isInitialized)
-            {
-                HasError = true;
-                return;
-            }
-            HasError = !await storage.EditItem(addItem);
-
-           
-        }
-        
-         public async Task EditItem(HouseholdAccountsBalanceItem item, int price)
-         {
-            if (!isInitialized)
-            {
-                HasError = true;
-                return;
-            }
-            HasError = !await storage.EditItem(item);
-            HouseholdAccounts.EditHouseholdAccountsBalance(item, price);
-         }
-         */
 
         public async Task ReadFile()
         {

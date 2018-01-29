@@ -224,34 +224,6 @@ namespace FUNCalendar.Models
                 return new List<HouseholdAccountsItem>();
             }
         }
-        /*
-        public async Task<bool> EditItem(HouseholdAccountsBalanceItem item)
-        {
-            int result;
-            try
-            {
-                result = await gateway.PutBalanceItemAsync(item);
-            }
-            catch
-            {
-                return false;
-            }
-            if(result !=(int)HttpStatusCode.OK)
-                return false;
-            return true;
-        }
         
-        public async Task<List<HouseholdAccountsBalanceItem>> ReadBalance()
-        {
-            try
-            {
-                return await gateway.GetBalanceAsync();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-        */
     }
 }
