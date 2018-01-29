@@ -29,6 +29,7 @@ namespace FUNCalendar.ViewModels
         private IHouseholdAccounts _householdAccounts;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
+        private IStorageService _storageService;
 
         /* Date詳細画面用 */
         public ReactiveProperty<DateTime> DateData { get; private set; } = new ReactiveProperty<DateTime>();
@@ -64,7 +65,7 @@ namespace FUNCalendar.ViewModels
         /* 廃棄 */
         private CompositeDisposable Disposable { get; } = new CompositeDisposable();
 
-        public CalendarDetailPageViewModel(ICalendar calendar, IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts, INavigationService navigationService, IPageDialogService pageDialogService)
+        public CalendarDetailPageViewModel(ICalendar calendar, IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts, INavigationService navigationService, IPageDialogService pageDialogService, IStorageService storageService)
         {
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._calendar = calendar;
@@ -73,6 +74,7 @@ namespace FUNCalendar.ViewModels
             this._householdAccounts = householdAccounts;
             this._navigationService = navigationService;
             this._pageDialogService = pageDialogService;
+            this._storageService = storageService;
 
             BackCommand = new ReactiveCommand();
             ToDoListOpenCloseCommand = new ReactiveCommand();
@@ -89,14 +91,14 @@ namespace FUNCalendar.ViewModels
 
             DisplayWishList = _wishList.WishListForCalendar.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(Disposable);
             DisplayToDoList = _todoList.ToDoListForCalendar.ToReadOnlyReactiveCollection(x => new VMToDoItem(x)).AddTo(Disposable);
-            //DisplayHouseHoldAccountsList = _householdAccounts.HouseHoldAccountsListForCalendar.ToReadOnlyReactiveCollection(x => new VMHouseHoldAccountsItem(x)).AddTo(Disposable);
+            DisplayHouseHoldAccountsList = _householdAccounts.HouseholdAccountsListForCalendar.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsItem(x)).AddTo(Disposable);
 
             /* DatePicker */
             DateData.Subscribe( _ =>
             {
                 _wishList.ClearWishListForCalendar();
                 _todoList.ClearToDoListForCalendar();
-                //_houseHoldAccountsList.ClearHouseHoldAcountsListForCalendar();
+                _householdAccounts.ClearHouseholdAccountsListForCalendar();
                 WishListHeight.Value = 1;
                 ToDoListHeight.Value = 1;
                 HouseholdAccountsListHeight.Value = 1;
@@ -142,21 +144,20 @@ namespace FUNCalendar.ViewModels
             });
 
             HouseHoldAccountsListOpenCloseCommand.Subscribe(() =>
-            {
-                /*
-                if (householdAccountsOpen)
+            { 
+                if (householdAccountsListOpen)
                 {
-                    _houseHoldAccountsList.ClearHouseHoldAccountsListForCalendar();
+                    _householdAccounts.ClearHouseholdAccountsListForCalendar();
                     HouseholdAccountsListHeight.Value = 1;
-                    householdAccountsOpen = false;
+                    householdAccountsListOpen = false;
                 }
                 else
                 {
-                    _houseHoldAccountsList.SetHouseHoldAccountsListForCalendar(DateData.Value);
-                    HouseholdAccountsListHeight.Value = (_HouseholdAccountsList.HouseholdAccountsListForCalendar.Count + 1) * 60;
-                    householdAccountsOpen = true;
+                    _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
+                    HouseholdAccountsListHeight.Value = (_householdAccounts.HouseholdAccountsListForCalendar.Count + 1) * 60;
+                    householdAccountsListOpen = true;
                 }
-                */
+                
             });
 
             /* アイテム編集処理 */
@@ -170,11 +171,17 @@ namespace FUNCalendar.ViewModels
                 _wishList.SetDisplayWishItem(VMWishItem.ToWishItem(obj as VMWishItem));
                 await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
             });
-            /*EditHouseHoldAccountsItemCommand.Subscribe(async (obj) =>
+            EditHouseholdAccountsItemCommand.Subscribe(async (obj) =>
             {
-                _houseHoldAccountsList.SetDisplayHouseHoldAccountsItem(VMHouseHoldAccountsItem.ToHouseHoldAccountsItem(obj as VMHouseHoldAccountsItem));
-                await _navigationService.NavigateAsync($"/NavigationPage/HouseHoldAccountsListRegisterPage?CanEdit=T");
-            });*/
+                _householdAccounts.SetHouseholdAccountsItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
+                var navigationitem = new HouseholdAccountsNavigationItem(DateData.Value);
+                var navigationparameter = new NavigationParameters()
+                {
+                    {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
+                };
+                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsHistoryPage");
+                await _navigationService.NavigateAsync("/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
+            });
 
             /* アイテム削除処理 */
             /*DeleteToDoItemCommand.Subscribe(async (obj) =>
@@ -197,16 +204,15 @@ namespace FUNCalendar.ViewModels
                     await localStorage.DeleteItem(wishItem);
                 }
             });*/
-            /*DeleteHouseholdAccountsItemCommand.Subscribe(async (obj) =>
+            DeleteHouseholdAccountsItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
-                    var HouseholdAccountsItem = VMHouseholdAccountsItem.ToHouseholdAccountsItem(obj as VMHouseholdAccountsItem);
-                    _householdAccountsList.Remove(householdAccountsItem);
-                    await localStorage.DeleteItem(householdAccountsItem);
+                    await _storageService.DeleteItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
+                    _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
                 }
-            });*/
+            });
 
             /* 画面遷移設定 */
             NavigationRegisterPageCommand.Subscribe(async () =>
@@ -225,7 +231,9 @@ namespace FUNCalendar.ViewModels
                         await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsListRegisterPage", navigationParameters);
+                        var navigationitem = new HouseholdAccountsNavigationItem(DateTime.Today);
+                        navigationParameters.Add(HouseholdAccountsRegisterPageViewModel.CalendarKey, navigationitem);
+                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsRegisterPage", navigationParameters);
                         break;
                 }
             });

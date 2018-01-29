@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using OxyPlot;
 using OxyPlot.Xamarin.Forms;
 using OxyPlot.Series;
-
+using System.Linq;
 
 namespace FUNCalendar.Models
 {
@@ -23,7 +23,8 @@ namespace FUNCalendar.Models
         private int StartPoint = 0;
         private int EndPoint = 0;
 
-
+        /* カレンダー用 アイテムの有無 */
+        public bool DateWithHouseholdAccounts { get; private set; }
 
         /* グラフ */
         public ObservableCollection<HouseholdAccountsPieSliceItem> PieSlice { get; private set; }
@@ -73,6 +74,21 @@ namespace FUNCalendar.Models
         }
         private string[] BalanceIcons;
 
+        /* カレンダー用 */
+        public ObservableCollection<HouseholdAccountsItem> HouseholdAccountsListForCalendar { get; private set; }
+        private string _incomeForCalendar;
+        public string IncomeForCalendar
+        {
+            get { return this._incomeForCalendar; }
+            set { this.SetProperty(ref this._incomeForCalendar, value); }
+        }
+        private string _outgoingForCalendar;
+        public string OutgoingForCalendar
+        {
+            get { return this._outgoingForCalendar; }
+            set { this.SetProperty(ref this._outgoingForCalendar, value); }
+        }
+
         private static bool IsInitialized = false;
 
         /* コンストラクタ */
@@ -95,6 +111,7 @@ namespace FUNCalendar.Models
                 "icon_train.png",
                 "icon_other.png"
             };
+            HouseholdAccountsListForCalendar = new ObservableCollection<HouseholdAccountsItem>();
         }
 
 
@@ -102,24 +119,16 @@ namespace FUNCalendar.Models
         /* リスト更新 */
         public void UpdateList(List<HouseholdAccountsItem> list)
         {
-            //if (IsInitialized) return;
+            if (IsInitialized) return;
             this.allHouseHoldAccounts = list;
-            //IsInitialized = true;
+            IsInitialized = true;
         }
 
-        /* アイテム追加 
-        public void AddHouseholdAccountsItem(string name, int price, DateTime date, DCategorys detailcategory, SCategorys summarycategory, StorageTypes storagetype, bool isoutgoings)
+        /* カレンダー用　指定された日にちのアイテムの有無を判定 */
+        public void SetDateWithHouseholdAccounts(DateTime date)
         {
-            HouseholdAccountsItem item = new HouseholdAccountsItem(IDCount, name, price, date, detailcategory, summarycategory, storagetype, isoutgoings);
-            IDCount++;
-            allHouseHoldAccounts.Add(item);
-            if (isoutgoings)
-            {
-                price = -price;
-            }
-            IncrementBalancePrice(storagetype, price);
-            SetBalance();
-        }*/
+            DateWithHouseholdAccounts = allHouseHoldAccounts.Where(x => x.Date == date).Any();
+        }
 
         /* アイテム追加 */
         public void AddHouseholdAccountsItem(HouseholdAccountsItem item)
@@ -375,15 +384,22 @@ namespace FUNCalendar.Models
             TotalBalance = string.Format("{0}円", sum);
         }
 
-        /* 指定された日にちの履歴を表示するためのメソッド */
-        public void SetHistoryForCalendar(DateTime date)
+        /* カレンダー用 指定された日にちの履歴を表示するためのメソッド */
+        public void SetHouseholdAccountsListForCalendar(DateTime date)
         {
             allHouseHoldAccounts.Sort(HouseholdAccountsItem.CompareByDate);
             foreach (HouseholdAccountsItem x in allHouseHoldAccounts)
             {
                 if (x.Date == date)
-                    DisplayHouseholdaccountList.Add(x);
+                    HouseholdAccountsListForCalendar.Add(x);
             }
+        }
+
+        /* カレンダー用　指定された月の収支を求めるメソッド */
+        public void SetMonthBalance(DateTime date)
+        {
+            IncomeForCalendar = string.Format("{0}円", CalucAllBalance(Range.Month, date, false));
+            OutgoingForCalendar = string.Format("{0}円", CalucAllBalance(Range.Month, date, true));
         }
 
 
@@ -606,7 +622,11 @@ namespace FUNCalendar.Models
             return sum;
         }
 
-
+        /* カレンダー用 HouseholdAccountsListForCalendarをClear */
+        public void ClearHouseholdAccountsListForCalendar()
+        {
+            HouseholdAccountsListForCalendar.Clear();
+        }
 
         /* ScategoryからDCategoryの範囲を求めるメソッド */
         public void ScToDcRange(SCategorys sc)

@@ -33,6 +33,7 @@ namespace FUNCalendar.ViewModels
         /* 正しい遷移か確認するためのkey */
         public static readonly string InputKey = "InputKey";
         public static readonly string EditKey = "EditKey";
+        public static readonly string CalendarKey = "CalendarKey";
 
         /* 遷移されたときのデータ格納用変数 */
         public HouseholdAccountsNavigationItem NavigatedItem { get; set; }
@@ -308,6 +309,14 @@ namespace FUNCalendar.ViewModels
                         break;
                     }
                 }
+            }
+
+            /* カレンダーのアイテム追加ボタンで遷移してきた時の処理 */
+            else if (parameters.ContainsKey(CalendarKey))
+            {
+                NavigatedItem = (HouseholdAccountsNavigationItem)parameters[CalendarKey];
+                this.CurrentDate = NavigatedItem.CurrentDate;
+                Date.Value = CurrentDate;
             }
         }
 

@@ -61,6 +61,10 @@ namespace FUNCalendar.ViewModels
             get { return this.calendarMonth; }
             set { this.SetProperty(ref this.calendarMonth, value); }
         }
+        /* 一か月の収入の合計 */
+        public ReactiveProperty<string> MonthIncome { get; private set; } = new ReactiveProperty<string>();
+        /* 一か月の支出の合計 */
+        public ReactiveProperty<string> MonthOutgoing { get; private set; } = new ReactiveProperty<string>();
 
         public ReactiveProperty<bool> IsEndRefreshing { get; private set; } = new ReactiveProperty<bool>();
 
@@ -105,6 +109,10 @@ namespace FUNCalendar.ViewModels
             CurrentMonth = string.Format("{0}月", DateTime.Now.ToString("%M"));
             CurrentDate = string.Format("{0}日", DateTime.Now.ToString("%d"));
 
+            MonthIncome = _householdAccounts.ObserveProperty(h => h.IncomeForCalendar).Select(i => string.Format("収入：{0}",i)).ToReactiveProperty().AddTo(Disposable);
+            MonthOutgoing = _householdAccounts.ObserveProperty(h => h.OutgoingForCalendar).Select(i => string.Format("支出：{0}",i)).ToReactiveProperty().AddTo(Disposable);
+            _householdAccounts.SetMonthBalance(DateTime.Today);
+
             DisplayCalendar = _calendar.ListedAMonthDateData.ToReadOnlyReactiveCollection(x => new VMDate(x)).AddTo(Disposable);
             IsEndRefreshing.Value = true;
             DisplayCalendar.ObserveAddChanged().Buffer(42).Subscribe(_ =>
@@ -125,6 +133,7 @@ namespace FUNCalendar.ViewModels
                 IsEndRefreshing.Value = false;
                 _loadingMessage.Show("読み込み中");
                 _calendar.BackPrevMonth();
+                //_householdAccounts.SetMonthBalance( );
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
                 CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
             });
@@ -135,6 +144,7 @@ namespace FUNCalendar.ViewModels
                 IsEndRefreshing.Value = false;
                 _loadingMessage.Show("読み込み中");
                 _calendar.GoNextMonth();
+                //_householdAccounts.SetMonthBalance( );
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
                 CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
             });
@@ -153,6 +163,8 @@ namespace FUNCalendar.ViewModels
                         await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
+                        var navigationitem = new HouseholdAccountsNavigationItem(DateTime.Today);
+                        navigationParameters.Add(HouseholdAccountsRegisterPageViewModel.CalendarKey, navigationitem);
                         await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsRegisterPage", navigationParameters);
                         break;
                 }

@@ -39,10 +39,10 @@ namespace FUNCalendar.Models
         void SetBalance();          //残高を表示するためのメソッド
 
         /* 履歴画面用 */
-        ObservableCollection<HouseholdAccountsItem> DisplayHouseholdaccountList { get; }        //表示する履歴のリスト       カレンダーでも使えます。
+        ObservableCollection<HouseholdAccountsItem> DisplayHouseholdaccountList { get; }        //表示する履歴のリスト
         void SetAllHistory(Range r, DateTime date);                                             //全履歴を表示するためのメソッド
         void SetDCategoryHistory(Range r, DateTime date, DCategorys dc);                        //指定された詳細カテゴリーの履歴を表示するためのメソッド
-        void SetHistoryForCalendar(DateTime date);                                              //指定された日にちの履歴を表示するためのメソッド
+        
 
 
         /* アイテム追加・編集・削除用 */
@@ -57,6 +57,16 @@ namespace FUNCalendar.Models
         /* その他 */
         int ScToDcStart(SCategorys sc);     //ScategoryからDcategoryの範囲を求めるメソッド
         int ScToDcEnd(SCategorys sc);       //同上
+
+        /* カレンダー用 */
+        ObservableCollection<HouseholdAccountsItem> HouseholdAccountsListForCalendar { get; }   //指定された日にちの履歴を格納
+        bool DateWithHouseholdAccounts { get; }                  //カレンダー用　指定された日にちのアイテムの有無を格納
+        string IncomeForCalendar { get; }                        //指定された月の収入
+        string OutgoingForCalendar { get; }                      //指定された月の支出
+        void SetDateWithHouseholdAccounts(DateTime date);        //カレンダー用　指定された日にちのアイテムの有無を判定するメソッド
+        void SetHouseholdAccountsListForCalendar(DateTime date);        //指定された日にちの履歴を表示するためのメソッド
+        void ClearHouseholdAccountsListForCalendar();                   //HouseholdAccountsListを初期化するメソッド
+        void SetMonthBalance(DateTime date);            //カレンダー用 指定された月の収支を求めるメソッド
 
 
         void UpdateList(List<HouseholdAccountsItem> list);          //リストのアップデート

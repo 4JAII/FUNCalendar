@@ -19,6 +19,10 @@ namespace FUNCalendar.ViewModels
         public DateTime CurrentDate { get; set; }
         public Range CurrentRange { get; set; }
 
+        public HouseholdAccountsNavigationItem(DateTime date)
+        {
+            this.CurrentDate = date;
+        }
 
         public HouseholdAccountsNavigationItem(DateTime date, Range range)
         {

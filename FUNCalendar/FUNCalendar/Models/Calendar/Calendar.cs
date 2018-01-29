@@ -147,7 +147,8 @@ namespace FUNCalendar.Models
                 x.HasWishList = wishList.DateWithWishList;
                 todoList.SetDateWithToDoList(x.DateData);
                 x.HasToDoList = todoList.DateWithToDoList;
-                /* 家計簿でカレンダーに表示するデータは */
+                householdAccounts.SetDateWithHouseholdAccounts(x.DateData);
+                x.HasHouseHoldAccountsList = householdAccounts.DateWithHouseholdAccounts;
             }
         }
 
