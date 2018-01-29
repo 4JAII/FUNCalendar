@@ -36,15 +36,28 @@ namespace FUNCalendar.ViewModels
 
         public DateTime CurrentDate { get; private set; }
         public Range CurrentRange { get; private set; }
-        private StorageTypes _currentstoragetype;
-        public StorageTypes CurrentStoragetype
-        {
-            get { return this._currentstoragetype; }
-            set { this.SetProperty(ref this._currentstoragetype, value); }
-        }
+        public StorageTypes CurrentStoragetype;
         public VMHouseholdAccountsBalanceItem CurrentBalanceItem { get; private set; }
         public int PreviousPrice { get; set; }
 
+        private string _title;
+        public string Title
+        {
+            get { return this._title; }
+            set { this.SetProperty(ref this._title, value); }
+        }
+        private string _storagetypeName;
+        public string StoragetypeName
+        {
+            get { return this._storagetypeName; }
+            set { this.SetProperty(ref this._storagetypeName, value); }
+        }
+        private ImageSource _image;
+        public ImageSource Image
+        {
+            get { return this._image; }
+            set { this.SetProperty(ref this._image, value); }
+        }
         public int ID { get; private set; }
         [Required(ErrorMessage = "金額を入力してください")]
         [RegularExpression("-?[0-9]+")]
@@ -142,6 +155,14 @@ namespace FUNCalendar.ViewModels
                 this.CurrentDate = NavigatedItem.CurrentDate;
                 this.CurrentRange = NavigatedItem.CurrentRange;
                 this.CurrentStoragetype = NavigatedItem.CurrentStoragetype;
+                this.Title = string.Format("{0}の残高の編集", CurrentStoragetype);
+                this.StoragetypeName = Enum.GetName(typeof(StorageTypes), CurrentStoragetype);
+                this.Image= (CurrentStoragetype == StorageTypes.財布) ? ImageSource.FromFile("icon_wallet.png") :
+                (CurrentStoragetype == StorageTypes.貯金) ? ImageSource.FromFile("icon_savings.png") :
+                (CurrentStoragetype == StorageTypes.銀行) ? ImageSource.FromFile("icon_bank.png") :
+                (CurrentStoragetype == StorageTypes.クレジットカード) ? ImageSource.FromFile("icon_credit.png") :
+                (CurrentStoragetype == StorageTypes.SUICA) ? ImageSource.FromFile("icon_train.png") :
+                (CurrentStoragetype == StorageTypes.その他) ? ImageSource.FromFile("icon_other.png") : ImageSource.FromFile("");
                 Regex re = new Regex("円");
                 Price.Value = re.Replace(NavigatedItem.Price, "");
                 PreviousPrice = int.Parse(re.Replace(NavigatedItem.Price,""));

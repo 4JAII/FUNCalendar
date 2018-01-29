@@ -27,5 +27,6 @@ namespace FUNCalendar.Services
         Task EditItem(HouseholdAccountsItem deleteItem,HouseholdAccountsItem addItem);
         Task ReadFile();
         Task CompleteToDo(ToDoItem newTodoItem, bool hasId, bool needsRegister, SCategorys Scategory, DCategorys Dcategory, StorageTypes storagetype);
+        Task BoughtWishItem(WishItem newWishItem, bool hasId, bool needsRegister, SCategorys Scategory, DCategorys Dcategory, StorageTypes Storagetype);
     }
 }

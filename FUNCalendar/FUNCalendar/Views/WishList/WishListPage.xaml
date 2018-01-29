@@ -86,6 +86,7 @@
                             <!-- 長押しのやつ -->
                             <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference WishListPage}}" CommandParameter="{Binding .}"/>
                             <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference WishListPage}}" CommandParameter="{Binding .}"  />
+                            <MenuItem Text="購入完了" IsDestructive="True" Command="{Binding Path=BindingContext.BoughtCommand, Source={x:Reference WishListPage}}" CommandParameter="{Binding .}"  />
                         </ViewCell.ContextActions>
                         <Grid>
                             <Grid.RowDefinitions>

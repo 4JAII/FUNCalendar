@@ -335,5 +335,60 @@ namespace FUNCalendar.Models
 
             }
         }
+
+        public async Task BoughtWishItem(WishItem newWishItem, bool hasId, bool needsRegister, SCategorys Scategory, DCategorys Dcategory, StorageTypes Storagetype)
+        {
+            HouseholdAccountsItem newHouseholdAccountsItem;
+            var PreviousWishItem = newWishItem;
+
+            /* WishItemを購入済みにする */
+            newWishItem.IsBought = true;
+            if (!isInitialized)
+            {
+                HasError = true;
+                return;
+            }
+            HasError = !await storage.EditItem(newWishItem);
+            WishList.EditWishItem(PreviousWishItem, newWishItem);
+
+            /* 対応するToDoItemを完了にする */
+            if (hasId)
+            {
+                var PreviousTodoItem = ToDoList.SortedToDoList.First(x => x.ID == newWishItem.ID);
+                var newTodoItem = PreviousTodoItem;
+                newTodoItem.IsCompleted = true;
+
+                if (!isInitialized)
+                {
+                    HasError = true;
+                    return;
+                }
+                HasError = !await storage.EditItem(newTodoItem);
+                ToDoList.EditToDoItem(PreviousTodoItem, newTodoItem);
+            }
+
+            /* wishitem -> householdaccountsitemに変換し保存 */
+            if (needsRegister)
+            {
+                var name = newWishItem.Name;
+                var price = newWishItem.Price;
+                var date = newWishItem.Date;
+                var scategory = Scategory;
+                var dcategroy = Dcategory;
+                var storagetype = Storagetype;
+                var isoutgoing = true;
+
+                newHouseholdAccountsItem = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, SCategory = scategory, DCategory = dcategroy, StorageType = storagetype, IsOutGoings = isoutgoing };
+                if (!isInitialized)
+                {
+                    HasError = true;
+                    return;
+                }
+                HasError = !await storage.AddItem(newHouseholdAccountsItem);
+                newHouseholdAccountsItem.ID = storage.LastAddedHouseholdAccountsItemID;
+                HouseholdAccounts.AddHouseholdAccountsItem(newHouseholdAccountsItem);
+            }
+
+        }
     }
 }

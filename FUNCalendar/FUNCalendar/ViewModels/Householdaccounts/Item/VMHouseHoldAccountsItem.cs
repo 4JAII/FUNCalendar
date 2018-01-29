@@ -52,7 +52,7 @@ namespace FUNCalendar.ViewModels
             this.CategoryData = string.Format("{0}>{1}>{2}",IsOutGoings, item.SCategory, item.DCategory);
             this.FrameColor = item.IsOutGoings ? Color.Red : Color.Green;
             this.Image = (item.StorageType == StorageTypes.財布) ? ImageSource.FromFile("icon_wallet.png") :
-                (item.StorageType == StorageTypes.貯金) ? ImageSource.FromFile("icon_sarvings.png") :
+                (item.StorageType == StorageTypes.貯金) ? ImageSource.FromFile("icon_savings.png") :
                 (item.StorageType == StorageTypes.銀行) ? ImageSource.FromFile("icon_bank.png") :
                 (item.StorageType == StorageTypes.クレジットカード) ? ImageSource.FromFile("icon_credit.png") :
                 (item.StorageType == StorageTypes.SUICA) ? ImageSource.FromFile("icon_train.png") :

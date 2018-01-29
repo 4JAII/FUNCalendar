@@ -89,12 +89,18 @@
                               Grid.Row="2"
                               Grid.Column="1"/>
 
-                <ListView
+                <ListView ItemsSource="{Binding DisplayLegend}"
                   SeparatorVisibility ="None"
                   Grid.Row="2"
                   Grid.Column="2"
                     MinimumHeightRequest="10">
-                    <ListView.ItemsSource></ListView.ItemsSource>
+                    <!--
+                    <ListView.ItemsSource>
+                        <OnPlatform x:TypeArguments="system:ItemsView"
+                            iOS=""
+                            Android=""
+                            WinPhone="{Binding DisplayLegend}"/>>
+                    </ListView.ItemsSource>-->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -103,7 +109,7 @@
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="5*"/>
                                     </Grid.ColumnDefinitions>
-
+                                    <BoxView Color="{Binding ColorPath}" Grid.Column="0"/>
                                     <Label Text="{Binding Label}"
                                         FontSize = "Micro"
                                     Grid.Column="1"/>
