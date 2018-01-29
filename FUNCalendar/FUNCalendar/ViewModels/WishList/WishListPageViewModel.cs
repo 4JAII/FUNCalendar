@@ -57,7 +57,7 @@ namespace FUNCalendar.ViewModels
             SelectedSortName = new ReactiveProperty<WishListSortName>();
 
             var navigationParameters = new NavigationParameters();
-            navigationParameters.Add("BackPage", "/NavigationPage/WishListPage");
+            navigationParameters.Add("BackPage", "/RootPage/NavigationPage/WishListPage");
 
             /* WishItemをVMWishItemに変換しつつReactiveCollection化 */
             DisplayWishList = _wishList.SortedWishList.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(disposable);

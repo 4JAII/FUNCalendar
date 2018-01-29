@@ -58,7 +58,7 @@ namespace FUNCalendar.ViewModels
             SelectedSortName = new ReactiveProperty<ToDoListSortName>();
 
             var navigationParameters = new NavigationParameters();
-            navigationParameters.Add("BackPage", "/NavigationPage/ToDoListPage");
+            navigationParameters.Add("BackPage", "/RootPage/NavigationPage/ToDoListPage");
 
             /* ToDoItemをVMToDoItemに変換しつつReactiveCollection化 */
             DisplayToDoList = _todoList.SortedToDoList.ToReadOnlyReactiveCollection(x => new VMToDoItem(x)).AddTo(disposable);
