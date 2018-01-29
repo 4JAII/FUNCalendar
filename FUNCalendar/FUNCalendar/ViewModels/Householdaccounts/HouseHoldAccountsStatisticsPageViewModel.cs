@@ -205,7 +205,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
-                await _inavigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage",navigationparameter);
+                await _inavigationservice.NavigateAsync("/NavigationPage/HouseholdAccountsRegisterPage",navigationparameter);
             }).AddTo(disposable);
 
             /* グラフのデータが変更された時の処理 */

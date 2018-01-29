@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
@@ -59,7 +59,7 @@
                 SelectedItem="{Binding SelectedRange.Value}"
                 ItemDisplayBinding="{Binding RangeName}"
                 HorizontalOptions="EndAndExpand"
-                WidthRequest="400"
+
                 Grid.Row="0"
                 Grid.Column="2"/>
 
@@ -89,24 +89,25 @@
                               Grid.Row="2"
                               Grid.Column="1"/>
 
-                <ListView ItemsSource="{Binding DisplayLegend}"
-                  HorizontalOptions="Center"
+                <ListView
                   SeparatorVisibility ="None"
                   Grid.Row="2"
-                  Grid.Column="2">
-
+                  Grid.Column="2"
+                    MinimumHeightRequest="10">
+                    <ListView.ItemsSource></ListView.ItemsSource>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal">
-                                    <Frame BackgroundColor="{Binding ColorPath}"
-                                   WidthRequest="10"
-                                   HeightRequest="10"
-                                   Padding="0"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Center"/>
-                                    <Label Text="{Binding Label}"/>
-                                </StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding Label}"
+                                        FontSize = "Micro"
+                                    Grid.Column="1"/>
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -135,6 +136,7 @@
                     <Label Text="支出" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
                     <Label Text="{Binding DisplayTotalOutgoing.Value}" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Grid.Row="0" Grid.Column="4"/>
                     <ListView ItemsSource="{Binding DisplayTotalOutgoingCollection}"
+                        SeparatorVisibility="None"
                           Grid.Row="1"
                           Grid.Column="1"
                           Grid.ColumnSpan="4">

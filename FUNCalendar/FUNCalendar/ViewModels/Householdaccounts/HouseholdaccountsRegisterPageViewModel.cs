@@ -75,6 +75,10 @@ namespace FUNCalendar.ViewModels
         public AsyncReactiveCommand RegisterHouseholdaccountsCommand { get; private set; }
         public AsyncReactiveCommand CancelCommand { get; private set; }
 
+        /* 支出・収入の色 */
+        public ReactiveProperty<Color> IncomeColor { get; private set; } = new ReactiveProperty<Color>();
+        public ReactiveProperty<Color> OutgoingColor { get; private set; } = new ReactiveProperty<Color>();
+
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
@@ -87,6 +91,9 @@ namespace FUNCalendar.ViewModels
             this._storageService = storageService;
             this._navigationservice = navigationService;
             this._pageDialogService = pageDialogService;
+
+            IncomeColor.Value = Color.White;
+            OutgoingColor.Value = Color.SkyBlue;
 
             /* Balanceitemの保持 */
             this.Balances = _householdaccount.Balances.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsBalanceItem(x)).AddTo(disposable);
@@ -164,6 +171,8 @@ namespace FUNCalendar.ViewModels
             {
                 IsOutgoing.Value = false;
                 UpdateScategory(false);
+                IncomeColor.Value = Color.SkyBlue;
+                OutgoingColor.Value = Color.White;
             }).AddTo(disposable);
 
             /* 支出ボタンが押されたときの処理 */
@@ -172,6 +181,8 @@ namespace FUNCalendar.ViewModels
             {
                 IsOutgoing.Value = true;
                 UpdateScategory(true);
+                IncomeColor.Value = Color.White;
+                OutgoingColor.Value = Color.SkyBlue;
             }).AddTo(disposable);
 
             /* 登録できるかどうか */
@@ -182,9 +193,8 @@ namespace FUNCalendar.ViewModels
             }.CombineLatestValuesAreAllFalse().ToReactiveProperty<bool>();
             CanRegister.Subscribe(x =>
             {
-                ErrorColor.Value = x ? Color.SkyBlue : Color.Gray;
+                ErrorColor.Value = x ? Color.SkyBlue : Color.DarkGray;
             });
-
 
             /* 登録ボタンが押された時の処理 */
             RegisterHouseholdaccountsCommand = CanRegister.ToAsyncReactiveCommand();
