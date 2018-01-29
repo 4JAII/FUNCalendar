@@ -57,6 +57,9 @@ namespace FUNCalendar.ViewModels
             NavigationRegisterPageCommand = new AsyncReactiveCommand();
             SelectedSortName = new ReactiveProperty<ToDoListSortName>();
 
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add("BackPage", "/RootPage/NavigationPage/ToDoListPage");
+
             /* ToDoItemをVMToDoItemに変換しつつReactiveCollection化 */
             DisplayToDoList = _todoList.SortedToDoList.ToReadOnlyReactiveCollection(x => new VMToDoItem(x)).AddTo(disposable);
             SortNames = new[]{ /* Pickerのアイテムセット */
@@ -91,12 +94,12 @@ namespace FUNCalendar.ViewModels
                 {
                     _storageService.WishList.SetDisplayWishItem(item.WishID);
                     await _pageDialogService.DisplayAlertAsync("確認", "WishListと連携しているアイテムなのでWishList編集画面に移動します", "OK");
-                    await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
+                    await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T", navigationParameters);
                 }
                 else
                 {
                     _todoList.SetDisplayToDoItem(VMToDoItem.ToToDoItem(item));
-                    await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T");
+                    await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T", navigationParameters);
                 }
             });
 
@@ -115,7 +118,7 @@ namespace FUNCalendar.ViewModels
             });
 
             /*画面遷移設定*/
-            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage"));
+            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters));
             /* 選ばれた並べ替え方法が変わったとき */
             SelectedSortName.Subscribe(_ => { if (_ != null) SelectedSortName.Value.Sort(); }).AddTo(disposable);
             /* 昇順降順が変わった時 */

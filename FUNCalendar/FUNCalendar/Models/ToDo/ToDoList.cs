@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Prism.Mvvm;
+using System.Linq;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using FUNCalendar.Services;
@@ -15,6 +16,10 @@ namespace FUNCalendar.Models
         public ObservableCollection<ToDoItem> SortedToDoList { get; private set; }
         public ToDoItem DisplayToDoItem { get; set; }
 
+        /* Calendar用 */
+        public ObservableCollection<ToDoItem> ToDoListForCalendar { get; private set; }
+        public bool DateWithToDoList { get; private set; }
+
         /* 昇順か？*/
         private bool isAscending = true;
         public bool IsAscending
@@ -26,6 +31,7 @@ namespace FUNCalendar.Models
         public ToDoList()
         {
             SortedToDoList = new ObservableCollection<ToDoItem>();
+            ToDoListForCalendar = new ObservableCollection<ToDoItem>();
             allToDoList = new List<ToDoItem>();
             selectedSortMethod = ToDoItem.CompareByID;
         }
@@ -106,6 +112,31 @@ namespace FUNCalendar.Models
             allToDoList.RemoveAll(item => item.ID == deleteToDoItem.ID);
             AddToDoItem(addToDoItem);
             Sort();
+        }
+
+        /* Calendar用に特定の日付のデータを取り出す */
+        public void SetToDoListForCalendar(DateTime date)
+        {
+            ToDoListForCalendar.Clear();
+            foreach (ToDoItem x in allToDoList)
+            {
+                if (x.Date == date)
+                {
+                    ToDoListForCalendar.Add(x);
+                }
+            }
+        }
+
+        /* WishListForCalendarをClear */
+        public void ClearToDoListForCalendar()
+        {
+            ToDoListForCalendar.Clear();
+        }
+
+        /* 指定した日にWishListがあるかどうか */
+        public void SetDateWithToDoList(DateTime date)
+        {
+            DateWithToDoList = allToDoList.Where(x => x.Date == date).Any();
         }
     }
 }

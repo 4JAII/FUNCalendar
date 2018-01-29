@@ -125,6 +125,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
+                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsBalancePage");
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             }).AddTo(disposable);
 

@@ -41,6 +41,8 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
+        /* ページ遷移用 */
+        private string backPage;
 
         /* 廃棄 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
@@ -95,7 +97,7 @@ namespace FUNCalendar.ViewModels
                         priority = await _pageDialogService.DisplayActionSheetAsync("優先度を選んでください", null, null, "1", "2", "3", "4", "5");
                     await _storageService.AddItem(wishItem, NeedsAdd, int.Parse(priority));
                 }
-                await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
+                await _navigationService.NavigateAsync(backPage);
             });
 
             /* 登録をキャンセルして遷移(確認もあるよ)  */
@@ -103,7 +105,7 @@ namespace FUNCalendar.ViewModels
             CancelCommand.Subscribe(async () =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");
-                if (result) await _navigationService.NavigateAsync($"/RootPage/NavigationPage/WishListPage");
+                if (result) await _navigationService.NavigateAsync(backPage);
             });
 
             /* 登録できるなら水色,エラーなら灰色 */
@@ -120,6 +122,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
+            backPage = parameters["BackPage"] as string;
             /* 編集目的で遷移してきたならセット */
             if (parameters["FromCalendar"] as string == "T")
             {
