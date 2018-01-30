@@ -62,10 +62,10 @@ namespace FUNCalendar.ViewModels
         public AsyncReactiveCommand BalanceCommand { get; private set; }
 
         /* 編集コマンド */
-        public AsyncReactiveCommand EditCommand { get; private set; }
+        public ReactiveCommand EditCommand { get; private set; }
 
         /* 削除コマンド */
-        public AsyncReactiveCommand RemoveCommand { get; private set; }
+        public ReactiveCommand RemoveCommand { get; private set; }
 
 
         public HouseholdAccountsHistoryPageViewModel(IHouseholdAccounts householdaccounts, IStorageService storageService, INavigationService navigationService, IPageDialogService pageDialogService)
@@ -83,8 +83,8 @@ namespace FUNCalendar.ViewModels
             BalanceCommand = new AsyncReactiveCommand();
             StatisticsCommand = new AsyncReactiveCommand();
             ResistCommand = new AsyncReactiveCommand();
-            EditCommand = new AsyncReactiveCommand();
-            RemoveCommand = new AsyncReactiveCommand();
+            EditCommand = new ReactiveCommand();
+            RemoveCommand = new ReactiveCommand();
 
 
             /* ピッカー用のアイテムの作成 */

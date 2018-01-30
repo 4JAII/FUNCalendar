@@ -32,18 +32,18 @@
             </Grid.ColumnDefinitions>
             <DatePicker Date="{Binding Date.Value}"
                 Format="yyyy/MM/dd"
-                Margin="0,10,0,10"
+                Margin="0,10,0,0"
                 Grid.Row="0" 
                 Grid.Column="0"
                 Grid.ColumnSpan="2"/>
-            <Grid Margin="0,10,0,10"
+            <Grid Margin="0,0,0,10"
                 Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -79,13 +79,13 @@
                         Grid.RowSpan="2"
                         Grid.Column="2"/>
             </Grid>
-            <Grid Margin="0,10,0,10"
+            <Grid Margin="0,0,0,10"
                 Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Label Text="お金の所在地:"
                     FontAttributes="Bold"

@@ -201,11 +201,6 @@ namespace FUNCalendar.ViewModels
                     (NavigatedItem.CurrentRange == Range.Year) ? RangeNames[2] : null;
                 this.CurrentSCategory = NavigatedItem.CurrentSCategory;
                 this.SCategoryTitle = String.Format("家計簿・{0}", NavigatedItem.CurrentSCategory);
-
-                _householdaccounts.SetSCategoryStatics(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value, CurrentSCategory);
-                _householdaccounts.SetSCategoryStatisticsPie(SelectedRange.Value.RangeData, SelectedDate.Value, CurrentSCategory);
-                this.DisplayScategoryTotal = _householdaccounts.ObserveProperty(h => h.SCategoryTotal).ToReactiveProperty().AddTo(disposable);
-
                 /* ReactiveProperty化(グラフ) */
                 this.Slices = _householdaccounts.PieSlice.ToReadOnlyReactiveCollection().AddTo(disposable);
 
@@ -230,6 +225,8 @@ namespace FUNCalendar.ViewModels
                     }
                 })
                 .AddTo(disposable);
+
+                this.DisplayScategoryTotal = _householdaccounts.ObserveProperty(h => h.SCategoryTotal).ToReactiveProperty().AddTo(disposable);
 
             }
         }

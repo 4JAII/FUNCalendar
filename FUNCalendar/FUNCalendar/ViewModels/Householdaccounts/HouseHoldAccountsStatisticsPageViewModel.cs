@@ -137,9 +137,7 @@ namespace FUNCalendar.ViewModels
             /* レンジを日単位で初期化 */
             SelectedRange.Value = RangeNames[0];
 
-            /* 統計とグラフの初期化 */
-            _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
-            _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
+
 
             /* グラフに表示するジャンルを支出で初期化 */
             CurrentBalanceType = BalanceTypes.outgoings;
@@ -151,14 +149,12 @@ namespace FUNCalendar.ViewModels
             this._plotmodel.Series.Add(pieseries);
             UpdatePie();
 
-
             /* レンジが変更された時の処理 */
             SelectedRange.Subscribe(_ =>
             {
                 if (_ != null)
                 {
-                    _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
-                    _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
+                    UpdateStatistics();
                 }
             })
             .AddTo(disposable);
@@ -168,8 +164,7 @@ namespace FUNCalendar.ViewModels
             {
                 if (_ != null)
                 {
-                    _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
-                    _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
+                    UpdateStatistics();
                 }
             })
             .AddTo(disposable);
@@ -267,6 +262,13 @@ namespace FUNCalendar.ViewModels
         {
             disposable.Dispose();
         }
+        /* 統計の更新 */
+        private void UpdateStatistics()
+        {
+            _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
+            _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
+
+        }
 
         /* グラフの更新 */
         private void UpdatePie()
@@ -295,8 +297,6 @@ namespace FUNCalendar.ViewModels
                     (NavigatedItem.CurrentRange == Range.Year) ? RangeNames[2] : null;
 
                 CurrentBalanceType = BalanceTypes.outgoings;
-                _householdaccounts.SetAllStatics(SelectedRange.Value.RangeData, SelectedDate.Value);
-                _householdaccounts.SetAllStaticsPie(SelectedRange.Value.RangeData, CurrentBalanceType, SelectedDate.Value);
             }
         }
 

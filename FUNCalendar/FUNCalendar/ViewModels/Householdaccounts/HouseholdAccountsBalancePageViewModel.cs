@@ -49,7 +49,7 @@ namespace FUNCalendar.ViewModels
         public AsyncReactiveCommand ResistCommand { get; private set; }
 
         /* 編集コマンド */
-        public AsyncReactiveCommand EditCommand { get; private set; }
+        public ReactiveCommand EditCommand { get; private set; }
 
         /* 購読解除 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
@@ -69,7 +69,7 @@ namespace FUNCalendar.ViewModels
             SelectedDate = new ReactiveProperty<DateTime>();
             HistoryCommand = new AsyncReactiveCommand();
             StatisticsCommand = new AsyncReactiveCommand();
-            EditCommand = new AsyncReactiveCommand();
+            EditCommand = new ReactiveCommand();
 
 
 

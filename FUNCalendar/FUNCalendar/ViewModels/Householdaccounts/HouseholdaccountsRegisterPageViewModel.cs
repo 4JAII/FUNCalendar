@@ -232,7 +232,7 @@ namespace FUNCalendar.ViewModels
                     var item = new HouseholdAccountsItem() { Name = name, Price = price, Date = date, DCategory = dcategory, SCategory = scategory, StorageType = storagetype, IsOutGoings = isoutgoing };
                     await _storageService.AddItem(item);
                 }
-                await _navigationservice.NavigateAsync(backPage,navigationparameter);
+                await _navigationservice.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsStatisticsPage", navigationparameter);
             });
 
             /* キャンセルボタンが押された時の処理 */
@@ -316,6 +316,7 @@ namespace FUNCalendar.ViewModels
             {
                 NavigatedItem = (HouseholdAccountsNavigationItem)parameters[CalendarKey];
                 this.CurrentDate = NavigatedItem.CurrentDate;
+                this.CurrentRange = Range.Day;
                 Date.Value = CurrentDate;
             }
         }
