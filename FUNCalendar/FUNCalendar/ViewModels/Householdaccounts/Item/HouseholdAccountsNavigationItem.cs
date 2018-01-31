@@ -15,9 +15,14 @@ namespace FUNCalendar.ViewModels
         public SCategorys CurrentSCategory { get; set; }
         public DCategorys CurrentDCategory { get; set; }
         public StorageTypes CurrentStoragetype { get; set; }
+        public string Price { get; set; }
         public DateTime CurrentDate { get; set; }
         public Range CurrentRange { get; set; }
 
+        public HouseholdAccountsNavigationItem(DateTime date)
+        {
+            this.CurrentDate = date;
+        }
 
         public HouseholdAccountsNavigationItem(DateTime date, Range range)
         {
@@ -42,9 +47,10 @@ namespace FUNCalendar.ViewModels
             this.CurrentRange = range;
         }
 
-        public HouseholdAccountsNavigationItem(StorageTypes storagetype, DateTime date, Range range)
+        public HouseholdAccountsNavigationItem(StorageTypes storagetype,string price, DateTime date, Range range)
         {
             this.CurrentStoragetype = storagetype;
+            this.Price = price;
             this.CurrentDate = date;
             this.CurrentRange = range;
         }

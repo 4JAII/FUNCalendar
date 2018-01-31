@@ -57,6 +57,9 @@ namespace FUNCalendar.ViewModels
             NavigationRegisterPageCommand = new AsyncReactiveCommand();
             SelectedSortName = new ReactiveProperty<ToDoListSortName>();
 
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add("BackPage", "/RootPage/NavigationPage/ToDoListPage");
+
             /* ToDoItemをVMToDoItemに変換しつつReactiveCollection化 */
             DisplayToDoList = _todoList.SortedToDoList.ToReadOnlyReactiveCollection(x => new VMToDoItem(x)).AddTo(disposable);
             SortNames = new[]{ /* Pickerのアイテムセット */
@@ -91,12 +94,12 @@ namespace FUNCalendar.ViewModels
                 {
                     _storageService.WishList.SetDisplayWishItem(item.WishID);
                     await _pageDialogService.DisplayAlertAsync("確認", "WishListと連携しているアイテムなのでWishList編集画面に移動します", "OK");
-                    await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
+                    await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T", navigationParameters);
                 }
                 else
                 {
                     _todoList.SetDisplayToDoItem(VMToDoItem.ToToDoItem(item));
-                    await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T");
+                    await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T", navigationParameters);
                 }
             });
 
@@ -115,7 +118,7 @@ namespace FUNCalendar.ViewModels
             });
 
             /*画面遷移設定*/
-            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage"));
+            NavigationRegisterPageCommand.Subscribe(async () => await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters));
             /* 選ばれた並べ替え方法が変わったとき */
             SelectedSortName.Subscribe(_ => { if (_ != null) SelectedSortName.Value.Sort(); }).AddTo(disposable);
             /* 昇順降順が変わった時 */
@@ -135,11 +138,16 @@ namespace FUNCalendar.ViewModels
                 {
                     await _pageDialogService.DisplayAlertAsync("注意", "このアイテムは既に完了済みです。", "確認");
                 }
+                /* 完了済みでない場合 */
                 else
                 {
+                    /* wishIDを持っている場合 */
                     if ((obj as VMToDoItem).WishID != 0)/* wishIDを持っているか */
                     {
+                        /* ダイアログで家計簿に登録するか確認 */
                         var result = await _pageDialogService.DisplayAlertAsync("確認", "このアイテムを家計簿に登録しますか？", "はい", "いいえ");
+
+                        /* ダイアログの確認で家計簿に登録するを選択した場合 */
                         if (result)
                         {
                             string scategory, dcategory, storagetype;
@@ -182,16 +190,20 @@ namespace FUNCalendar.ViewModels
                             await _storageService.CompleteToDo(todoitem, true, result, Scategory, Dcategory, Storagetype);
                             
                         }
+                        /* 家計簿に登録しない場合 */
                         else
                         {
+                            /* とりあえず代入 */
                             var Scategory = SCategorys.start_of_支出;
                             var Dcategory = DCategorys.start_of_その他_支出;
                             var Storagetype = StorageTypes.start_of_Stype;
                             await _storageService.CompleteToDo(todoitem, true, false, Scategory, Dcategory, Storagetype);
                         }
                     }
+                    /* wishIDを持っていない場合 */
                     else
                     {
+                        /* とりあえず代入 */
                         var Scategory = SCategorys.start_of_支出;
                         var Dcategory = DCategorys.start_of_その他_支出;
                         var Storagetype = StorageTypes.start_of_Stype;

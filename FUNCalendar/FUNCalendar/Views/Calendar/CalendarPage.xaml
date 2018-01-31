@@ -197,13 +197,13 @@
                Grid.ColumnSpan="3"
                VerticalOptions="Center"
                HorizontalOptions="Center"/>
-        <Label Text="支出：○○○○○円"
+        <Label Text="{Binding MonthOutgoing.Value}"
                Grid.Row="6"
                Grid.Column="5"
                Grid.ColumnSpan="3"
                VerticalOptions="Center"
                HorizontalOptions="Center"/>
-        <Label Text="収入：○○○○○円"
+        <Label Text="{Binding MonthIncome.Value}"
                Grid.Row="7"
                Grid.Column="5"
                Grid.ColumnSpan="3"

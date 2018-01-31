@@ -51,7 +51,6 @@
     <Compile Include="Models\Others\DatabaseGateway.cs" />
     <Compile Include="Models\Others\ExtendObservableCollection.cs" />
     <Compile Include="Models\Others\FileReadWriteService.cs" />
-    <Compile Include="Models\Others\JsonObject\JsonBalanceItem.cs" />
     <Compile Include="Models\Others\JsonObject\JsonHouseholdAccountsItem.cs" />
     <Compile Include="Models\Others\JsonObject\JsonHouseholdAccountsList.cs" />
     <Compile Include="Models\Others\JsonObject\JsonStatus.cs" />
@@ -75,7 +74,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\WishList\IWishList.cs" />
     <Compile Include="ViewModels\Calendar\CalendarPageViewModel.cs" />
-    <Compile Include="Models\Others\JsonObject\JsonBalanceList.cs" />
     <Compile Include="ViewModels\Calendar\CalendarDetailPageViewModel.cs" />
     <Compile Include="ViewModels\Calendar\VMDate.cs" />
     <Compile Include="ViewModels\Householdaccounts\HouseholdAccountsEditBalancePageViewModel.cs" />
@@ -276,55 +274,55 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ToDo\ToDoListRegisterPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Others\ConfigurationPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsBalancePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsDCHistoryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsHistoryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsRegisterPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsSCStatisticsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsStatisticsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WishList\WishListPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WishList\WishListRegisterPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Calendar\CalendarDetailPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Calendar\CalendarPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Householdaccounts\HouseholdAccountsEditBalancePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

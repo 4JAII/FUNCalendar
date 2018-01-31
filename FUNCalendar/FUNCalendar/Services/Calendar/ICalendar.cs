@@ -19,6 +19,6 @@ namespace FUNCalendar.Services
         void BackPrevMonth();
         void GoNextMonth();
         void SetDisplayDate(Date date);
-        void SetHasList(IWishList wishList);
+        void SetLists(IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts);
     }
 }

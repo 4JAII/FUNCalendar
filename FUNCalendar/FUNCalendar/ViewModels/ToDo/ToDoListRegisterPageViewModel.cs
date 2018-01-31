@@ -46,6 +46,9 @@ namespace FUNCalendar.ViewModels
         /* エラー時の色 */
         public ReactiveProperty<Color> ErrorColor { get; private set; } = new ReactiveProperty<Color>();
 
+        /* ページ遷移用 */
+        private string backPage;
+
         /* 廃棄 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
 
@@ -93,7 +96,7 @@ namespace FUNCalendar.ViewModels
                     var todoItem = new ToDoItem { Description = this.Description.Value, Date = Date.Value, Priority = this.Priority.Value, IsCompleted = false, WishID = 0 };
                     await _storageService.AddItem(todoItem);
                 }
-                await _navigationService.NavigateAsync($"/RootPage/NavigationPage/ToDoListPage");
+                await _navigationService.NavigateAsync(backPage);
             });
 
             /* 登録をキャンセルして遷移(確認もあるよ)  */
@@ -101,7 +104,7 @@ namespace FUNCalendar.ViewModels
             CancelCommand.Subscribe(async () =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "入力をキャンセルし画面を変更します。よろしいですか？", "はい", "いいえ");
-                if (result) await _navigationService.NavigateAsync($"/RootPage/NavigationPage/ToDoListPage");
+                if (result) await _navigationService.NavigateAsync(backPage);
             });
 
             /* 登録できるなら水色,エラーなら灰色 */
@@ -118,6 +121,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
+            backPage = parameters["BackPage"] as string;
             /* 編集目的で遷移してきたならセット */
             if (parameters["CanEdit"] as string != "T") return;
             VMToDoItem vmToDoItem = new VMToDoItem(_todoList.DisplayToDoItem);

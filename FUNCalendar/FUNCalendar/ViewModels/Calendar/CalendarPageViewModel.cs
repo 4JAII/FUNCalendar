@@ -61,6 +61,10 @@ namespace FUNCalendar.ViewModels
             get { return this.calendarMonth; }
             set { this.SetProperty(ref this.calendarMonth, value); }
         }
+        /* 一か月の収入の合計 */
+        public ReactiveProperty<string> MonthIncome { get; private set; } = new ReactiveProperty<string>();
+        /* 一か月の支出の合計 */
+        public ReactiveProperty<string> MonthOutgoing { get; private set; } = new ReactiveProperty<string>();
 
         public ReactiveProperty<bool> IsEndRefreshing { get; private set; } = new ReactiveProperty<bool>();
 
@@ -79,6 +83,7 @@ namespace FUNCalendar.ViewModels
         {
             this._storageService = storageService;
             this._loadingMessage = loadingMessage;
+            this._calendar = calendar;
             this._wishList = wishList;
             this._todoList = todoList;
             this._householdAccounts = householdAccounts;
@@ -87,11 +92,8 @@ namespace FUNCalendar.ViewModels
             {
                 await _storageService.InitializeAsync(this._wishList, this._todoList, this._householdAccounts);
                 await _storageService.ReadFile();
-
+                _calendar.SetLists(_wishList, _todoList, _householdAccounts);
             });
-
-            this._calendar = calendar;
-            _calendar.SetHasList(_wishList);
 
             this._pageDialogService = pageDialogService;
             this._navigationService = navigationService;
@@ -106,6 +108,10 @@ namespace FUNCalendar.ViewModels
             CurrentYear = string.Format("{0}年", DateTime.Now.ToString("yyyy"));
             CurrentMonth = string.Format("{0}月", DateTime.Now.ToString("%M"));
             CurrentDate = string.Format("{0}日", DateTime.Now.ToString("%d"));
+
+            MonthIncome = _householdAccounts.ObserveProperty(h => h.IncomeForCalendar).Select(i => string.Format("収入：{0}",i)).ToReactiveProperty().AddTo(Disposable);
+            MonthOutgoing = _householdAccounts.ObserveProperty(h => h.OutgoingForCalendar).Select(i => string.Format("支出：{0}",i)).ToReactiveProperty().AddTo(Disposable);
+            _householdAccounts.SetMonthBalance(DateTime.Today);
 
             DisplayCalendar = _calendar.ListedAMonthDateData.ToReadOnlyReactiveCollection(x => new VMDate(x)).AddTo(Disposable);
             IsEndRefreshing.Value = true;
@@ -127,7 +133,7 @@ namespace FUNCalendar.ViewModels
                 IsEndRefreshing.Value = false;
                 _loadingMessage.Show("読み込み中");
                 _calendar.BackPrevMonth();
-                _calendar.SetHasList(_wishList);
+                //_householdAccounts.SetMonthBalance( );
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
                 CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
             });
@@ -138,7 +144,7 @@ namespace FUNCalendar.ViewModels
                 IsEndRefreshing.Value = false;
                 _loadingMessage.Show("読み込み中");
                 _calendar.GoNextMonth();
-                _calendar.SetHasList(_wishList);
+                //_householdAccounts.SetMonthBalance( );
                 CalendarYear = string.Format("{0}年", _calendar.CurrentYear.ToString());
                 CalendarMonth = string.Format("{0}月", _calendar.CurrentMonth.ToString());
             });
@@ -146,16 +152,20 @@ namespace FUNCalendar.ViewModels
             NavigationRegisterPageCommand.Subscribe(async () =>
             {
                 var result = await _pageDialogService.DisplayActionSheetAsync("登録するアイテムの種類を選択", "キャンセル", "", "ToDo", "WishList", "家計簿");
+                var navigationParameters = new NavigationParameters();
+                navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarPage");
                 switch (result)
                 {
                     case "ToDo":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage");
+                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters);
                         break;
                     case "WishList":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage");
+                        await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsListRegisterPage");
+                        var navigationitem = new HouseholdAccountsNavigationItem(DateTime.Today);
+                        navigationParameters.Add(HouseholdAccountsRegisterPageViewModel.CalendarKey, navigationitem);
+                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsRegisterPage", navigationParameters);
                         break;
                 }
             });

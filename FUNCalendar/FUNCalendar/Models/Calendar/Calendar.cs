@@ -15,6 +15,9 @@ namespace FUNCalendar.Models
         private int[] monthDateMaxValue = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         private int i, j;
         private List<Date> tempList = new List<Date>();
+        private IWishList wishList;
+        private IToDoList todoList;
+        private IHouseholdAccounts householdAccounts;
 
         public ExtendObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ExtendObservableCollection<Date>();
         public Date DisplayDate { get; set; }
@@ -47,7 +50,6 @@ namespace FUNCalendar.Models
             {
                 aMonthDateData[i] = new Date();
             }
-            Update();
         }
 
         /* メソッド */
@@ -87,7 +89,6 @@ namespace FUNCalendar.Models
             for (i = 0; i < monthDateMaxValue[currentMonth - 1]; i++)
             {
                 aMonthDateData[i + (int)firstDayOfTheWeek].DateData = new DateTime(currentYear, currentMonth, i + 1);
-                /* wishlist,todo,家計簿のデータを格納 */
             }
             /* 次の月の分を格納 */
             if (currentMonth + 1 == 13)
@@ -102,6 +103,8 @@ namespace FUNCalendar.Models
             {
                 aMonthDateData[i].DateData = new DateTime(currentYear + j, currentMonth + 1 - j * 12, i - (int)firstDayOfTheWeek - monthDateMaxValue[currentMonth - 1] + 1);
             }
+
+            SetHasList();
             ListedAMonthDateData.Replace(aMonthDateData);
         }
 
@@ -136,13 +139,26 @@ namespace FUNCalendar.Models
         }
 
         /* WishList,ToDoList,HouseholdAccountsListを持っているか登録 */
-        public void SetHasList(IWishList wishList)
+        private void SetHasList()
         {
-            foreach (Date x in ListedAMonthDateData)
+            foreach (Date x in AMonthDateData)
             {
                 wishList.SetDateWithWishList(x.DateData);
                 x.HasWishList = wishList.DateWithWishList;
+                todoList.SetDateWithToDoList(x.DateData);
+                x.HasToDoList = todoList.DateWithToDoList;
+                householdAccounts.SetDateWithHouseholdAccounts(x.DateData);
+                x.HasHouseHoldAccountsList = householdAccounts.DateWithHouseholdAccounts;
             }
+        }
+
+        /* WishList,ToDoList,HouseholdAccountsListをもらう */
+        public void SetLists(IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts)
+        {
+            this.wishList = wishList;
+            this.todoList = todoList;
+            this.householdAccounts = householdAccounts;
+            Update();
         }
     }
 }

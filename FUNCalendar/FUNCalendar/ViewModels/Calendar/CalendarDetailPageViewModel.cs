@@ -25,14 +25,17 @@ namespace FUNCalendar.ViewModels
     {
         private ICalendar _calendar;
         private IWishList _wishList;
+        private IToDoList _todoList;
+        private IHouseholdAccounts _householdAccounts;
         private INavigationService _navigationService;
         private IPageDialogService _pageDialogService;
+        private IStorageService _storageService;
 
         /* Date詳細画面用 */
         public ReactiveProperty<DateTime> DateData { get; private set; } = new ReactiveProperty<DateTime>();
         public ReadOnlyReactiveCollection<VMWishItem> DisplayWishList { get; private set; }
-        //public ReadOnlyReactiveCollection<VMToDoItem> DisplayToDoList { get; private set; }
-        //public ReadOnlyReactiveCollection<VMHouseHoldAccountsItem> DisplayHouseHoldAccountsList { get; private set; }
+        public ReadOnlyReactiveCollection<VMToDoItem> DisplayToDoList { get; private set; }
+        public ReadOnlyReactiveCollection<VMHouseholdAccountsItem> DisplayHouseHoldAccountsList { get; private set; }
 
         /* Command関連 */
         public ReactiveCommand BackCommand { get; private set; }
@@ -46,24 +49,32 @@ namespace FUNCalendar.ViewModels
         public ReactiveCommand DeleteToDoItemCommand { get; private set; }
         public ReactiveCommand EditWishItemCommand { get; private set; }
         public ReactiveCommand DeleteWishItemCommand { get; private set; }
-        public ReactiveCommand EditHouseHoldAccountsItemCommand { get; private set; }
-        public ReactiveCommand DeleteHouseHoldAccountsItemCommand { get; private set; }
+        public ReactiveCommand EditHouseholdAccountsItemCommand { get; private set; }
+        public ReactiveCommand DeleteHouseholdAccountsItemCommand { get; private set; }
 
         /* ListViewの高さ */
         public ReactiveProperty<int> WishListHeight { get; private set; } = new ReactiveProperty<int>(1);
         public ReactiveProperty<int> ToDoListHeight { get; private set; } = new ReactiveProperty<int>(1);
         public ReactiveProperty<int> HouseholdAccountsListHeight { get; private set; } = new ReactiveProperty<int>(1);
 
+        /* ListView開閉用 */
+        private bool wishListOpen = false;
+        private bool todoListOpen = false;
+        private bool householdAccountsListOpen = false;
+
         /* 廃棄 */
         private CompositeDisposable Disposable { get; } = new CompositeDisposable();
 
-        public CalendarDetailPageViewModel(ICalendar calendar,IWishList wishList, INavigationService navigationService, IPageDialogService pageDialogService)
+        public CalendarDetailPageViewModel(ICalendar calendar, IWishList wishList, IToDoList todoList, IHouseholdAccounts householdAccounts, INavigationService navigationService, IPageDialogService pageDialogService, IStorageService storageService)
         {
             /* コンストラクタインジェクションされたインスタンスを保持 */
             this._calendar = calendar;
             this._wishList = wishList;
+            this._todoList = todoList;
+            this._householdAccounts = householdAccounts;
             this._navigationService = navigationService;
             this._pageDialogService = pageDialogService;
+            this._storageService = storageService;
 
             BackCommand = new ReactiveCommand();
             ToDoListOpenCloseCommand = new ReactiveCommand();
@@ -75,19 +86,19 @@ namespace FUNCalendar.ViewModels
             DeleteToDoItemCommand = new ReactiveCommand();
             EditWishItemCommand = new ReactiveCommand();
             DeleteWishItemCommand = new ReactiveCommand();
-            EditHouseHoldAccountsItemCommand = new ReactiveCommand();
-            DeleteHouseHoldAccountsItemCommand = new ReactiveCommand();
+            EditHouseholdAccountsItemCommand = new ReactiveCommand();
+            DeleteHouseholdAccountsItemCommand = new ReactiveCommand();
 
             DisplayWishList = _wishList.WishListForCalendar.ToReadOnlyReactiveCollection(x => new VMWishItem(x)).AddTo(Disposable);
-            //DisplayToDoList = _todoList.ToDoListForCalendar.ToReadOnlyReactiveCollection(x => new VMToDoItem(x)).AddTo(Disposable);
-            //DisplayHouseHoldAccountsList = _houseHoldAccountsList.HouseHoldAccountsListForCalendar.ToReadOnlyReactiveCollection(x => new VMHouseHoldAccountsItem(x)).AddTo(Disposable);
+            DisplayToDoList = _todoList.ToDoListForCalendar.ToReadOnlyReactiveCollection(x => new VMToDoItem(x)).AddTo(Disposable);
+            DisplayHouseHoldAccountsList = _householdAccounts.HouseholdAccountsListForCalendar.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsItem(x)).AddTo(Disposable);
 
             /* DatePicker */
             DateData.Subscribe( _ =>
             {
                 _wishList.ClearWishListForCalendar();
-                //_todoList.ClearToDoListForCalendar();
-                //_houseHoldAccountsList.ClearHouseHoldAcountsListForCalendar();
+                _todoList.ClearToDoListForCalendar();
+                _householdAccounts.ClearHouseholdAccountsListForCalendar();
                 WishListHeight.Value = 1;
                 ToDoListHeight.Value = 1;
                 HouseholdAccountsListHeight.Value = 1;
@@ -102,66 +113,75 @@ namespace FUNCalendar.ViewModels
             /* List開閉処理 */
             ToDoListOpenCloseCommand.Subscribe(() =>
             {
-                /*
-                if (_todoList.ToDoListForCalendar.Any())
+                if (todoListOpen)
                 {
                     _todoList.ClearToDoListForCalendar();
                     ToDoListHeight.Value = 1;
+                    todoListOpen = false;
                 }
                 else
                 {
                     _todoList.SetToDoListForCalendar(DateData.Value);
                     ToDoListHeight.Value = (_todoList.ToDoListForCalendar.Count + 1) * 60;
+                    todoListOpen = true;
                 }
-                */
             });
 
             WishListOpenCloseCommand.Subscribe(() =>
             {
-                if (_wishList.WishListForCalendar.Any())
+                if (wishListOpen)
                 {
                     _wishList.ClearWishListForCalendar();
                     WishListHeight.Value = 1;
+                    wishListOpen = false;
                 }
                 else
                 {
                     _wishList.SetWishListForCalendar(DateData.Value);
                     WishListHeight.Value = (_wishList.WishListForCalendar.Count + 1) * 60;
+                    wishListOpen = true;
                 }
             });
 
             HouseHoldAccountsListOpenCloseCommand.Subscribe(() =>
-            {
-                /*
-                if (_houseHoldAccountsList.HouseHoldAccountsListForCalendar.Any())
+            { 
+                if (householdAccountsListOpen)
                 {
-                    _houseHoldAccountsList.ClearHouseHoldAccountsListForCalendar();
+                    _householdAccounts.ClearHouseholdAccountsListForCalendar();
                     HouseholdAccountsListHeight.Value = 1;
+                    householdAccountsListOpen = false;
                 }
                 else
                 {
-                    _houseHoldAccountsList.SetHouseHoldAccountsListForCalendar(DateData.Value);
-                    HouseholdAccountsListHeight.Value = (_HouseholdAccountsList.HouseholdAccountsListForCalendar.Count + 1) * 60;
+                    _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
+                    HouseholdAccountsListHeight.Value = (_householdAccounts.HouseholdAccountsListForCalendar.Count + 1) * 60;
+                    householdAccountsListOpen = true;
                 }
-                */
+                
             });
 
             /* アイテム編集処理 */
-            /*EditToDoItemCommand.Subscribe(async (obj) =>
+            EditToDoItemCommand.Subscribe(async (obj) =>
             {
                 _todoList.SetDisplayToDoItem(VMToDoItem.ToToDoItem(obj as VMToDoItem));
                 await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T");
-            });*/
+            });
             EditWishItemCommand.Subscribe(async (obj) =>
             {
                 _wishList.SetDisplayWishItem(VMWishItem.ToWishItem(obj as VMWishItem));
                 await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
             });
-            /*EditHouseHoldAccountsItemCommand.Subscribe(async (obj) =>
+            EditHouseholdAccountsItemCommand.Subscribe(async (obj) =>
             {
-                _houseHoldAccountsList.SetDisplayHouseHoldAccountsItem(VMHouseHoldAccountsItem.ToHouseHoldAccountsItem(obj as VMHouseHoldAccountsItem));
-                await _navigationService.NavigateAsync($"/NavigationPage/HouseHoldAccountsListRegisterPage?CanEdit=T");
-            });*/
+                _householdAccounts.SetHouseholdAccountsItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
+                var navigationitem = new HouseholdAccountsNavigationItem(DateData.Value);
+                var navigationparameter = new NavigationParameters()
+                {
+                    {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
+                };
+                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsHistoryPage");
+                await _navigationService.NavigateAsync("/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
+            });
 
             /* アイテム削除処理 */
             /*DeleteToDoItemCommand.Subscribe(async (obj) =>
@@ -169,7 +189,7 @@ namespace FUNCalendar.ViewModels
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
-                    var todoItem = VMToDOItem.ToToDoItem(obj as VMToDoItem);
+                    var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
                     _todoList.Remove(todoItem);
                     await localStorage.DeleteItem(todoItem);
                 }
@@ -184,16 +204,15 @@ namespace FUNCalendar.ViewModels
                     await localStorage.DeleteItem(wishItem);
                 }
             });*/
-            /*DeleteWishItemCommand.Subscribe(async (obj) =>
+            DeleteHouseholdAccountsItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
-                    var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
-                    _wishList.Remove(wishItem);
-                    await localStorage.DeleteItem(wishItem);
+                    await _storageService.DeleteItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
+                    _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
                 }
-            });*/
+            });
 
             /* 画面遷移設定 */
             NavigationRegisterPageCommand.Subscribe(async () =>
@@ -202,6 +221,7 @@ namespace FUNCalendar.ViewModels
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add("DateData", DateData.Value);
                 navigationParameters.Add("FromCalendar", "T");
+                navigationParameters.Add("BackPage", "/NavigationPage/CalendarDetailPage");
                 switch (result)
                 {
                     case "ToDo":
@@ -211,7 +231,9 @@ namespace FUNCalendar.ViewModels
                         await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsListRegisterPage", navigationParameters);
+                        var navigationitem = new HouseholdAccountsNavigationItem(DateTime.Today);
+                        navigationParameters.Add(HouseholdAccountsRegisterPageViewModel.CalendarKey, navigationitem);
+                        await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsRegisterPage", navigationParameters);
                         break;
                 }
             });

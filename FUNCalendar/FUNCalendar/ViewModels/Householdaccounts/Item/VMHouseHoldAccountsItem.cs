@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FUNCalendar.Models;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace FUNCalendar.ViewModels
 {
@@ -30,6 +31,10 @@ namespace FUNCalendar.ViewModels
         public string CategoryData { get; private set; }
         [JsonProperty("is_out_goings")]
         public string IsOutGoings { get; private set; }
+        [JsonIgnore]
+        public Color FrameColor { get; private set; }
+        [JsonIgnore]
+        public ImageSource Image { get; private set; }
 
         public VMHouseholdAccountsItem() { }
 
@@ -45,6 +50,13 @@ namespace FUNCalendar.ViewModels
             this.Storagetype = Enum.GetName(typeof(StorageTypes), item.StorageType);
             this.IsOutGoings = item.IsOutGoings ? "支出" : "収入";
             this.CategoryData = string.Format("{0}>{1}>{2}",IsOutGoings, item.SCategory, item.DCategory);
+            this.FrameColor = item.IsOutGoings ? Color.Red : Color.Green;
+            this.Image = (item.StorageType == StorageTypes.財布) ? ImageSource.FromFile("icon_wallet.png") :
+                (item.StorageType == StorageTypes.貯金) ? ImageSource.FromFile("icon_savings.png") :
+                (item.StorageType == StorageTypes.銀行) ? ImageSource.FromFile("icon_bank.png") :
+                (item.StorageType == StorageTypes.クレジットカード) ? ImageSource.FromFile("icon_credit.png") :
+                (item.StorageType == StorageTypes.SUICA) ? ImageSource.FromFile("icon_train.png") :
+                (item.StorageType == StorageTypes.その他) ? ImageSource.FromFile("icon_other.png") : ImageSource.FromFile("");
         }
 
         /* 編集用 */

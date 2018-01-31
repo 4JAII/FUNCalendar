@@ -57,10 +57,10 @@ namespace FUNCalendar.ViewModels
         public AsyncReactiveCommand ResistCommand { get; private set; }
 
         /* 編集コマンド */
-        public AsyncReactiveCommand EditCommand { get; private set; }
+        public ReactiveCommand EditCommand { get; private set; }
 
         /* 削除コマンド */
-        public AsyncReactiveCommand RemoveCommand { get; private set; }
+        public ReactiveCommand RemoveCommand { get; private set; }
 
         /* 監視解除 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
@@ -78,8 +78,8 @@ namespace FUNCalendar.ViewModels
 
             /* インスタンス化 */
             this.BackPageCommand = new AsyncReactiveCommand();
-            EditCommand = new AsyncReactiveCommand();
-            RemoveCommand = new AsyncReactiveCommand();
+            EditCommand = new ReactiveCommand();
+            RemoveCommand = new ReactiveCommand();
             SelectedRange = new ReactiveProperty<HouseholdAccountsRangeItem>();
             SelectedDate = new ReactiveProperty<DateTime>();
 
@@ -125,6 +125,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
+                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsDCHistoryPage");
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             }).AddTo(disposable);
 
@@ -137,6 +138,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
                 };
+                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsDCHistoryPage");
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             });
 

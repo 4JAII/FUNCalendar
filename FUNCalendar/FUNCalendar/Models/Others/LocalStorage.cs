@@ -24,7 +24,6 @@ namespace FUNCalendar.Models
         public int LastAddedWishItemID { get; private set; }
         public int LastAddedToDoItemID { get; private set; }
         public int LastAddedHouseholdAccountsItemID { get; private set; }
-        public int LastAddedBalanceItemID { get; private set; }
 
         private async Task CreateConnection()
         {
@@ -84,23 +83,6 @@ namespace FUNCalendar.Models
                 return false;
             }
             LastAddedToDoItemID = item.ID;
-            return true;
-        }
-
-
-
-        public async Task<bool> AddItem(HouseholdAccountsBalanceItem item)
-        {
-            try
-            {
-                await CreateConnection();
-                await asyncConnection.InsertAsync(item);
-            }
-            catch
-            {
-                return false;
-            }
-            LastAddedBalanceItemID = item.ID;
             return true;
         }
 
@@ -197,22 +179,6 @@ namespace FUNCalendar.Models
             return true;
         }
 
-        /*
-        public async Task<bool> EditItem(HouseholdAccountsBalanceItem item)
-        {
-            try
-            {
-                await CreateConnection();
-                await asyncConnection.UpdateAsync(item);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
-
-        */
         public async Task<bool> EditItem(HouseholdAccountsItem item)
         {
             try
@@ -246,16 +212,6 @@ namespace FUNCalendar.Models
         }
 
 
-        /*
-        public async Task<List<HouseholdAccountsBalanceItem>> ReadBalance()
-        {
-            await CreateConnection();
-            var temp = await asyncConnection.Table<HouseholdAccountsBalanceItem>().ToListAsync();
-            if (temp == null) temp = new List<HouseholdAccountsBalanceItem>();
-            return temp;
-        }
-
-        */
         public async Task<List<HouseholdAccountsItem>> ReadHouseholdAccounts()
         {
             await CreateConnection();

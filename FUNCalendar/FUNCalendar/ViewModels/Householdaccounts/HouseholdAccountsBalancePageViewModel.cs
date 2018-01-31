@@ -49,7 +49,7 @@ namespace FUNCalendar.ViewModels
         public AsyncReactiveCommand ResistCommand { get; private set; }
 
         /* 編集コマンド */
-        public AsyncReactiveCommand EditCommand { get; private set; }
+        public ReactiveCommand EditCommand { get; private set; }
 
         /* 購読解除 */
         private CompositeDisposable disposable { get; } = new CompositeDisposable();
@@ -69,7 +69,7 @@ namespace FUNCalendar.ViewModels
             SelectedDate = new ReactiveProperty<DateTime>();
             HistoryCommand = new AsyncReactiveCommand();
             StatisticsCommand = new AsyncReactiveCommand();
-            EditCommand = new AsyncReactiveCommand();
+            EditCommand = new ReactiveCommand();
 
 
 
@@ -125,19 +125,23 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
+                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsBalancePage");
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             }).AddTo(disposable);
 
             /* アイテム編集ボタンが押されたときの処理 */
             EditCommand.Subscribe(async (obj) =>
             {
-                _householdaccounts.SetHouseholdAccountsBalanceItem(VMHouseholdAccountsBalanceItem.ToHouseholdAccountsBalanceItem(obj as VMHouseholdAccountsBalanceItem));
-                
-                var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var storagetype = (obj as VMHouseholdAccountsBalanceItem).StorageType;
+                var price = (obj as VMHouseholdAccountsBalanceItem).Price;
+
+                var Storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), storagetype);
+                var navigationitem = new HouseholdAccountsNavigationItem(Storagetype, price, SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsEditBalancePageViewModel.EditKey, navigationitem }
                 };
+
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsEditBalancePage", navigationparameter);
 
             }).AddTo(disposable);

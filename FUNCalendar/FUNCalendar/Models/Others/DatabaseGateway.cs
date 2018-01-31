@@ -173,26 +173,6 @@ namespace FUNCalendar.Models
             IRestResponse response = await DeleteAsync(requestPath, householdAccountsItem.ID);
             return (int)response.StatusCode;
         }
-        /*
-        public async Task<List<HouseholdAccountsBalanceItem>> GetBalanceAsync()
-        {
-            string requestPath = "v1/balance";
-            IRestResponse response;
-            List<HouseholdAccountsBalanceItem> list;
-            response = await GetAsync(requestPath);
-            if (response.StatusCode != HttpStatusCode.OK)
-                return null;
-            list = JsonConvert.DeserializeObject<JsonBalanceList>(response.Content).Value;
-            return list;
-        }
-
-        public async Task<int> PutBalanceItemAsync(HouseholdAccountsBalanceItem householdAccountsBalanceItem)
-        {
-            JsonBalanceItem jsonBalanceItem= new JsonBalanceItem { VMValue = new VMHouseholdAccountsBalanceItem(householdAccountsBalanceItem) };
-            string requestPath = "v1/balance/{id}";
-            IRestResponse response = await PutAsync<JsonBalanceItem>(requestPath, householdAccountsBalanceItem.ID,jsonBalanceItem );
-            return (int)response.StatusCode;
-        }
-        */
+        
     }
 }
