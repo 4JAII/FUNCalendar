@@ -88,6 +88,9 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="LoadingMessageiOS.cs" />
     <Compile Include="Main.cs" />
@@ -207,6 +210,12 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\icon_bank.png" />
+    <BundleResource Include="Resources\icon_credit.png" />
+    <BundleResource Include="Resources\icon_other.png" />
+    <BundleResource Include="Resources\icon_savings.png" />
+    <BundleResource Include="Resources\icon_train.png" />
+    <BundleResource Include="Resources\icon_wallet.png" />
     <Content Include="Resources\icon_wishList.png" />
   </ItemGroup>
   <ItemGroup>

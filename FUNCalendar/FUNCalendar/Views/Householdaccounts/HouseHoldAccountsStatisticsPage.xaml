@@ -90,7 +90,7 @@
                               Grid.Column="0"/>
 
                 <ListView ItemsSource="{Binding DisplayLegend}"
-                          HasUnevenRows="True"
+                          RowHeight="15"
                   SeparatorVisibility ="None"
                   Grid.Row="2"
                   Grid.Column="2">

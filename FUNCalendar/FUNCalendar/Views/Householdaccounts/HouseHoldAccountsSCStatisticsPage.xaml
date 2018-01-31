@@ -82,8 +82,8 @@
                 <ListView ItemsSource="{Binding DisplayLegend}"
                   HorizontalOptions="Center"
                           VerticalOptions="Center"
-                          HasUnevenRows="True"
-                  SeparatorVisibility ="None"
+                          RowHeight="15"
+                          SeparatorVisibility ="None"
                   Grid.Row="2"
                   Grid.Column="2">
 

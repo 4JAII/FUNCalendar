@@ -68,7 +68,7 @@
             <ListView ItemsSource="{Binding DisplayHistoryCollection}"
                   HorizontalOptions="Center"
                   SeparatorVisibility ="None"
-                  HasUnevenRows="True"
+                      RowHeight="150"
                   Grid.Row="1"
                   Grid.Column="0"
                   Grid.ColumnSpan="7">
@@ -82,7 +82,7 @@
 
                             <StackLayout>
                                 <Frame BackgroundColor="White"
-                                       OutlineColor="Aqua"
+                                       OutlineColor="{Binding FrameColor}"
                                Padding="0"
                                VerticalOptions="Fill"
                                HorizontalOptions="Fill"

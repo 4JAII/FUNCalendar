@@ -34,7 +34,8 @@ namespace FUNCalendar.iOS.Dependency
         /// <summary>ローディングを終了する</summary>
         public void Hide()
         {
-            loadpop.Hide();
+            if(loadpop != null)
+                loadpop.Hide();
             ishow = false;
         }
 

@@ -77,8 +77,8 @@
 
             <ListView ItemsSource="{Binding DisplayHistoryCollection}"
                   HorizontalOptions="Center"
-                      HasUnevenRows="True"
                   SeparatorVisibility ="None"
+                      RowHeight="150"
                   Grid.Row="2"
                   Grid.Column="0"
                   Grid.ColumnSpan="7">
