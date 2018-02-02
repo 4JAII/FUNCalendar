@@ -24,6 +24,7 @@ namespace FUNCalendar.ViewModels
         public ImageSource HasHouseHoldAccountsList { get; private set; }
         public string DayOfTheWeek { get; private set; }
         public Color BackgroundColor { get; private set; }
+        public Color DateColor { get; private set; }
 
         /* Date=>VMDateに変換 */
         public VMDate(Date date)
@@ -36,12 +37,19 @@ namespace FUNCalendar.ViewModels
             this.HasToDoList = date.HasToDoList ? ImageSource.FromFile("Calendar_HasToDoList.png") : null;
             this.HasHouseHoldAccountsList = date.HasHouseHoldAccountsList ? ImageSource.FromFile("Calendar_HasHouseHoldAccountsList.png") : null;
             this.DayOfTheWeek = dayOfTheWeekArray[(int)date.DayOfTheWeek];
+            this.BackgroundColor = Color.FromRgb(240, 240, 240);
+            if (DateData == DateTime.Today) this.BackgroundColor = Color.SkyBlue;
+            this.DateColor = (DateData.Month == date.SelectedDate.Month) ? Color.FromRgb(0, 0, 0) : Color.FromRgb(200, 200, 200);
+
+            /*
             switch((int)date.DayOfTheWeek)
             {
                 case 0 : this.BackgroundColor = Color.LightPink; break;
                 case 6 : this.BackgroundColor = Color.LightBlue; break;
-                default: this.BackgroundColor = Color.LightGray; break;
+                default: this.BackgroundColor = Color.FromRgb(245,245,245); break;
             }
+            if (DateData == DateTime.Today) this.BackgroundColor = Color.SkyBlue;
+            */
         }
 
         /* 変換 */

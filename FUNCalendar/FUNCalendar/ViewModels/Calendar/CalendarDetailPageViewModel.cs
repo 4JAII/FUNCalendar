@@ -179,31 +179,34 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
                 };
-                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsHistoryPage");
                 await _navigationService.NavigateAsync("/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             });
 
             /* アイテム削除処理 */
-            /*DeleteToDoItemCommand.Subscribe(async (obj) =>
+            DeleteToDoItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
                     var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
-                    _todoList.Remove(todoItem);
-                    await localStorage.DeleteItem(todoItem);
+                    bool needsDelete = false;
+                    if (todoItem.WishID != 0)
+                        needsDelete = await _pageDialogService.DisplayAlertAsync("確認", "関連のWishListも削除しますか？\n(いいえを選んだ場合そのWishListの連携機能が使えなくなります)", "はい", "いいえ");
+                    await _storageService.DeleteItem(todoItem, needsDelete);
                 }
-            });*/
-            /*DeleteWishItemCommand.Subscribe(async (obj) =>
+            });
+           DeleteWishItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
                     var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
-                    _wishList.Remove(wishItem);
-                    await localStorage.DeleteItem(wishItem);
+                    bool needsDelete = false;
+                    if (wishItem.ToDoID != 0)
+                        needsDelete = await _pageDialogService.DisplayAlertAsync("確認", "関連のToDoも削除しますか？\n(いいえを選んだ場合そのToDoの連携機能が使えなくなります)", "はい", "いいえ");
+                    await _storageService.DeleteItem(wishItem, needsDelete);
                 }
-            });*/
+            });
             DeleteHouseholdAccountsItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
@@ -221,17 +224,19 @@ namespace FUNCalendar.ViewModels
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add("DateData", DateData.Value);
                 navigationParameters.Add("FromCalendar", "T");
-                navigationParameters.Add("BackPage", "/NavigationPage/CalendarDetailPage");
                 switch (result)
                 {
                     case "ToDo":
+                        navigationParameters.Add("BackPage", "/NavigationPage/CalendarDetailPage");
                         await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage" ,navigationParameters);
                         break;
                     case "WishList":
+                        navigationParameters.Add("BackPage", "/NavigationPage/CalendarDetailPage");
                         await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
-                        var navigationitem = new HouseholdAccountsNavigationItem(DateTime.Today);
+                        var navigationitem = new HouseholdAccountsNavigationItem(DateData.Value);
+                        navigationParameters.Add("BackPage", PageName.CalendarDetailPage);
                         navigationParameters.Add(HouseholdAccountsRegisterPageViewModel.CalendarKey, navigationitem);
                         await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsRegisterPage", navigationParameters);
                         break;

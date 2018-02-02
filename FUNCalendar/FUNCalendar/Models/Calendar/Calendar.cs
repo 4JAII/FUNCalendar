@@ -105,12 +105,14 @@ namespace FUNCalendar.Models
             }
 
             SetHasList();
+            SetSelectedDate();
             ListedAMonthDateData.Replace(aMonthDateData);
         }
 
         /* 一つ前の月へ */
         public void BackPrevMonth()
         {
+
             currentMonth--;
             if (currentMonth < 1)
             {
@@ -123,6 +125,7 @@ namespace FUNCalendar.Models
         /* 一つ次の月へ */
         public void GoNextMonth()
         {
+
             currentMonth++;
             if (currentMonth > 12)
             {
@@ -149,6 +152,14 @@ namespace FUNCalendar.Models
                 x.HasToDoList = todoList.DateWithToDoList;
                 householdAccounts.SetDateWithHouseholdAccounts(x.DateData);
                 x.HasHouseHoldAccountsList = householdAccounts.DateWithHouseholdAccounts;
+            }
+        }
+
+        private void SetSelectedDate()
+        {
+            foreach(Date x in AMonthDateData)
+            {
+                x.SelectedDate = DateTime.Parse(String.Format("{0}/{1}", CurrentYear, CurrentMonth));
             }
         }
 

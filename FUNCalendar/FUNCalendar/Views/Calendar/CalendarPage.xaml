@@ -22,7 +22,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="9*"/>
+            <RowDefinition Height="15*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -70,13 +70,15 @@
                 <DataTemplate>
                     <StackLayout BackgroundColor="{Binding BackgroundColor}">
                         <Label VerticalTextAlignment="Center"
-                               HorizontalTextAlignment="Center"
+                               HorizontalTextAlignment="Start"
+                               TextColor="{Binding DateColor}"
                                FontSize="Micro"
                                FontAttributes="Bold"
                                HeightRequest="18"
-                               Text="{Binding StrDate}"/>
+                               Text="{Binding StrDate}"
+                               Margin="5,0,0,0"/>
 
-                        <Grid HeightRequest="10">
+                        <Grid HeightRequest="25">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>

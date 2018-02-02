@@ -4,7 +4,8 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.HouseholdAccountsHistoryPage"
-             x:Name="HouseholdAccountsHistoryPage">
+             x:Name="HouseholdAccountsHistoryPage"
+             Title="家計簿・履歴">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add"
@@ -68,10 +69,19 @@
             <ListView ItemsSource="{Binding DisplayHistoryCollection}"
                   HorizontalOptions="Center"
                   SeparatorVisibility ="None"
-                      RowHeight="150"
                   Grid.Row="1"
                   Grid.Column="0"
                   Grid.ColumnSpan="7">
+                <ListView.HasUnevenRows>
+                    <OnPlatform x:TypeArguments="x:Boolean"
+                        iOS="False"
+                        Android="True"
+                        WinPhone="True"/>
+                </ListView.HasUnevenRows>
+                <ListView.RowHeight>
+                    <OnPlatform x:TypeArguments="x:Int32"
+                            iOS="150"/>
+                </ListView.RowHeight>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

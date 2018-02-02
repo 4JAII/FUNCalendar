@@ -90,11 +90,19 @@
                               Grid.Column="0"/>
 
                 <ListView ItemsSource="{Binding DisplayLegend}"
-                          RowHeight="15"
                   SeparatorVisibility ="None"
                   Grid.Row="2"
                   Grid.Column="2">
-                    
+                    <ListView.HasUnevenRows>
+                        <OnPlatform x:TypeArguments="x:Boolean"
+                            iOS="False"
+                            Android="True"
+                            WinPhone="True"/>
+                    </ListView.HasUnevenRows>
+                    <ListView.RowHeight>
+                        <OnPlatform x:TypeArguments="x:Int32"
+                            iOS="15"/>
+                    </ListView.RowHeight>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -106,6 +114,7 @@
                                     <BoxView Color="{Binding ColorPath}" 
                                              HeightRequest="10"
                                              WidthRequest="10"
+                                             Margin="0,5,0,0"
                                              Grid.Column="0"/>
                                     <Label Text="{Binding Label}"
                                         FontSize = "Micro"

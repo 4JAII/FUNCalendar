@@ -78,10 +78,19 @@
             <ListView ItemsSource="{Binding DisplayHistoryCollection}"
                   HorizontalOptions="Center"
                   SeparatorVisibility ="None"
-                      RowHeight="150"
                   Grid.Row="2"
                   Grid.Column="0"
                   Grid.ColumnSpan="7">
+                <ListView.HasUnevenRows>
+                    <OnPlatform x:TypeArguments="x:Boolean"
+                        iOS="False"
+                        Android="True"
+                        WinPhone="True"/>
+                </ListView.HasUnevenRows>
+                <ListView.RowHeight>
+                    <OnPlatform x:TypeArguments="x:Int32"
+                            iOS="150"/>
+                </ListView.RowHeight>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -92,7 +101,7 @@
 
                             <StackLayout>
                                 <Frame BackgroundColor="White"
-                                       OutlineColor="Aqua"
+                                       OutlineColor="{Binding FrameColor}"
                                Padding="0"
                                VerticalOptions="Fill"
                                HorizontalOptions="Fill"

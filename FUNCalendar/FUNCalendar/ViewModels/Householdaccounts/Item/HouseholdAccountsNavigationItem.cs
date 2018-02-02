@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FUNCalendar.Models;
+using Prism.Navigation;
 
 
 namespace FUNCalendar.ViewModels
@@ -53,6 +54,34 @@ namespace FUNCalendar.ViewModels
             this.Price = price;
             this.CurrentDate = date;
             this.CurrentRange = range;
+        }
+
+        public static NavigationParameters CreateNavigationParameter(PageName page, HouseholdAccountsNavigationItem item)
+        {
+            var navigationparameter = new NavigationParameters();
+            switch (page)
+            {
+                case PageName.HouseholdAccountsBalancePage:
+                    navigationparameter.Add(HouseholdAccountsBalancePageViewModel.InputKey, item);
+                    break;
+                case PageName.HouseholdAccountsDCHistoryPage:
+                    navigationparameter.Add(HouseholdAccountsDCHistoryPageViewModel.InputKey, item);
+                    break;
+                case PageName.HouseholdAccountsHistoryPage:
+                    navigationparameter.Add(HouseholdAccountsHistoryPageViewModel.InputKey, item);
+                    break;
+                case PageName.HouseholdAccountsSCStatisticsPage:
+                    navigationparameter.Add(HouseholdAccountsSCStatisticsPageViewModel.InputKey, item);
+                    break;
+                case PageName.HouseholdAccountsStatisticsPage:
+                    navigationparameter.Add(HouseholdAccountsStatisticsPageViewModel.InputKey, item);
+                    break;
+                default:
+                    navigationparameter = null;
+                    break;
+            }
+
+            return navigationparameter;
         }
 
     }

@@ -66,14 +66,14 @@
                         Grid.Row="2"
                         Grid.Column="0"/>
                     <Picker ItemsSource="{Binding ScategoryNames}"
-                        SelectedItem="{Binding CurrentScategory.Value}"
+                        SelectedItem="{Binding SelectedScategory.Value}"
                         ItemDisplayBinding="{Binding ScategoryName}"
                         WidthRequest="400"
                         Grid.Row="1"
                         Grid.RowSpan="2"
                         Grid.Column="1"/>
                     <Picker ItemsSource="{Binding DcategoryNames}"
-                        SelectedItem="{Binding CurrentDcategory.Value}"
+                        SelectedItem="{Binding SelectedDcategory.Value}"
                         ItemDisplayBinding="{Binding DcategoryName}"
                         Grid.Row="1"
                         Grid.RowSpan="2"

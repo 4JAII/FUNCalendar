@@ -7,7 +7,6 @@ namespace FUNCalendar.Views
         public HouseholdAccountsStatisticsPage()
         {
             InitializeComponent();
-
         }
     }
 }
