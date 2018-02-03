@@ -34,6 +34,7 @@ namespace FUNCalendar.ViewModels
         public static readonly string InputKey = "InputKey";
         public static readonly string EditKey = "EditKey";
         public static readonly string CalendarKey = "CalendarKey";
+        public static readonly string CalendarEditKey = "CalendarEditKey";
 
         /* 遷移されたときのデータ格納用変数 */
         public HouseholdAccountsNavigationItem NavigatedItem { get; set; }
@@ -355,6 +356,48 @@ namespace FUNCalendar.ViewModels
                 this.CurrentDate = NavigatedItem.CurrentDate;
                 this.CurrentRange = Range.Day;
                 Date.Value = CurrentDate;
+            }
+
+            /* カレンダーのアイテム編集ボタンで遷移してきた時の処理 */
+            else if (parameters.ContainsKey(CalendarEditKey)){
+                NavigatedItem = (HouseholdAccountsNavigationItem)parameters[CalendarEditKey];
+                this.CurrentDate = NavigatedItem.CurrentDate;
+                this.CurrentRange = Range.Day;
+                Date.Value = CurrentDate;
+
+                VMHouseholdAccountsItem vmitem = new VMHouseholdAccountsItem(_householdaccount.SelectedItem);
+                HouseholdAccountsItem item = _householdaccount.SelectedItem;
+                Regex re = new Regex(@"[^0-9]");
+                ID = vmitem.ID;
+                Name.Value = vmitem.Name;
+                Price.Value = re.Replace(vmitem.Price, "");
+                Date.Value = _householdaccount.SelectedItem.Date;
+                IsOutgoing.Value = _householdaccount.SelectedItem.IsOutGoings;
+                UpdateScategory(IsOutgoing.Value);
+                foreach (HouseholdAccountsSCategoryItem x in ScategoryNames)
+                {
+                    if (x.ScategoryData == item.SCategory)
+                    {
+                        SelectedScategory.Value = x;
+                        break;
+                    }
+                }
+                foreach (HouseholdAccountsDcategoryItem x in DcategoryNames)
+                {
+                    if (x.DcategoryData == item.DCategory)
+                    {
+                        SelectedDcategory.Value = x;
+                        break;
+                    }
+                }
+                foreach (HouseholdAccountsStorageTypeItem x in StorageNames)
+                {
+                    if (x.StorageTypeData == item.StorageType)
+                    {
+                        SelectedStorageType.Value = x;
+                        break;
+                    }
+                }
             }
         }
 

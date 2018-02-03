@@ -167,18 +167,20 @@ namespace FUNCalendar.ViewModels
             {
                 var result = await _pageDialogService.DisplayActionSheetAsync("登録するアイテムの種類を選択", "キャンセル", "", "ToDo", "WishList", "家計簿");
                 var navigationParameters = new NavigationParameters();
-                navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarPage");
                 switch (result)
                 {
                     case "ToDo":
+                        navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarPage");
                         await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters);
                         break;
                     case "WishList":
+                        navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarPage");
                         await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
                         var navigationitem = new HouseholdAccountsNavigationItem(DateTime.Today);
                         navigationParameters.Add(HouseholdAccountsRegisterPageViewModel.CalendarKey, navigationitem);
+                        navigationParameters.Add("BackPage", PageName.CalendarPage);
                         await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsRegisterPage", navigationParameters);
                         break;
                 }

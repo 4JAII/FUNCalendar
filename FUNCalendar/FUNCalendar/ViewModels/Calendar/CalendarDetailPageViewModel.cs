@@ -175,10 +175,9 @@ namespace FUNCalendar.ViewModels
             {
                 _householdAccounts.SetHouseholdAccountsItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
                 var navigationitem = new HouseholdAccountsNavigationItem(DateData.Value);
-                var navigationparameter = new NavigationParameters()
-                {
-                    {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
-                };
+                var navigationparameter = new NavigationParameters();
+                navigationparameter.Add("BackPage", PageName.CalendarDetailPage);
+                navigationparameter.Add(HouseholdAccountsRegisterPageViewModel.CalendarEditKey, navigationitem);
                 await _navigationService.NavigateAsync("/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             });
 

@@ -91,7 +91,7 @@
                     FontAttributes="Bold"
                     Grid.Row="0"/>
                 <Picker ItemsSource="{Binding StorageNames}"
-                        SelectedItem="{Binding CurrentStorageType.Value}"
+                        SelectedItem="{Binding SelectedStorageType.Value}"
                         ItemDisplayBinding="{Binding StorageTypeName}"
                         Grid.Row="1"/>
             </Grid>

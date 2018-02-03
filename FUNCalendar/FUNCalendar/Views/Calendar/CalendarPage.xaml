@@ -9,6 +9,7 @@
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="False"
              Title="CalendarPage"
+             MinimumHeightRequest="1000"
              >
 
     <ContentPage.ToolbarItems>
