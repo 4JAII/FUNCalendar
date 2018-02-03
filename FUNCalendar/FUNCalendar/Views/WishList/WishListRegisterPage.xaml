@@ -33,7 +33,7 @@
         <DatePicker Date="{Binding Date.Value}" Grid.Row="1" Grid.Column="2" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
         <Entry Text="{Binding Name.Value}" FontSize="Large" Placeholder="商品名を入力(32文字以内)" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Entry Text="{Binding Price.Value}" FontSize="Large" Placeholder="値段を入力(半角 9桁以内)" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Label Text="ToDoに追加" FontSize="Medium" Grid.Row="7" Grid.Column="1"/>
+        <Label Text="連携機能" FontSize="Medium" Grid.Row="7" Grid.Column="1"/>
         <Switch IsToggled="{Binding NeedsAdd}" Grid.Row="7" Grid.Column="2"/>
         <Button Text="登録" BackgroundColor="{Binding ErrorColor.Value}" IsEnabled="{Binding CanRegister.Value}" Command="{Binding RegisterWishItemCommand}" Grid.Row="9" Grid.Column="1" />
         <Button Text="キャンセル" BackgroundColor="DarkGray" Command="{Binding CancelCommand}" Grid.Row="9" Grid.Column="2" />

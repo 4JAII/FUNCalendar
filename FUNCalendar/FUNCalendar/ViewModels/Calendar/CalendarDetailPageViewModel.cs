@@ -241,7 +241,7 @@ namespace FUNCalendar.ViewModels
                     await _storageService.DeleteItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
                     _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
                 }
-                _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);/*未解決*/
+                _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
             });
 
             /* 画面遷移設定 */
@@ -343,7 +343,7 @@ namespace FUNCalendar.ViewModels
                         }
                         _wishList.SetWishListForCalendar(DateData.Value);
                         _todoList.SetToDoListForCalendar(DateData.Value);
-                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);/*未解決*/
+                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
                     }
                     /* wishIDを持っていない場合 */
                     else
@@ -353,7 +353,7 @@ namespace FUNCalendar.ViewModels
                         var Dcategory = DCategorys.start_of_その他_支出;
                         var Storagetype = StorageTypes.start_of_Stype;
                         await _storageService.CompleteToDo(todoitem, false, false, Scategory, Dcategory, Storagetype);
-                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);/*未解決*/
+                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
                     }
                 }
             });
@@ -424,7 +424,7 @@ namespace FUNCalendar.ViewModels
                         await _storageService.BoughtWishItem(wishitem, hasID, true, Scategory, Dcategory, Storagetype);
                         _wishList.SetWishListForCalendar(DateData.Value);
                         _todoList.SetToDoListForCalendar(DateData.Value);
-                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);/*未解決*/
+                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
 
                     }
                     /* 家計簿に登録しない場合 */
@@ -435,7 +435,7 @@ namespace FUNCalendar.ViewModels
                         var Dcategory = DCategorys.start_of_その他_支出;
                         var Storagetype = StorageTypes.start_of_Stype;
                         await _storageService.BoughtWishItem(wishitem, hasID, false, Scategory, Dcategory, Storagetype);
-                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);/*未解決*/
+                        _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
                     }
                 }
             });
