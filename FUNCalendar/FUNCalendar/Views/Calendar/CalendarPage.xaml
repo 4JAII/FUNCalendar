@@ -8,16 +8,17 @@
              x:Name="CalendarPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="False"
-             Title="CalendarPage">
-    
+             Title="CalendarPage"
+             >
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
                      Text="Add"
                      Command="{Binding NavigationRegisterPageCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <Grid HorizontalOptions ="CenterAndExpand" VerticalOptions="CenterAndExpand"
-          HeightRequest="600" WidthRequest="1000">
+    <Grid HorizontalOptions ="CenterAndExpand" VerticalOptions="Start" 
+          HeightRequest="1000" WidthRequest="1000">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -47,14 +48,14 @@
         <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"/>
         <Button Image="Calendar_GoNextMonth.png" Grid.Row="0" Grid.Column="7" Command="{Binding GoNextMonth}" BorderWidth="0"
                 HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White" Grid.RowSpan="3"/>
-        
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="日" Grid.Row="2" Grid.Column="1"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="月" Grid.Row="2" Grid.Column="2"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="火" Grid.Row="2" Grid.Column="3"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="水" Grid.Row="2" Grid.Column="4"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="木" Grid.Row="2" Grid.Column="5"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="金" Grid.Row="2" Grid.Column="6"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="土" Grid.Row="2" Grid.Column="7"/>
+
+        <Label VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="Red" HorizontalTextAlignment="Center" Text="日" Grid.Row="2" Grid.Column="1"/>
+        <Label VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" Text="月" Grid.Row="2" Grid.Column="2"/>
+        <Label VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" Text="火" Grid.Row="2" Grid.Column="3"/>
+        <Label VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" Text="水" Grid.Row="2" Grid.Column="4"/>
+        <Label VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" Text="木" Grid.Row="2" Grid.Column="5"/>
+        <Label VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" Text="金" Grid.Row="2" Grid.Column="6"/>
+        <Label VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="Blue" HorizontalTextAlignment="Center" Text="土" Grid.Row="2" Grid.Column="7"/>
 
         <AiForms:RepeatableWrapLayout ItemsSource="{Binding DisplayCalendar}"
                                       ItemTapCommand="{Binding TapCommand}"
@@ -119,7 +120,7 @@
                                    Aspect="AspectFit"
                                    Grid.Column="2"/>
                         </Grid>
-                        
+
                         <!--
                         <Label VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"
@@ -211,5 +212,7 @@
                Grid.ColumnSpan="3"
                VerticalOptions="Center"
                HorizontalOptions="Center"/>
+
+
     </Grid>
 </ContentPage>
