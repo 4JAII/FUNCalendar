@@ -4,7 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.HouseholdAccountsRegisterPage"
-            Title="家計簿登録画面">
+            Title="家計簿登録">
 
     <Grid>
          <Grid.RowDefinitions>

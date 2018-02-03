@@ -7,7 +7,7 @@
              x:Name="CalendarDetailPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="False"
-             Title="CalendarDetailPage">
+             Title="Calendar詳細">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
@@ -35,7 +35,6 @@
         <ScrollView Grid.Row="2" Grid.Column="1">
             <ScrollView.Content>
                 <StackLayout Spacing="5">
-
                     <Button Text="ToDo" Command="{Binding ToDoListOpenCloseCommand}" BackgroundColor="#F69229"
                             HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                     <ListView ItemsSource="{Binding DisplayToDoList}"

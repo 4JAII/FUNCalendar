@@ -8,8 +8,8 @@
              x:Name="CalendarPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="False"
-             Title="CalendarPage">
-    
+             Title="Calendar">
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon= "icon_add.png"
                      Text="Add"

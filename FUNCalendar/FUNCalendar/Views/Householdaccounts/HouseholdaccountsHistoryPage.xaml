@@ -4,7 +4,8 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FUNCalendar.Views.HouseholdAccountsHistoryPage"
-             x:Name="HouseholdAccountsHistoryPage">
+             x:Name="HouseholdAccountsHistoryPage"
+             Title="家計簿履歴">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add"
