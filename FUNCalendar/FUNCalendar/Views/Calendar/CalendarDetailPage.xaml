@@ -29,8 +29,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <DatePicker Date="{Binding DateData.Value}" Grid.Row="1" Grid.Column="1"
-                    HorizontalOptions="Center" VerticalOptions="Center"/>
+        <DatePicker Date="{Binding DateData.Value}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
 
         <ScrollView Grid.Row="2" Grid.Column="1">
             <ScrollView.Content>

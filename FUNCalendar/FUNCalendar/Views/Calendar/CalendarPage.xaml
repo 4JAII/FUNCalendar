@@ -43,8 +43,8 @@
 
         <Button Image="Calendar_BackPrevMonth.png" Grid.Row="0" Grid.Column="1" Command="{Binding BackPrevMonth}" BorderWidth="0"
                 HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White" Grid.RowSpan="3"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarYear}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"/>
-        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarYear}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3"/>
+        <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Medium" Text="{Binding CalendarMonth}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" Grid.ColumnSpan="3"/>
         <Button Image="Calendar_GoNextMonth.png" Grid.Row="0" Grid.Column="7" Command="{Binding GoNextMonth}" BorderWidth="0"
                 HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White" Grid.RowSpan="3"/>
 
@@ -138,75 +138,79 @@
                HorizontalTextAlignment="Center"
                FontSize="Medium"
                Text="{Binding CurrentYear}"
-               Grid.Row="4"
+               Grid.Row="4" 
+               Grid.RowSpan="2"
                Grid.Column="2"
-               Grid.ColumnSpan="3"/>
+               Grid.ColumnSpan="2"/>
         <Label VerticalTextAlignment="Center"
                HorizontalTextAlignment="Center"
                FontSize="Medium"
                Text="{Binding CurrentMonth}"
                Grid.Row="4"
-               Grid.Column="3"
-               Grid.ColumnSpan="3"/>
+               Grid.RowSpan="2"
+               Grid.Column="4"
+               Grid.ColumnSpan="2"/>
         <Label VerticalTextAlignment="Center"
                HorizontalTextAlignment="Center"
                FontSize="Medium"
                Text="{Binding CurrentDate}"
                Grid.Row="4"
-               Grid.Column="4"
+               Grid.RowSpan="2"
+               Grid.Column="5"
                Grid.ColumnSpan="3"/>
 
         <Image Source="Calendar_HasToDoList.png"
-               VerticalOptions="Center"
+               VerticalOptions="StartAndExpand"
                HorizontalOptions="End"
                WidthRequest="15"
                Aspect="AspectFit"
-               Grid.Row="5"
+               Grid.Row="6"
                Grid.Column="1"/>
         <Label Text="ToDo"
-               Grid.Row="5"
+               Grid.Row="6"
                Grid.Column="2"
-               VerticalOptions="Center"
+               VerticalOptions="StartAndExpand"
                HorizontalOptions="Start"/>
         <Image Source="Calendar_HasWishList.png"
-               VerticalOptions="Center"
+               VerticalOptions="StartAndExpand"
                HorizontalOptions="End"
                WidthRequest="15"
                Aspect="AspectFit"
-               Grid.Row="6"
+               Grid.Row="7"
                Grid.Column="1"/>
         <Label Text="WishList"
-               Grid.Row="6"
+               Grid.Row="7"
                Grid.Column="2"
-               VerticalOptions="Center"
+               VerticalOptions="StartAndExpand"
                HorizontalOptions="Start"/>
         <Image Source="Calendar_HasHouseHoldAccountsList.png"
-               VerticalOptions="Center"
+               VerticalOptions="StartAndExpand"
                HorizontalOptions="End"
                WidthRequest="15"
                Aspect="AspectFit"
-               Grid.Row="7"
+               Grid.Row="8"
                Grid.Column="1"/>
         <Label Text="家計簿"
-               Grid.Row="7"
+               Grid.Row="8"
                Grid.Column="2"
-               VerticalOptions="Center"
+               VerticalOptions="StartAndExpand"
                HorizontalOptions="Start"/>
 
         <Label Text="{Binding CalendarMonth}"
-               Grid.Row="5"
+               Grid.Row="6"
+               Grid.RowSpan="2"
                Grid.Column="5"
                Grid.ColumnSpan="3"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"/>
+               VerticalOptions="StartAndExpand"
+               HorizontalOptions="CenterAndExpand"/>
         <Label Text="{Binding MonthOutgoing.Value}"
-               Grid.Row="6"
+               Grid.Row="7"
                Grid.Column="5"
                Grid.ColumnSpan="3"
                VerticalOptions="Center"
                HorizontalOptions="Center"/>
         <Label Text="{Binding MonthIncome.Value}"
-               Grid.Row="7"
+               Grid.Row="8"
                Grid.Column="5"
                Grid.ColumnSpan="3"
                VerticalOptions="Center"

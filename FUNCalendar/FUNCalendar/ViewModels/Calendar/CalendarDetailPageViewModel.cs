@@ -324,8 +324,11 @@ namespace FUNCalendar.ViewModels
                                     break;
                             }
                             storagetype = await _pageDialogService.DisplayActionSheetAsync("出金元の設定", null, null, "財布", "貯金", "銀行", "クレジットカード", "その他");
-                            if (scategory == null || storagetype == null)
+                            if (storagetype == null || dcategory == null)
+                            {
+                                await _pageDialogService.DisplayAlertAsync("エラー", "分類できませんでした", "OK");
                                 return;
+                            }
                             var Scategory = (SCategorys)Enum.Parse(typeof(SCategorys), scategory);
                             var Dcategory = (DCategorys)Enum.Parse(typeof(DCategorys), dcategory);
                             var Storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), storagetype);
@@ -417,7 +420,11 @@ namespace FUNCalendar.ViewModels
                                 break;
                         }
                         storagetype = await _pageDialogService.DisplayActionSheetAsync("出金元の設定", null, null, "財布", "貯金", "銀行", "クレジットカード", "その他");
-
+                        if(storagetype == null || dcategory == null)
+                        {
+                            await _pageDialogService.DisplayAlertAsync("エラー","分類できませんでした","OK");
+                            return;
+                        }
                         var Scategory = (SCategorys)Enum.Parse(typeof(SCategorys), scategory);
                         var Dcategory = (DCategorys)Enum.Parse(typeof(DCategorys), dcategory);
                         var Storagetype = (StorageTypes)Enum.Parse(typeof(StorageTypes), storagetype);
