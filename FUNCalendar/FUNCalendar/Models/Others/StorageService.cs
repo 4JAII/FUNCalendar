@@ -206,7 +206,7 @@ namespace FUNCalendar.Models
                 else
                 {
                     todoItem = new ToDoItem { ID = addItem.ToDoID, Description = description, Date = addItem.Date, Priority = priority, IsCompleted = addItem.IsBought, WishID = addItem.ID };
-                    await EditItem(ToDoList.SortedToDoList.First(x => x.ID == deleteItem.ToDoID), todoItem);
+                    await EditItem(ToDoList.SortedToDoList.FirstOrDefault(x => x.ID == deleteItem.ToDoID), todoItem);
                 }
             }
             else if (!needsRegister && deleteItem.ToDoID != 0)/* ToDoが登録済みかつ登録が消されたとき */
@@ -226,6 +226,7 @@ namespace FUNCalendar.Models
             }
             HasError = !await storage.EditItem(addItem);
             if (HasError) return;
+
             ToDoList.EditToDoItem(deleteItem, addItem);
         }
 

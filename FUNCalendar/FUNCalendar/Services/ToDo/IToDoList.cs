@@ -13,7 +13,7 @@ namespace FUNCalendar.Services
     {
         ExtendedObservableCollection<ToDoItem> SortedToDoList { get; }
         ToDoItem DisplayToDoItem { get; set; }
-        ObservableCollection<ToDoItem> ToDoListForCalendar { get; }
+        ExtendedObservableCollection<ToDoItem> ToDoListForCalendar { get; }
         bool DateWithToDoList { get; }
         bool IsAscending { get;  }
 

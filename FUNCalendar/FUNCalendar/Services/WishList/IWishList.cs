@@ -13,7 +13,7 @@ namespace FUNCalendar.Services
     {
         ExtendedObservableCollection<WishItem> SortedWishList { get; }
         WishItem DisplayWishItem { get; set; }
-        ObservableCollection<WishItem> WishListForCalendar { get; }
+        ExtendedObservableCollection<WishItem> WishListForCalendar { get; }
         bool DateWithWishList { get; }
         bool IsAscending { get; set; }
         void SortByID();

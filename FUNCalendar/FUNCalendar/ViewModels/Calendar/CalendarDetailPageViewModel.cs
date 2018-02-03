@@ -94,15 +94,15 @@ namespace FUNCalendar.ViewModels
             DisplayHouseHoldAccountsList = _householdAccounts.HouseholdAccountsListForCalendar.ToReadOnlyReactiveCollection(x => new VMHouseholdAccountsItem(x)).AddTo(Disposable);
 
             /* DatePicker */
-            DateData.Subscribe( _ =>
-            {
-                _wishList.ClearWishListForCalendar();
-                _todoList.ClearToDoListForCalendar();
-                _householdAccounts.ClearHouseholdAccountsListForCalendar();
-                WishListHeight.Value = 1;
-                ToDoListHeight.Value = 1;
-                HouseholdAccountsListHeight.Value = 1;
-            });
+            DateData.Subscribe(_ =>
+           {
+               _wishList.ClearWishListForCalendar();
+               _todoList.ClearToDoListForCalendar();
+               _householdAccounts.ClearHouseholdAccountsListForCalendar();
+               WishListHeight.Value = 1;
+               ToDoListHeight.Value = 1;
+               HouseholdAccountsListHeight.Value = 1;
+           });
 
             /* 戻る処理 */
             BackCommand.Subscribe(async () =>
@@ -144,7 +144,7 @@ namespace FUNCalendar.ViewModels
             });
 
             HouseHoldAccountsListOpenCloseCommand.Subscribe(() =>
-            { 
+            {
                 if (householdAccountsListOpen)
                 {
                     _householdAccounts.ClearHouseholdAccountsListForCalendar();
@@ -157,19 +157,36 @@ namespace FUNCalendar.ViewModels
                     HouseholdAccountsListHeight.Value = (_householdAccounts.HouseholdAccountsListForCalendar.Count + 1) * 60;
                     householdAccountsListOpen = true;
                 }
-                
+
             });
 
             /* アイテム編集処理 */
             EditToDoItemCommand.Subscribe(async (obj) =>
             {
-                _todoList.SetDisplayToDoItem(VMToDoItem.ToToDoItem(obj as VMToDoItem));
-                await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage?CanEdit=T");
+                ToDoItem item = VMToDoItem.ToToDoItem(obj as VMToDoItem);
+                var navigationParameters = new NavigationParameters();
+                navigationParameters.Add("CanEdit", "T");
+                navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarDetailPage");
+                if (item.WishID == 0)
+                {
+                    
+                    _todoList.SetDisplayToDoItem(item);
+                    await _navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters);
+                }
+                else
+                {
+                    _wishList.SetDisplayWishItem(item.WishID);
+                    await _pageDialogService.DisplayAlertAsync("確認", "WishListと連携しているアイテムなのでWishList編集画面に移動します", "OK");
+                    await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
+                }
             });
             EditWishItemCommand.Subscribe(async (obj) =>
             {
+                var navigationParameters = new NavigationParameters();
+                navigationParameters.Add("CanEdit", "T");
+                navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarDetailPage");
                 _wishList.SetDisplayWishItem(VMWishItem.ToWishItem(obj as VMWishItem));
-                await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage?CanEdit=T");
+                await _navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage",navigationParameters);
             });
             EditHouseholdAccountsItemCommand.Subscribe(async (obj) =>
             {
@@ -184,26 +201,34 @@ namespace FUNCalendar.ViewModels
             });
 
             /* アイテム削除処理 */
-            /*DeleteToDoItemCommand.Subscribe(async (obj) =>
+            DeleteToDoItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
                     var todoItem = VMToDoItem.ToToDoItem(obj as VMToDoItem);
-                    _todoList.Remove(todoItem);
-                    await localStorage.DeleteItem(todoItem);
+                    bool needsDelete = false;
+                    if (todoItem.WishID != 0)
+                        needsDelete = await _pageDialogService.DisplayAlertAsync("確認", "関連のWishListも削除しますか？\n(いいえを選んだ場合そのWishListの連携機能が使えなくなります)", "はい", "いいえ");
+                    await _storageService.DeleteItem(todoItem, needsDelete);
                 }
-            });*/
-            /*DeleteWishItemCommand.Subscribe(async (obj) =>
+                _todoList.SetToDoListForCalendar(DateData.Value);
+                _wishList.SetWishListForCalendar(DateData.Value);
+            });
+            DeleteWishItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
                 if (result)
                 {
                     var wishItem = VMWishItem.ToWishItem(obj as VMWishItem);
-                    _wishList.Remove(wishItem);
-                    await localStorage.DeleteItem(wishItem);
+                    bool needsDelete = false;
+                    if (wishItem.ToDoID != 0)
+                        needsDelete = await _pageDialogService.DisplayAlertAsync("確認", "関連のToDoも削除しますか？\n(いいえを選んだ場合そのToDoの連携機能が使えなくなります)", "はい", "いいえ");
+                    await _storageService.DeleteItem(wishItem, needsDelete);
                 }
-            });*/
+                _todoList.SetToDoListForCalendar(DateData.Value);
+                _wishList.SetWishListForCalendar(DateData.Value);
+            });
             DeleteHouseholdAccountsItemCommand.Subscribe(async (obj) =>
             {
                 var result = await _pageDialogService.DisplayAlertAsync("確認", "削除しますか？", "はい", "いいえ");
@@ -212,20 +237,21 @@ namespace FUNCalendar.ViewModels
                     await _storageService.DeleteItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
                     _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
                 }
+                _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);/*未解決*/
             });
 
             /* 画面遷移設定 */
             NavigationRegisterPageCommand.Subscribe(async () =>
             {
-                var result = await _pageDialogService.DisplayActionSheetAsync("登録するアイテムの種類を選択", "キャンセル","", "ToDo", "WishList", "家計簿");
+                var result = await _pageDialogService.DisplayActionSheetAsync("登録するアイテムの種類を選択", "キャンセル", "", "ToDo", "WishList", "家計簿");
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add("DateData", DateData.Value);
                 navigationParameters.Add("FromCalendar", "T");
-                navigationParameters.Add("BackPage", "/NavigationPage/CalendarDetailPage");
+                navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarDetailPage");
                 switch (result)
                 {
                     case "ToDo":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage" ,navigationParameters);
+                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters);
                         break;
                     case "WishList":
                         await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
@@ -241,7 +267,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-            
+
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
@@ -251,7 +277,7 @@ namespace FUNCalendar.ViewModels
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
-            
+
         }
     }
 }

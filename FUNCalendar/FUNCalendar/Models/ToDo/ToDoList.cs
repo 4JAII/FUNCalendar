@@ -17,7 +17,7 @@ namespace FUNCalendar.Models
         public ToDoItem DisplayToDoItem { get; set; }
 
         /* Calendar用 */
-        public ObservableCollection<ToDoItem> ToDoListForCalendar { get; private set; }
+        public ExtendedObservableCollection<ToDoItem> ToDoListForCalendar { get; private set; }
         public bool DateWithToDoList { get; private set; }
 
         /* 昇順か？*/
@@ -30,10 +30,11 @@ namespace FUNCalendar.Models
 
         public ToDoList()
         {
-            ToDoListForCalendar = new ObservableCollection<ToDoItem>();
+            ToDoListForCalendar = new ExtendedObservableCollection<ToDoItem>();
             SortedToDoList = new ExtendedObservableCollection<ToDoItem>();
             allToDoList = new List<ToDoItem>();
             selectedSortMethod = ToDoItem.CompareByID;
+            UpdateSortedList();
         }
 
         /* リスト更新 */
@@ -86,6 +87,7 @@ namespace FUNCalendar.Models
         {
             this.allToDoList = null;
             this.allToDoList = list;
+            UpdateSortedList();
         }
 
         /* アイテム追加 */
@@ -120,14 +122,7 @@ namespace FUNCalendar.Models
         /* Calendar用に特定の日付のデータを取り出す */
         public void SetToDoListForCalendar(DateTime date)
         {
-            ToDoListForCalendar.Clear();
-            foreach (ToDoItem x in allToDoList)
-            {
-                if (x.Date == date)
-                {
-                    ToDoListForCalendar.Add(x);
-                }
-            }
+            ToDoListForCalendar.Replace(SortedToDoList.Where(x => x.Date == date));
         }
 
         /* WishListForCalendarをClear */
