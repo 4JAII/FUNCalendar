@@ -49,7 +49,7 @@
                                     <ViewCell.ContextActions>
                                         <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditToDoItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"/>
                                         <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteToDoItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
-                                        <MenuItem Text="完了" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteToDoItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
+                                        <MenuItem Text="完了" IsDestructive="True" Command="{Binding Path=BindingContext.CompleteCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
                                     </ViewCell.ContextActions>
                                     <Frame OutlineColor="#F69229">
                                         <Grid>
@@ -90,7 +90,7 @@
                                     <ViewCell.ContextActions>
                                         <MenuItem Text="編集" Command="{Binding Path=BindingContext.EditWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"/>
                                         <MenuItem Text="削除" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
-                                        <MenuItem Text="購入完了" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteWishItemCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
+                                        <MenuItem Text="購入完了" IsDestructive="True" Command="{Binding Path=BindingContext.BoughtCommand, Source={x:Reference CalendarDetailPage}}" CommandParameter="{Binding .}"  />
                                     </ViewCell.ContextActions>
                                     <Frame OutlineColor="#B1D781">
                                         <Grid>

@@ -271,6 +271,7 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.EditItem(newTodoItem);
+            if (HasError) return;
             ToDoList.EditToDoItem(PreviousTodoItem, newTodoItem);
 
             /* 対応するIDのwishitemを購入済みにする hasId == true*/
@@ -326,12 +327,13 @@ namespace FUNCalendar.Models
                 return;
             }
             HasError = !await storage.EditItem(newWishItem);
+            if (HasError) return;
             WishList.EditWishItem(PreviousWishItem, newWishItem);
 
             /* 対応するToDoItemを完了にする */
             if (hasId)
             {
-                var PreviousTodoItem = ToDoList.SortedToDoList.First(x => x.ID == newWishItem.ID);
+                var PreviousTodoItem = ToDoList.SortedToDoList.First(x => x.ID == newWishItem.ToDoID);
                 var newTodoItem = PreviousTodoItem;
                 newTodoItem.IsCompleted = true;
 
