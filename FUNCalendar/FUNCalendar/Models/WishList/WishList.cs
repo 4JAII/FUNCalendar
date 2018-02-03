@@ -14,7 +14,7 @@ namespace FUNCalendar.Models
     {
         private List<WishItem> allWishList;
         private Func<WishItem, WishItem, int> selectedSortMethod;
-        public ObservableCollection<WishItem> SortedWishList { get; private set; }
+        public ExtendedObservableCollection<WishItem> SortedWishList { get; private set; }
         public WishItem DisplayWishItem { get; set; }
 
         /* Calendar用 */
@@ -32,7 +32,7 @@ namespace FUNCalendar.Models
 
         public WishList()
         {
-            SortedWishList = new ObservableCollection<WishItem>();
+            SortedWishList = new ExtendedObservableCollection<WishItem>();
             WishListForCalendar = new ObservableCollection<WishItem>();
             allWishList = new List<WishItem>();
             selectedSortMethod = WishItem.CompareByID;
@@ -42,11 +42,7 @@ namespace FUNCalendar.Models
         /* リスト更新 */
         private void UpdateSortedList()
         {
-            SortedWishList.Clear();
-            foreach (var p in allWishList)
-            {
-                SortedWishList.Add(p);
-            }
+            SortedWishList.Replace(allWishList);
         }
 
         /* 各種ソート */
@@ -82,6 +78,14 @@ namespace FUNCalendar.Models
             selectedSortMethod = WishItem.CompareByDate;
             Sort();
         }
+
+        public void Reverse()
+        {
+            allWishList.Reverse();
+            IsAscending = !IsAscending;
+            UpdateSortedList();
+        }
+
         public void UpdateList(List<WishItem> list)
         {
             this.allWishList = null;

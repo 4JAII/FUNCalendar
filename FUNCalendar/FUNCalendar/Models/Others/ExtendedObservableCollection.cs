@@ -11,7 +11,6 @@ namespace FUNCalendar.Models
 {
     public class ExtendedObservableCollection<T> : ObservableCollection<T>
     {
-
         public void Replace(IEnumerable<T> collection)
         {
             Items.Clear();
@@ -23,7 +22,7 @@ namespace FUNCalendar.Models
                 Items.Add(x);
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add,x,i));
             }
-
+            //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
     }
 }

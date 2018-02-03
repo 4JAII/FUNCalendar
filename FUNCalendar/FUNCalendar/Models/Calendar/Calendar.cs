@@ -19,7 +19,7 @@ namespace FUNCalendar.Models
         private IToDoList todoList;
         private IHouseholdAccounts householdAccounts;
 
-        public ExtendObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ExtendObservableCollection<Date>();
+        public ExtendedObservableCollection<Date> ListedAMonthDateData { get; private set; } = new ExtendedObservableCollection<Date>();
         public Date DisplayDate { get; set; }
 
         /* プロパティ */
