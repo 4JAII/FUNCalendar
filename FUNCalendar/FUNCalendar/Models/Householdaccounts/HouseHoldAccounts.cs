@@ -8,6 +8,7 @@ using OxyPlot;
 using OxyPlot.Xamarin.Forms;
 using OxyPlot.Series;
 using System.Linq;
+using Prism.Navigation;
 
 namespace FUNCalendar.Models
 {
@@ -388,6 +389,7 @@ namespace FUNCalendar.Models
         public void SetHouseholdAccountsListForCalendar(DateTime date)
         {
             allHouseHoldAccounts.Sort(HouseholdAccountsItem.CompareByDate);
+            HouseholdAccountsListForCalendar.Clear();
             foreach (HouseholdAccountsItem x in allHouseHoldAccounts)
             {
                 if (x.Date == date)

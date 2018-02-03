@@ -13,6 +13,7 @@ namespace FUNCalendar.Models
         private bool hasToDoList;
         private bool hasHouseHoldAccountsList;
         private DayOfWeek dayOfTheWeek;
+        private DateTime selectedDate;
 
         /* プロパティ */
         public DateTime DateData
@@ -50,6 +51,12 @@ namespace FUNCalendar.Models
         {
             get { return this.dayOfTheWeek; }
             private set { this.dayOfTheWeek = value; }
+        }
+
+        public DateTime SelectedDate
+        {
+            get { return this.selectedDate; }
+            set { this.SetProperty(ref this.selectedDate, value); }
         }
 
         /* コンストラクタ */

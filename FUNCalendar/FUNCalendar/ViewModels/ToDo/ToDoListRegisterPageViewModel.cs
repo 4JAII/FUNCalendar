@@ -123,6 +123,10 @@ namespace FUNCalendar.ViewModels
         {
             backPage = parameters["BackPage"] as string;
             /* 編集目的で遷移してきたならセット */
+            if (parameters["FromCalendar"] as string == "T")
+            {
+                Date.Value = Convert.ToDateTime(parameters["DateData"]);
+            }
             if (parameters["CanEdit"] as string != "T") return;
             VMToDoItem vmToDoItem = new VMToDoItem(_todoList.DisplayToDoItem);
             ID = vmToDoItem.ID;

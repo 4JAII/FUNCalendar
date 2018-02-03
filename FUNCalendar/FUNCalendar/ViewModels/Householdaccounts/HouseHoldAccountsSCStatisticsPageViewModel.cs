@@ -169,12 +169,12 @@ namespace FUNCalendar.ViewModels
             /* アイテム追加ボタンが押された時の処理 */
             ResistCommand.Subscribe(async _ =>
             {
-                var navigationitem = new HouseholdAccountsNavigationItem(SelectedDate.Value, SelectedRange.Value.RangeData);
+                var navigationitem = new HouseholdAccountsNavigationItem(CurrentBalanceType,CurrentSCategory,SelectedDate.Value, SelectedRange.Value.RangeData);
                 var navigationparameter = new NavigationParameters()
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
-                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsSCStatisticsPage");
+                navigationparameter.Add("BackPage", PageName.HouseholdAccountsSCStatisticsPage);
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             }).AddTo(disposable);
 

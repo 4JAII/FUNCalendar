@@ -145,4 +145,15 @@ namespace FUNCalendar.Models
         difference
     }
 
+    public enum PageName
+    {
+        HouseholdAccountsBalancePage,
+        HouseholdAccountsDCHistoryPage,
+        HouseholdAccountsHistoryPage,
+        HouseholdAccountsSCStatisticsPage,
+        HouseholdAccountsStatisticsPage,
+        CalendarDetailPage,
+        CalendarPage
+    }
+
 }

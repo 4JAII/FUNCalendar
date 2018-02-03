@@ -192,11 +192,9 @@ namespace FUNCalendar.ViewModels
             {
                 _householdAccounts.SetHouseholdAccountsItem(VMHouseholdAccountsItem.ToHouseholdaccountsItem(obj as VMHouseholdAccountsItem));
                 var navigationitem = new HouseholdAccountsNavigationItem(DateData.Value);
-                var navigationparameter = new NavigationParameters()
-                {
-                    {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
-                };
-                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsHistoryPage");
+                var navigationparameter = new NavigationParameters();
+                navigationparameter.Add("BackPage", PageName.CalendarDetailPage);
+                navigationparameter.Add(HouseholdAccountsRegisterPageViewModel.CalendarEditKey, navigationitem);
                 await _navigationService.NavigateAsync("/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             });
 
@@ -247,17 +245,19 @@ namespace FUNCalendar.ViewModels
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add("DateData", DateData.Value);
                 navigationParameters.Add("FromCalendar", "T");
-                navigationParameters.Add("BackPage", "/RootPage/NavigationPage/CalendarDetailPage");
                 switch (result)
                 {
                     case "ToDo":
-                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage", navigationParameters);
+                        navigationParameters.Add("BackPage", "/NavigationPage/CalendarDetailPage");
+                        await this._navigationService.NavigateAsync($"/NavigationPage/ToDoListRegisterPage" ,navigationParameters);
                         break;
                     case "WishList":
+                        navigationParameters.Add("BackPage", "/NavigationPage/CalendarDetailPage");
                         await this._navigationService.NavigateAsync($"/NavigationPage/WishListRegisterPage", navigationParameters);
                         break;
                     case "家計簿":
-                        var navigationitem = new HouseholdAccountsNavigationItem(DateTime.Today);
+                        var navigationitem = new HouseholdAccountsNavigationItem(DateData.Value);
+                        navigationParameters.Add("BackPage", PageName.CalendarDetailPage);
                         navigationParameters.Add(HouseholdAccountsRegisterPageViewModel.CalendarKey, navigationitem);
                         await this._navigationService.NavigateAsync($"/NavigationPage/HouseholdAccountsRegisterPage", navigationParameters);
                         break;

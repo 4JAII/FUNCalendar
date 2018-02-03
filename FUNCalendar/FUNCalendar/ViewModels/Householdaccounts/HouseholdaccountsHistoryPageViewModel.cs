@@ -115,7 +115,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.InputKey, navigationitem }
                 };
-                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsHistoryPage");
+                navigationparameter.Add("BackPage", PageName.HouseholdAccountsHistoryPage);
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             }).AddTo(disposable);
 
@@ -128,7 +128,7 @@ namespace FUNCalendar.ViewModels
                 {
                     {HouseholdAccountsRegisterPageViewModel.EditKey, navigationitem }
                 };
-                navigationparameter.Add("BackPage", "/RootPage/NavigationPage/HouseholdAccountsHistoryPage");
+                navigationparameter.Add("BackPage", PageName.HouseholdAccountsHistoryPage);
                 await _navigationService.NavigateAsync("/RootPage/NavigationPage/HouseholdAccountsRegisterPage", navigationparameter);
             });
 

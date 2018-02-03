@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FUNCalendar.Models;
+using System.ComponentModel;
 
 namespace FUNCalendar.Services
 {
-    public interface ICalendar
+    public interface ICalendar : INotifyPropertyChanged
     {
         Date[] AMonthDateData { get; set; }
         ExtendedObservableCollection<Date> ListedAMonthDateData { get; }
