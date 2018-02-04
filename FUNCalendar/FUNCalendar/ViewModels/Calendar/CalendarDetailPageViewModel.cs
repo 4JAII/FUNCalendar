@@ -128,7 +128,7 @@ namespace FUNCalendar.ViewModels
                 else
                 {
                     _todoList.SetToDoListForCalendar(DateData.Value);
-                    ToDoListHeight.Value = (_todoList.ToDoListForCalendar.Count + 1) * 60;
+                    ToDoListHeight.Value = (_todoList.ToDoListForCalendar.Count + 1) * 90;
                     todoListOpen = true;
                 }
             });
@@ -144,7 +144,7 @@ namespace FUNCalendar.ViewModels
                 else
                 {
                     _wishList.SetWishListForCalendar(DateData.Value);
-                    WishListHeight.Value = (_wishList.WishListForCalendar.Count + 1) * 60;
+                    WishListHeight.Value = (_wishList.WishListForCalendar.Count + 1) * 90;
                     wishListOpen = true;
                 }
             });
@@ -160,7 +160,7 @@ namespace FUNCalendar.ViewModels
                 else
                 {
                     _householdAccounts.SetHouseholdAccountsListForCalendar(DateData.Value);
-                    HouseholdAccountsListHeight.Value = (_householdAccounts.HouseholdAccountsListForCalendar.Count + 1) * 60;
+                    HouseholdAccountsListHeight.Value = (_householdAccounts.HouseholdAccountsListForCalendar.Count + 1) * 90;
                     householdAccountsListOpen = true;
                 }
 

@@ -65,7 +65,7 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Label Text="{Binding Description}" Grid.Column="1" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Description}" Grid.Column="1" HorizontalOptions="Center" FontSize="Micro"/>
                                             <Label Text="{Binding Date}" Grid.Column="3" HorizontalOptions="Center"/>
                                             <Label Text="{Binding Priority}" Grid.Column="5" HorizontalOptions="Center"/>
                                             <Label Text="{Binding IsCompleted}" Grid.Column="7" HorizontalOptions="Center"/>
@@ -106,8 +106,8 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center"/>
-                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Center" FontSize="Micro"/>
+                                            <Label Text="{Binding Price}" Grid.Column="3" HorizontalOptions="Center" FontSize="Micro"/>
                                             <Label Text="{Binding Date}" Grid.Column="5" HorizontalOptions="Center"/>
                                             <Label Text="{Binding IsBought}" Grid.Column="7" HorizontalOptions="Center"/>
                                         </Grid>

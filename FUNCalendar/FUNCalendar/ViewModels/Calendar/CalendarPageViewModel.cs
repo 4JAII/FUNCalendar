@@ -97,6 +97,7 @@ namespace FUNCalendar.ViewModels
                 await _storageService.InitializeAsync(this._wishList, this._todoList, this._householdAccounts);
                 await _storageService.ReadFile();
                 _calendar.SetLists(_wishList, _todoList, _householdAccounts);
+                _householdAccounts.SetMonthBalance(SelectedDate);
             });
 
             this._pageDialogService = pageDialogService;
@@ -186,7 +187,7 @@ namespace FUNCalendar.ViewModels
                 }
             });
 
-            _householdAccounts.SetMonthBalance(SelectedDate);
+            
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
