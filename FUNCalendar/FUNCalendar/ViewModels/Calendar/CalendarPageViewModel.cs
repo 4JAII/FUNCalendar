@@ -97,6 +97,9 @@ namespace FUNCalendar.ViewModels
                 await _storageService.InitializeAsync(this._wishList, this._todoList, this._householdAccounts);
                 await _storageService.ReadFile();
                 _calendar.SetLists(_wishList, _todoList, _householdAccounts);
+                SelectedYear = _calendar.CurrentYear;
+                SelectedMonth = _calendar.CurrentMonth;
+                SelectedDate = DateTime.Parse(String.Format("{0}/{1}", SelectedYear, SelectedMonth));
                 _householdAccounts.SetMonthBalance(SelectedDate);
             });
 
@@ -116,11 +119,6 @@ namespace FUNCalendar.ViewModels
 
             MonthIncome = _householdAccounts.ObserveProperty(h => h.IncomeForCalendar).Select(i => string.Format("収入：{0}",i)).ToReactiveProperty().AddTo(Disposable);
             MonthOutgoing = _householdAccounts.ObserveProperty(h => h.OutgoingForCalendar).Select(i => string.Format("支出：{0}",i)).ToReactiveProperty().AddTo(Disposable);
-
-            SelectedYear = _calendar.CurrentYear;
-            SelectedMonth = _calendar.CurrentMonth;
-            SelectedDate = DateTime.Parse(String.Format("{0}/{1}", SelectedYear, SelectedMonth));
-
 
             DisplayCalendar = _calendar.ListedAMonthDateData.ToReadOnlyReactiveCollection(x => new VMDate(x)).AddTo(Disposable);
             IsEndRefreshing.Value = true;
@@ -187,7 +185,6 @@ namespace FUNCalendar.ViewModels
                 }
             });
 
-            
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
@@ -198,6 +195,7 @@ namespace FUNCalendar.ViewModels
         public void OnNavigatedTo(NavigationParameters parameters)
         {
             canInitialize.Value = true;
+
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

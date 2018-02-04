@@ -169,6 +169,7 @@
         <Label Text="ToDo"
                Grid.Row="6"
                Grid.Column="2"
+               Grid.ColumnSpan="2"
                VerticalOptions="StartAndExpand"
                HorizontalOptions="Start"/>
         <Image Source="Calendar_HasWishList.png"
@@ -181,6 +182,7 @@
         <Label Text="WishList"
                Grid.Row="7"
                Grid.Column="2"
+               Grid.ColumnSpan="2"
                VerticalOptions="StartAndExpand"
                HorizontalOptions="Start"/>
         <Image Source="Calendar_HasHouseHoldAccountsList.png"
@@ -193,6 +195,7 @@
         <Label Text="家計簿"
                Grid.Row="8"
                Grid.Column="2"
+               Grid.ColumnSpan="2"
                VerticalOptions="StartAndExpand"
                HorizontalOptions="Start"/>
 
